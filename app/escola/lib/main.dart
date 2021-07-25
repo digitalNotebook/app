@@ -24,8 +24,18 @@ class MyApp extends StatelessWidget {
         //definir o theme dos Text
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
-                fontSize: 20,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
+              ),
+              headline5: TextStyle(
+                fontSize: 25,
+              ),
+              bodyText1: TextStyle(
+                fontSize: 20,
+              ),
+              button: TextStyle(
+                fontSize: 25,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
       ),

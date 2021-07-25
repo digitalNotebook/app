@@ -5,12 +5,14 @@ class ClassList extends StatelessWidget {
   final String teacherName;
   final String className;
   final String classDescription;
+  final double containerHeight;
 
   ClassList({
     required this.textScale,
     required this.teacherName,
     required this.className,
     required this.classDescription,
+    required this.containerHeight,
   });
 
   @override
@@ -18,32 +20,34 @@ class ClassList extends StatelessWidget {
     return Card(
       elevation: 5,
       child: ListTile(
-        leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              maxRadius: 15,
-              child: Icon(Icons.person),
-            ),
-            Text(
-              teacherName,
-              style: TextStyle(fontSize: 10 * textScale),
-            ),
-          ],
+        leading: FittedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                maxRadius: 25,
+                child: Icon(Icons.person),
+              ),
+              Text(
+                teacherName,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+            ],
+          ),
         ),
         title: Text(
           className,
-          style: TextStyle(fontSize: 12 * textScale),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         subtitle: Text(
-          'Something here about present continuous',
-          style: TextStyle(fontSize: 12 * textScale),
+          'Something here about present continuous kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
+          style: Theme.of(context).textTheme.bodyText2,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
         trailing: Text(
           '${DateTime.now().day.toString()} th',
-          style: TextStyle(fontSize: 12 * textScale),
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       ),
     );

@@ -22,7 +22,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Digital Notebook'),
+        title: Text(
+          'Digital Notebook',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -33,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                autofocus: true,
                 decoration: const InputDecoration(
                   hintText: 'Enter a seed',
                 ),
@@ -40,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter with a seed';
                   }
-                  if ('Leo' != value || 'Vitor' != value) {
+                  if ('Leo' != value) {
                     return 'Seed doesn\'t match';
                   }
                   this.seed = value;

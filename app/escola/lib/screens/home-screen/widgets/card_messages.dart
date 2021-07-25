@@ -25,14 +25,15 @@ class CardMessages extends StatelessWidget {
               leading: CircleAvatar(
                 child: Icon(Icons.person),
               ),
-              title: Text(
-                'Leonardo Fagundes',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 12 * textScale),
+              title: FittedBox(
+                child: Text(
+                  'Leonardo Fagundes',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
               subtitle: Text(
                 '34 min',
-                style: TextStyle(fontSize: 10 * textScale),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
             Flexible(
@@ -43,9 +44,7 @@ class CardMessages extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
             ),

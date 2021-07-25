@@ -72,20 +72,49 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               //MENSAGEM DE SAUDAÇÃO
-              Saudacao(textScale, containerHeight),
+              Stack(
+                children: [
+                  //container base
+                  Container(
+                    //margin: EdgeInsets.symmetric(vertical: 5),
+                    height: containerHeight * 0.1,
+                    width: double.infinity,
+                    color: Colors.black12,
+                  ),
+                  //container em cima do container anterior
+                  Container(
+                    height: containerHeight * 0.1,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    width: double.infinity,
+                    child: FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Saudacao(textScale),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
               //FOTO DO ALUNO(A)
               Stack(
                 children: [
                   Container(
                     color: Colors.black12,
                     height: containerHeight * 0.1,
+                    width: double.infinity,
                   ),
                   Container(
-                    height: containerHeight * 0.09,
+                    height: containerHeight * 0.1,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
+                          maxRadius: containerHeight * 0.1,
                           child: IconButton(
                             //ADD FOTO DO ALUNO
                             onPressed: () {},
@@ -97,74 +126,90 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 ],
               ),
-
               //BOTÕES DE MENU
-              Container(
-                color: Colors.black12,
-                height: containerHeight * 0.13,
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      TextButton(
-                        onPressed: () => _showDialog(mediaQuery),
-                        child: Column(
-                          children: [
-                            Icon(Icons.calendar_today),
-                            Text(
-                              'Calendar',
-                              style: TextStyle(fontSize: 12 * textScale),
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Column(
-                          children: [
-                            Icon(Icons.message_outlined),
-                            Text(
-                              'Messages',
-                              style: TextStyle(fontSize: 12 * textScale),
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Column(
-                          children: [
-                            Icon(Icons.note_outlined),
-                            Text(
-                              'Classes',
-                              style: TextStyle(fontSize: 12 * textScale),
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Column(
-                          children: [
-                            Icon(Icons.home_work_outlined),
-                            Text(
-                              'Homework',
-                              style: TextStyle(fontSize: 12 * textScale),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+              Stack(
+                children: [
+                  Container(
+                    color: Colors.black12,
+                    width: double.infinity,
+                    height: containerHeight * 0.13,
+                    // margin: EdgeInsets.symmetric(vertical: 5),
                   ),
-                ),
+                  Container(
+                    height: containerHeight * 0.13,
+                    padding: EdgeInsets.symmetric(vertical: 1),
+                    child: FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextButton(
+                            onPressed: () => _showDialog(mediaQuery),
+                            child: Column(
+                              children: [
+                                Icon(Icons.calendar_today),
+                                Text(
+                                  'Calendar',
+                                  style: Theme.of(context).textTheme.button,
+                                  overflow: TextOverflow.clip,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Column(
+                              children: [
+                                Icon(Icons.message_outlined),
+                                Text(
+                                  'Messages',
+                                  style: Theme.of(context).textTheme.button,
+                                  overflow: TextOverflow.clip,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Column(
+                              children: [
+                                Icon(Icons.note_outlined),
+                                Text(
+                                  'Classes',
+                                  style: Theme.of(context).textTheme.button,
+                                  overflow: TextOverflow.clip,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Column(
+                              children: [
+                                Icon(Icons.home_work_outlined),
+                                Text(
+                                  'Homework',
+                                  style: Theme.of(context).textTheme.button,
+                                  overflow: TextOverflow.clip,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               //MENSAGENS DE AVISO
               Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    // margin: EdgeInsets.symmetric(vertical: 5),
                     width: double.infinity,
                     height: containerHeight * 0.4,
                     color: Colors.black12,
@@ -187,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    // margin: EdgeInsets.symmetric(vertical: 5),
                     width: double.infinity,
                     height: containerHeight * 0.27,
                     color: Colors.black12,
@@ -199,18 +244,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         teacherName: 'Leonardo',
                         className: 'Present Continuos',
                         classDescription: 'Something about present continuos',
+                        containerHeight: containerHeight,
                       ),
                       ClassList(
                         textScale: textScale,
                         teacherName: 'Leonardo',
                         className: 'Present Continuos',
                         classDescription: 'Something about present continuos',
+                        containerHeight: containerHeight,
                       ),
                       ClassList(
                         textScale: textScale,
                         teacherName: 'Leonardo',
                         className: 'Present Continuos',
                         classDescription: 'Something about present continuos',
+                        containerHeight: containerHeight,
                       )
                     ],
                   ),
