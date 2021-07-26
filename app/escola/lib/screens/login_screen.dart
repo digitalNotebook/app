@@ -1,5 +1,6 @@
-import 'package:escola/screens/home-screen/home_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'bottom_tabs_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/';
@@ -15,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void successSubmit(BuildContext ctx) {
     Navigator.of(ctx)
-        .pushReplacementNamed(MyHomePage.routeName, arguments: seed);
+        .pushReplacementNamed(TabsScreen.pageName, arguments: seed);
   }
 
   @override

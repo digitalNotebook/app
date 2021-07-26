@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:escola/screens/error_screen.dart';
+import 'package:escola/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/home-screen/home_screen.dart';
-import './screens/error-screen/error_screen.dart';
-import './screens/login-screen/login_screen.dart';
+import './screens/calendar_screen.dart';
+import './screens/menu_screen.dart';
+import './screens/classes_screen.dart';
+import './screens/homeworks_screen.dart';
+import 'screens/bottom_tabs_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,36 +19,49 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Digital Notebook',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        accentColor: Colors.blueAccent,
-        buttonColor: Colors.blueGrey,
-        //criar uma pasta assets com fonts
-        // fontFamily: '',
-        //definir o theme dos Text
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-              headline5: TextStyle(
-                fontSize: 25,
-              ),
-              bodyText1: TextStyle(
-                fontSize: 20,
-              ),
-              button: TextStyle(
-                fontSize: 25,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
+        primarySwatch: Colors.grey,
+        accentColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          color: Colors.black,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
-      initialRoute: '/', //depois mudar para / para o login
+      initialRoute: '/',
       routes: {
-        LoginScreen.routeName: (ctx) => LoginScreen(),
-        MyHomePage.routeName: (ctx) => MyHomePage(title: 'Digital Notebook'),
+        '/': (ctx) => LoginScreen(),
+        TabsScreen.pageName: (ctx) {
+          return TabsScreen(
+            key: ValueKey('bottom-tab'),
+          );
+        },
+        MenuScreen.pageName: (ctx) {
+          return MenuScreen(
+            key: ValueKey('menu-screen'),
+          );
+        },
+        CalendarScreen.pageName: (ctx) {
+          return CalendarScreen(
+            key: ValueKey('calendar-screen'),
+          );
+        },
+        ClassesScreen.pageName: (ctx) {
+          return ClassesScreen(
+            key: ValueKey('classes-screen'),
+          );
+        },
+        HomeworkScreen.pageName: (ctx) {
+          return HomeworkScreen(
+            key: ValueKey('homework-screen'),
+          );
+        },
+        //outra rota aqui
       },
       onUnknownRoute: (settings) {
-        return MaterialPageRoute(builder: (ctx) => ErrorScreen());
+        return MaterialPageRoute(
+          builder: (ctx) => ErrorScreen(),
+        );
       },
     );
   }
