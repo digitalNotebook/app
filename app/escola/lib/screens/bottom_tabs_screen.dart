@@ -19,10 +19,10 @@ class _TabsScreenState extends State<TabsScreen> {
   //lista de screens e titles
   final List<Map<String, dynamic>> _pages = [
     {'page': MenuScreen(), 'title': 'Home'},
-    {'page': ClassesScreen(), 'title': 'Calendar'},
-    {'page': CalendarScreen(), 'title': 'Messages'},
-    {'page': HomeworkScreen(), 'title': 'Classes'},
-    {'page': MessagesScreen(), 'title': 'Homeworks'}
+    {'page': ClassesScreen(), 'title': 'Classes'},
+    {'page': CalendarScreen(), 'title': 'Calendar'},
+    {'page': HomeworkScreen(), 'title': 'Homeworks'},
+    {'page': MessagesScreen(), 'title': 'Messages'}
   ];
 
   //saber qual index está selecionado, por padrão é o Home
