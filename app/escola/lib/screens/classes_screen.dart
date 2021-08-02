@@ -1,4 +1,7 @@
+import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../widgets/class_list.dart';
 
 class ClassesScreen extends StatelessWidget {
   const ClassesScreen({Key? key}) : super(key: key);
@@ -7,8 +10,9 @@ class ClassesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Classes Screen'),
+    return ChangeNotifierProvider(
+      create: (_) => Aulas(),
+      child: ClassList(),
     );
   }
 }

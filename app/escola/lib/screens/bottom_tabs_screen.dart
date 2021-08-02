@@ -28,6 +28,11 @@ class _TabsScreenState extends State<TabsScreen> {
   //saber qual index está selecionado, por padrão é o Home
   int _selectedPageIndex = 0;
 
+  @override
+  void didUpdateWidget(covariant TabsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
   //captura o index da página selecionada
   void _selectPage(int index) {
     setState(() {
