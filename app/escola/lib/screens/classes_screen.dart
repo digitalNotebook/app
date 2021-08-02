@@ -12,7 +12,7 @@ class ClassesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => Aulas(),
-      child: ClassList(),
+      child: ClassList(), //mudar para classOverview()
     );
   }
 }

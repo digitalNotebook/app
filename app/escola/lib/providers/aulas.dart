@@ -60,15 +60,13 @@ class Aulas with ChangeNotifier {
     return _aulas.firstWhere((cadaAula) => cadaAula.id == id);
   }
 
-  List<Aula> handleUndoneClasses() {
-    return [
-      ..._aulas.where((cadaAula) => cadaAula.status == Status.UNDONE).toList()
-    ];
+  List<Aula> get undoneClasses {
+    return _aulas
+        .where((cadaAula) => cadaAula.status == Status.UNDONE)
+        .toList();
   }
 
-  List<Aula> handleDoneClasses() {
-    return [
-      ..._aulas.where((cadaAula) => cadaAula.status == Status.DONE).toList()
-    ];
+  List<Aula> get doneClasses {
+    return _aulas.where((cadaAula) => cadaAula.status == Status.DONE).toList();
   }
 }

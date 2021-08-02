@@ -5,13 +5,16 @@ import '../providers/aulas.dart';
 import '../widgets/class_item.dart';
 
 class ClassList extends StatelessWidget {
+  //classeOverview vira stateful
+  // var _filtro = Status.UNDONE; por padrão
   @override
   Widget build(BuildContext context) {
+    //passa a referencia abaixo para a classItem que virar ClassList
     //recebo uma referencia do container provider Aulas
     final aulasData = Provider.of<Aulas>(context);
     //recebo uma cópia de _aulas
     var aulas = aulasData.items;
-    print('TOTAL: ${aulas.length}');
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,21 +28,19 @@ class ClassList extends StatelessWidget {
                   autofocus: true,
                   clipBehavior: Clip.hardEdge,
                   onPressed: () {
-                    aulas = aulasData.handleUndoneClasses();
-                    print('UNDONE: ${aulas.length}');
+                    //seta a variavel _filtro para UNDONE
                   },
                   child: Text('UNDONE'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    aulas = aulasData.handleDoneClasses();
-                    print('DONE: ${aulas.length}');
+                    //seta a variavel _filtro para DONE
                   },
                   child: Text('DONE'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //REFERENCIA DO MÉTODO PARA EXIBIR OS favorites
+                    ////seta a variavel _filtro para FAV
                   },
                   child: Text('FAVORITES'),
                 ),
@@ -64,6 +65,8 @@ class ClassList extends StatelessWidget {
                 itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
                   value: aulas[index],
                   child:
+                      //passa a referencia de _filtro para o construtor
+                      //essa classe consulta o container, vira a classeList
                       ClassItem(), //cria os cards da aula, trocar por ListTile
                 ),
               ),
