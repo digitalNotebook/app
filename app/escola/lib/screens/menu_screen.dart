@@ -31,19 +31,19 @@ class MenuScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 150),
                   ),
                   Text(
-                    'Leonardo',
+                    'Leonardo', //foto perfil
                     style: TextStyle(fontSize: 150),
                   ),
                 ],
               ),
             ),
           ),
-          //FOTO PERFIL
+
           Expanded(
             flex: 1,
             child: FittedBox(
               child: Text(
-                'Foto perfil',
+                'Mensagem',
                 style: TextStyle(fontSize: 150),
               ),
             ),
@@ -55,7 +55,7 @@ class MenuScreen extends StatelessWidget {
                 children: [
                   //CRIAR UM LISTVIEW DE CARDS
                   Text(
-                    'Mensagens',
+                    'Active Class',
                     style: TextStyle(fontSize: 150),
                   ),
                 ],
@@ -66,7 +66,7 @@ class MenuScreen extends StatelessWidget {
             flex: 2,
             child: FittedBox(
               child: Text(
-                'Aulas',
+                'Homework c/ calendar',
                 style: TextStyle(fontSize: 150),
               ),
             ),

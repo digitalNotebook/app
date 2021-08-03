@@ -69,4 +69,8 @@ class Aulas with ChangeNotifier {
   List<Aula> get doneClasses {
     return _aulas.where((cadaAula) => cadaAula.status == Status.DONE).toList();
   }
+
+  List<Aula> get favoriteClasses {
+    return _aulas.where((cadaAula) => cadaAula.isFavorite).toList();
+  }
 }
