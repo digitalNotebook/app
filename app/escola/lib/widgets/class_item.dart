@@ -6,7 +6,7 @@ import '../providers/aula.dart';
 class ClassItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final aula = Provider.of<Aula>(context);
+    // final aula = Provider.of<Aula>(context);
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
@@ -42,7 +42,10 @@ class ClassItem extends StatelessWidget {
           ),
           Row(
             children: [
-              Text('${aula.title} - ${aula.subtitle}'),
+              Consumer<Aula>(
+                builder: (ctx, aula, child) =>
+                    Text('${aula.title} - ${aula.subtitle}'),
+              ),
             ],
           )
         ],

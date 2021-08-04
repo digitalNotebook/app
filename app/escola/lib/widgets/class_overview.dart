@@ -25,7 +25,9 @@ class _ClassOverviewState extends State<ClassOverview> {
   }
 
   void _handleFavoriteButton() {
-    _classFilter = Filters.FAVORITES;
+    setState(() {
+      _classFilter = Filters.FAVORITES;
+    });
   }
 
   @override
@@ -43,6 +45,7 @@ class _ClassOverviewState extends State<ClassOverview> {
               handleDoneButton: _handleDoneButton,
               handleUndoneButton: _handleUndoneButton,
               handleFavoriteButton: _handleFavoriteButton,
+              status: _classFilter,
             ),
           ),
           //CONTAINER COM AS AULAS

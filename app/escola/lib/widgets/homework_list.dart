@@ -34,7 +34,8 @@ class HomeworkList extends StatelessWidget {
           Expanded(
             flex: 8,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+              // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),

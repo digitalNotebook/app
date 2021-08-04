@@ -14,7 +14,7 @@ class ClassList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //recebo uma referencia do container provider Aulas
-    final aulasData = Provider.of<Aulas>(context);
+    final aulasData = Provider.of<Aulas>(context, listen: false);
     //recebo uma cópia de _aulas
     List<Aula> aulas;
     if (_filters == Filters.DONE)
