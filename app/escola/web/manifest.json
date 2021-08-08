@@ -1,21 +1,21 @@
 {
-    "name": "escola",
-    "short_name": "escola",
+    "name": "Digital Notebook",
+    "short_name": "DN",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A new Leo's project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
+            "src": "icons/education-256.png",
+            "sizes": "256x256",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
+            "src": "icons/education.png",
             "sizes": "512x512",
             "type": "image/png"
         }

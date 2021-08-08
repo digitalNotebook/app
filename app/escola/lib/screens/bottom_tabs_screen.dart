@@ -42,10 +42,11 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Método Build da TabsScreen acionado');
     //recupera a seed enviada de loginScreen
-    final seedId = ModalRoute.of(context)?.settings.arguments;
+    // final seedId = ModalRoute.of(context)?.settings.arguments;
 
-    final deviceInfo = MediaQuery.of(context);
+    // final deviceInfo = MediaQuery.of(context);
     // print(
     //     'Height: ${deviceInfo.size.height} and Width: ${deviceInfo.size.width}');
     return Scaffold(
@@ -55,6 +56,15 @@ class _TabsScreenState extends State<TabsScreen> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         elevation: 4,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(

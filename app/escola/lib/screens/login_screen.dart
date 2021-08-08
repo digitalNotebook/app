@@ -36,6 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'Seed:',
+                style: Theme.of(context).textTheme.headline6,
+              ),
               TextFormField(
                 autofocus: true,
                 decoration: const InputDecoration(
@@ -60,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       successSubmit(context);
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text('Login'),
                 ),
               )
             ],
