@@ -51,17 +51,24 @@ class _TabsScreenState extends State<TabsScreen> {
     //     'Height: ${deviceInfo.size.height} and Width: ${deviceInfo.size.width}');
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.person),
+        ),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        shadowColor: Theme.of(context).appBarTheme.shadowColor,
+        iconTheme: Theme.of(context).appBarTheme.iconTheme,
         title: Text(
           _pages[_selectedPageIndex]['title'],
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
-        elevation: 4,
+        elevation: Theme.of(context).appBarTheme.elevation,
         actions: [
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.person,
-              color: Colors.white,
+              Icons.settings,
+              color: Theme.of(context).accentColor,
             ),
           ),
         ],
@@ -69,7 +76,7 @@ class _TabsScreenState extends State<TabsScreen> {
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Theme.of(context).bottomAppBarTheme.color,
         unselectedItemColor: Colors.white30,
         selectedItemColor: Colors.white,
         showUnselectedLabels: true,

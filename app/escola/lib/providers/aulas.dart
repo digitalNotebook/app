@@ -6,12 +6,14 @@ class Aulas with ChangeNotifier {
   List<Aula> _aulas = [
     Aula(
         id: 'a1',
-        title: 'Present Continuous',
-        subtitle: 'Part 5',
+        title: 'Simple Present',
+        subtitle: 'Action verbs',
         imagesUrl: 'varios links de imagem',
         dataAula: DateTime.utc(2021, 08, 05),
-        description: 'description',
+        description: 'Simple Present',
         videoUrl: 'videoUrl - Part 5',
+        horaInicio: DateTime.now().subtract(Duration(hours: 2)),
+        horaFim: DateTime.now().subtract(Duration(hours: 4)),
         status: Status.UNDONE),
     Aula(
         id: 'a1',
@@ -21,6 +23,8 @@ class Aulas with ChangeNotifier {
         dataAula: DateTime.utc(2021, 08, 01),
         description: 'description',
         videoUrl: 'videoUrl - Part 4',
+        horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 5)),
+        horaFim: DateTime.now().subtract(Duration(hours: 4, days: 5)),
         status: Status.DONE),
     Aula(
         id: 'a1',
@@ -29,6 +33,8 @@ class Aulas with ChangeNotifier {
         imagesUrl: 'varios links de imagem',
         dataAula: DateTime.utc(2021, 07, 20),
         description: 'description',
+        horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 10)),
+        horaFim: DateTime.now().subtract(Duration(hours: 4, days: 10)),
         videoUrl: 'videoUrl - Part 3',
         status: Status.DONE),
     Aula(
@@ -38,6 +44,8 @@ class Aulas with ChangeNotifier {
         imagesUrl: 'varios links de imagem',
         dataAula: DateTime.utc(2021, 07, 05),
         description: 'description',
+        horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 20)),
+        horaFim: DateTime.now().subtract(Duration(hours: 4, days: 20)),
         videoUrl: 'videoUrl - Part 2',
         status: Status.DONE),
     Aula(
@@ -48,6 +56,8 @@ class Aulas with ChangeNotifier {
         dataAula: DateTime.utc(2021, 06, 20),
         description: 'description',
         videoUrl: 'videoUrl - Part 1',
+        horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 40)),
+        horaFim: DateTime.now().subtract(Duration(hours: 4, days: 40)),
         status: Status.DONE),
   ];
 

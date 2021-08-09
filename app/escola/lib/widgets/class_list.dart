@@ -25,13 +25,13 @@ class ClassList extends StatelessWidget {
       aulas = aulasData.favoriteClasses;
 
     return Container(
-      //padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(30),
-            topRight: const Radius.circular(30),
+            topLeft: const Radius.circular(15),
+            topRight: const Radius.circular(15),
           ),
-          color: Colors.black38),
+          color: Theme.of(context).primaryColor),
       alignment: Alignment.center,
       child: ListView.builder(
         itemCount: aulas.length,

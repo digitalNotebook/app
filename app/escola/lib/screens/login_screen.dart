@@ -41,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: Theme.of(context).textTheme.headline6,
               ),
               TextFormField(
-                autofocus: true,
                 decoration: const InputDecoration(
                   hintText: 'Enter a seed',
                 ),

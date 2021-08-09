@@ -62,12 +62,15 @@ class HomeworkList extends StatelessWidget {
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30),
                               ),
-                              child: Image.network(
-                                'https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2018/10/Hand-Luggage-Only-12.jpg?w=1600&ssl=1',
-                                fit: BoxFit.fitWidth,
-                                width: double.infinity,
-                                height: 100,
+                              child: Placeholder(
+                                fallbackHeight: 100,
                               ),
+                              // child: Image.network(
+                              //   'https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2018/10/Hand-Luggage-Only-12.jpg?w=1600&ssl=1',
+                              //   fit: BoxFit.fitWidth,
+                              //   width: double.infinity,
+                              //   height: 100,
+                              // ),
                             ),
                             IconButton(
                               onPressed: () {},

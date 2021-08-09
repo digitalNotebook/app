@@ -14,6 +14,8 @@ class Aula with ChangeNotifier {
   final String description;
   final String videoUrl;
   final Status status;
+  final DateTime horaInicio;
+  final DateTime horaFim;
   bool isFavorite;
 
   Aula({
@@ -25,6 +27,8 @@ class Aula with ChangeNotifier {
     required this.description,
     required this.videoUrl,
     required this.status,
+    required this.horaInicio,
+    required this.horaFim,
     this.isFavorite = false,
   });
 

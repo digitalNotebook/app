@@ -1,3 +1,4 @@
+import 'package:escola/screens/class_detail_screen.dart';
 import 'package:escola/screens/error_screen.dart';
 import 'package:escola/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +20,29 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Digital Notebook',
       theme: ThemeData(
+        //cor de fundo da tela
+        scaffoldBackgroundColor: Colors.white,
+        //cor dos
         primarySwatch: Colors.grey,
+
         accentColor: Colors.black,
+        //tema da bottomAppBar
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.black,
+        ),
+        //tema do upAppBar
         appBarTheme: AppBarTheme(
-          color: Colors.black87,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
+          centerTitle: true,
+          //cor dos icones
+          iconTheme: IconThemeData(
+            color: Colors.black87,
           ),
+          //cor de fundo da appBar
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+          ),
+          elevation: 0, //tira a sombra embaixo da upAppBar
         ),
       ),
       initialRoute: '/',
@@ -56,6 +73,11 @@ class MyApp extends StatelessWidget {
             key: ValueKey('homework-screen'),
           );
         },
+        ClassDetailScreen.pageName: (ctx) {
+          return ClassDetailScreen(
+            key: ValueKey('class-detail-screen'),
+          );
+        }
         //outra rota aqui
       },
       onUnknownRoute: (settings) {
