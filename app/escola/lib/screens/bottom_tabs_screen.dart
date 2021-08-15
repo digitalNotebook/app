@@ -1,4 +1,5 @@
 import 'package:escola/screens/profile_screen.dart';
+import 'package:escola/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 import './calendar_screen.dart';
@@ -69,7 +70,9 @@ class _TabsScreenState extends State<TabsScreen> {
         elevation: Theme.of(context).appBarTheme.elevation,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsScreen.pageName);
+            },
             icon: Icon(
               Icons.settings,
               color: Theme.of(context).accentColor,

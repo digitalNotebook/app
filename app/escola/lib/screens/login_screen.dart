@@ -45,13 +45,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: 'Enter a seed',
                 ),
                 validator: (String? value) {
-                  if (value == null || value.isEmpty) {
+                  var textoInserido = value!.trim();
+                  print(textoInserido);
+                  if (textoInserido.isEmpty) {
                     return 'Please enter with a seed';
                   }
-                  if ('Leo' != value) {
+                  if ('Leo' != textoInserido) {
                     return 'Seed doesn\'t match';
                   }
-                  this.seed = value;
+                  this.seed = textoInserido;
                   return null;
                 },
               ),

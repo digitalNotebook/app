@@ -1,8 +1,10 @@
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:escola/screens/error_screen.dart';
+import 'package:escola/screens/exercicios_screen.dart';
 import 'package:escola/screens/login_screen.dart';
 import 'package:escola/screens/message_screen_detail.dart';
 import 'package:escola/screens/profile_screen.dart';
+import 'package:escola/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 import './screens/calendar_screen.dart';
@@ -94,6 +96,16 @@ class MyApp extends StatelessWidget {
         ProfileScreen.pageName: (ctx) {
           return ProfileScreen(
             key: ValueKey('profile-screen'),
+          );
+        },
+        ExerciciosScreen.pageName: (ctx) {
+          return ExerciciosScreen(
+            key: ValueKey('exercicios-screen'),
+          );
+        },
+        SettingsScreen.pageName: (ctx) {
+          return SettingsScreen(
+            key: ValueKey('settings-screen'),
           );
         }
         //outra rota aqui

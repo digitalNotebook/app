@@ -1,11 +1,13 @@
 // import 'package:escola/models/exercicio.dart';
 
+import 'package:flutter/cupertino.dart';
+
 enum Status {
   DONE,
   UNDONE,
 }
 
-class Homework {
+class Homework with ChangeNotifier {
   final String id;
   final String title;
   final String description;

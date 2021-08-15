@@ -1,22 +1,24 @@
-class Exercicio {
+import 'package:flutter/cupertino.dart';
+
+class Exercicio with ChangeNotifier {
   final String idHomework;
-  final String pergunta;
+  final List<String> perguntas;
   final List<String> alternativas;
-  final String resposta;
+  final List<String> respostas;
 
   //podemos adicionar varios construtores dependendo do formato do exercicio
 
   Exercicio.alternativas({
     required this.alternativas,
     required this.idHomework,
-    required this.pergunta,
-    required this.resposta,
+    required this.perguntas,
+    required this.respostas,
   });
 
   Exercicio.basico({
     required this.idHomework,
-    required this.pergunta,
-    required this.resposta,
+    required this.perguntas,
+    required this.respostas,
     this.alternativas = const [],
   });
 }

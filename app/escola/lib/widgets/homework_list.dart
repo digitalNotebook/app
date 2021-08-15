@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/homeworks.dart';
+import '../widgets/homework_item.dart';
 
 class HomeworkList extends StatelessWidget {
   const HomeworkList({
@@ -7,104 +11,22 @@ class HomeworkList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('DONE'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('TO DO'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('FAVORITES'),
-                ),
-              ],
-            ),
+    var homeworks = Provider.of<Homeworks>(context).items;
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(15),
+            topRight: const Radius.circular(15),
           ),
-          Expanded(
-            flex: 8,
-            child: Container(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(15),
-                    topRight: const Radius.circular(15),
-                  ),
-                  color: Theme.of(context).accentColor),
-              alignment: Alignment.center,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) {
-                  return Card(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: const Radius.circular(20),
-                                topRight: const Radius.circular(20),
-                              ),
-                              child: Placeholder(
-                                fallbackHeight: 70,
-                                color: Colors.amber,
-                              ),
-                              // child: Image.network(
-                              //   'https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2018/10/Hand-Luggage-Only-12.jpg?w=1600&ssl=1',
-                              //   fit: BoxFit.fitWidth,
-                              //   width: double.infinity,
-                              //   height: 100,
-                              // ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: const Radius.circular(20),
-                                    bottomRight: const Radius.circular(20),
-                                  ),
-                                ),
-                                padding: EdgeInsets.only(top: 5, left: 10),
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  'Aula ${index + 1}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
+          color: Theme.of(context).accentColor),
+      alignment: Alignment.center,
+      child: ListView.builder(
+        itemCount: homeworks.length,
+        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+          value: homeworks[index],
+          child: HomeworkItem(),
+        ),
       ),
     );
   }
