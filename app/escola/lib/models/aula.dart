@@ -16,6 +16,7 @@ class Aula with ChangeNotifier {
   final Status status;
   final DateTime horaInicio;
   final DateTime horaFim;
+  // final Homework homework;
   bool isFavorite;
 
   Aula({

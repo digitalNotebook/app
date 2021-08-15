@@ -16,34 +16,52 @@ class ClassTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Buildei os botões');
+    final elevatedButtonTheme = Theme.of(context).elevatedButtonTheme;
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
           onPressed: handleUndoneButton,
-          child: Text('UNDONE'),
+          child: const Text('UNDONE'),
           style: ButtonStyle(
             backgroundColor: status == Filters.UNDONE
-                ? MaterialStateProperty.all(Theme.of(context).buttonColor)
-                : null,
+                ? elevatedButtonTheme.style!.backgroundColor
+                : MaterialStateProperty.all(Colors.white),
+            overlayColor: MaterialStateProperty.all(Colors.white),
+            splashFactory: NoSplash.splashFactory,
+            foregroundColor: status == Filters.UNDONE
+                ? elevatedButtonTheme.style!.foregroundColor
+                : MaterialStateProperty.all(Colors.black),
           ),
         ),
         ElevatedButton(
           onPressed: handleDoneButton,
-          child: Text('DONE'),
+          child: const Text('DONE'),
           style: ButtonStyle(
             backgroundColor: status == Filters.DONE
-                ? MaterialStateProperty.all(Theme.of(context).buttonColor)
-                : null,
+                ? elevatedButtonTheme.style!.backgroundColor
+                : MaterialStateProperty.all(Colors.white),
+            overlayColor: MaterialStateProperty.all(Colors.white),
+            splashFactory: NoSplash.splashFactory,
+            foregroundColor: status == Filters.DONE
+                ? elevatedButtonTheme.style!.foregroundColor
+                : MaterialStateProperty.all(Colors.black),
           ),
         ),
         ElevatedButton(
           onPressed: handleFavoriteButton,
-          child: Text('FAVORITES'),
+          child: const Text('FAVORITES'),
           style: ButtonStyle(
             backgroundColor: status == Filters.FAVORITES
-                ? MaterialStateProperty.all(Theme.of(context).buttonColor)
-                : null,
+                ? elevatedButtonTheme.style!.backgroundColor
+                : MaterialStateProperty.all(Colors.white),
+            overlayColor: MaterialStateProperty.all(Colors.white),
+            splashFactory: NoSplash.splashFactory,
+            foregroundColor: status == Filters.FAVORITES
+                ? elevatedButtonTheme.style!.foregroundColor
+                : MaterialStateProperty.all(Colors.black),
           ),
         ),
       ],

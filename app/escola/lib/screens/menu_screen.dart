@@ -1,3 +1,4 @@
+import 'package:escola/mediaQuery/size_config.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

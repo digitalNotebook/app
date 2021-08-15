@@ -32,7 +32,7 @@ class _ClassOverviewState extends State<ClassOverview> {
 
   @override
   Widget build(BuildContext context) {
-    print('Buildei a ClassesScreen - alo');
+    print('Buildei a ClassesOverview');
 
     return SafeArea(
       child: Column(

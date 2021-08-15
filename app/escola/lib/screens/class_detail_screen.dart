@@ -1,4 +1,4 @@
-import 'package:escola/providers/aula.dart';
+import 'package:escola/models/aula.dart';
 import 'package:flutter/material.dart';
 
 class ClassDetailScreen extends StatelessWidget {

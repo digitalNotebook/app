@@ -14,7 +14,7 @@ class HomeworkList extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () {},
@@ -34,24 +34,21 @@ class HomeworkList extends StatelessWidget {
           Expanded(
             flex: 8,
             child: Container(
-              // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                    topLeft: const Radius.circular(15),
+                    topRight: const Radius.circular(15),
                   ),
-                  color: Colors.black38),
+                  color: Theme.of(context).accentColor),
+              alignment: Alignment.center,
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (ctx, index) {
                   return Card(
-                    elevation: 5,
+                    elevation: 1,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Column(
                       children: [
@@ -59,11 +56,12 @@ class HomeworkList extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
+                                topLeft: const Radius.circular(20),
+                                topRight: const Radius.circular(20),
                               ),
                               child: Placeholder(
-                                fallbackHeight: 100,
+                                fallbackHeight: 70,
+                                color: Colors.amber,
                               ),
                               // child: Image.network(
                               //   'https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2018/10/Hand-Luggage-Only-12.jpg?w=1600&ssl=1',
@@ -80,7 +78,23 @@ class HomeworkList extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Aula ${index + 1}'),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: const Radius.circular(20),
+                                    bottomRight: const Radius.circular(20),
+                                  ),
+                                ),
+                                padding: EdgeInsets.only(top: 5, left: 10),
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  'Aula ${index + 1}',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ],
                         )
                       ],

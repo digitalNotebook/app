@@ -4,11 +4,12 @@ import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/aula.dart';
+import '../models/aula.dart';
 
 class ClassItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('Buildei a ClassItem');
     final aula = Provider.of<Aula>(context, listen: false);
     return GestureDetector(
       onTap: () {

@@ -1,4 +1,4 @@
-import 'package:escola/providers/aula.dart';
+import 'package:escola/models/aula.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +13,7 @@ class ClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Buildei a ClassList');
     //recebo uma referencia do container provider Aulas
     final aulasData = Provider.of<Aulas>(context, listen: false);
     //recebo uma cópia de _aulas
@@ -31,7 +32,7 @@ class ClassList extends StatelessWidget {
             topLeft: const Radius.circular(15),
             topRight: const Radius.circular(15),
           ),
-          color: Theme.of(context).primaryColor),
+          color: Theme.of(context).accentColor),
       alignment: Alignment.center,
       child: ListView.builder(
         itemCount: aulas.length,

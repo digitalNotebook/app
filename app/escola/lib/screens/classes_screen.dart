@@ -11,6 +11,7 @@ class ClassesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //setamos o changeNotifierProvider uma widget acima
+    print('Buildei a ClassesScreen');
     return ChangeNotifierProvider(
       create: (_) => Aulas(),
       child: ClassOverview(),

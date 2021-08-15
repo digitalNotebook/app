@@ -1,3 +1,4 @@
+import 'package:escola/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import './calendar_screen.dart';
@@ -43,6 +44,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     print('Método Build da TabsScreen acionado');
+
     //recupera a seed enviada de loginScreen
     // final seedId = ModalRoute.of(context)?.settings.arguments;
 
@@ -52,7 +54,9 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(ProfileScreen.pageName);
+          },
           icon: Icon(Icons.person),
         ),
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

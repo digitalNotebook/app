@@ -1,6 +1,8 @@
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:escola/screens/error_screen.dart';
 import 'package:escola/screens/login_screen.dart';
+import 'package:escola/screens/message_screen_detail.dart';
+import 'package:escola/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import './screens/calendar_screen.dart';
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         //cor dos
         primarySwatch: Colors.grey,
-
         accentColor: Colors.black,
         //tema da bottomAppBar
         bottomAppBarTheme: BottomAppBarTheme(
@@ -43,6 +44,13 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
           elevation: 0, //tira a sombra embaixo da upAppBar
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.black),
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            elevation: MaterialStateProperty.all(4),
+          ),
         ),
       ),
       initialRoute: '/',
@@ -76,6 +84,16 @@ class MyApp extends StatelessWidget {
         ClassDetailScreen.pageName: (ctx) {
           return ClassDetailScreen(
             key: ValueKey('class-detail-screen'),
+          );
+        },
+        MessageDetailScreen.pageName: (ctx) {
+          return MessageDetailScreen(
+            key: ValueKey('message-detail-screen'),
+          );
+        },
+        ProfileScreen.pageName: (ctx) {
+          return ProfileScreen(
+            key: ValueKey('profile-screen'),
           );
         }
         //outra rota aqui

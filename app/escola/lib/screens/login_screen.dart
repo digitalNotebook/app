@@ -63,7 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       successSubmit(context);
                     }
                   },
-                  child: const Text('Login'),
+                  child: const Text(
+                    'Login',
+                  ),
                 ),
               )
             ],

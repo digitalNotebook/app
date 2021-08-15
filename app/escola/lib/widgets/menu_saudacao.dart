@@ -1,3 +1,4 @@
+import 'package:escola/mediaQuery/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -38,12 +39,12 @@ class Saudacao extends StatelessWidget {
           children: [
             Text(
               _saudar(),
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 3),
             ),
             Text(
               'Felipe',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: SizeConfig.blockSizeHorizontal! * 3,
                 fontWeight: FontWeight.bold,
               ),
             ),
