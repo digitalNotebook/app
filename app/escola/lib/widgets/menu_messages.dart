@@ -1,5 +1,7 @@
 import 'package:escola/screens/message_screen_detail.dart';
+import 'package:escola/screens/messages_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../mediaQuery/size_config.dart';
 
@@ -43,8 +45,16 @@ class MenuMessage extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
+              pushNewScreenWithRouteSettings(
+                context,
+                screen: MessagesScreen(),
+                settings: RouteSettings(
+                  name: MessagesScreen.pageName,
+                  arguments: mensagem,
+                ),
+              );
+              // Navigator.of(context)
+              //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
             },
             child: Card(
               elevation: 5,

@@ -8,17 +8,23 @@ class HomeworkOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(
-        flex: 2,
-        child: HomeworkTabs(),
+    print('Homeworks build');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Homeworks'),
       ),
-      Expanded(
-        flex: 8,
-        child: HomeworkList(),
-      ),
-    ]));
+      body: SafeArea(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          flex: 2,
+          child: HomeworkTabs(),
+        ),
+        Expanded(
+          flex: 8,
+          child: HomeworkList(),
+        ),
+      ])),
+    );
   }
 }

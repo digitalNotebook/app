@@ -1,6 +1,7 @@
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class MenuLastClass extends StatelessWidget {
@@ -35,8 +36,16 @@ class MenuLastClass extends StatelessWidget {
                   subtitle: Text(aula.undoneClasses.first.subtitle),
                   trailing: Icon(Icons.play_arrow),
                   onTap: () {
-                    Navigator.of(context).pushNamed(ClassDetailScreen.pageName,
-                        arguments: aula.undoneClasses.first);
+                    pushNewScreenWithRouteSettings(
+                      context,
+                      screen: ClassDetailScreen(),
+                      settings: RouteSettings(
+                        name: ClassDetailScreen.pageName,
+                        arguments: aula.undoneClasses.first,
+                      ),
+                    );
+                    // Navigator.of(context).pushNamed(ClassDetailScreen.pageName,
+                    //     arguments: aula.undoneClasses.first);
                   },
                 ),
               ),

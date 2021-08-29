@@ -31,7 +31,13 @@ class ClassDetailScreen extends StatelessWidget {
                     vertical: 30,
                   ),
                   alignment: Alignment.center,
-                  child: Text('Aula: ${aula.title} - ${aula.subtitle}'),
+                  child: Text(
+                    'Aula: ${aula.title} - ${aula.subtitle}',
+                    style: TextStyle(
+                      fontFamily: 'IndieFlower',
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ],
             ),

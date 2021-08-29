@@ -10,18 +10,23 @@ class CalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Buildei a tela Calendar');
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        TableCalendar(
-          focusedDay: DateTime.now(),
-          firstDay: DateTime(2021, 1, 1),
-          lastDay: DateTime(2022, 1, 1),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Calendar'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          TableCalendar(
+            focusedDay: DateTime.now(),
+            firstDay: DateTime(2021, 1, 1),
+            lastDay: DateTime(2022, 1, 1),
+          ),
+        ],
+      ),
     );
   }
 }

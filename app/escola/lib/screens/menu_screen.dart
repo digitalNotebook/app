@@ -15,6 +15,7 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('HomeScreen build');
     SizeConfig().init(context);
     return MultiProvider(
       providers: [
@@ -23,39 +24,44 @@ class MenuScreen extends StatelessWidget {
         ),
         //demais providers aqui
       ],
-      child: SafeArea(
-        child: Column(
-          children: [
-            //SAUDAÇÃO
-            Expanded(
-              child: Saudacao(),
-            ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              //SAUDAÇÃO
+              Expanded(
+                child: Saudacao(),
+              ),
 
-            Expanded(
-              flex: 3,
-              child: MenuMessage(),
-            ),
+              Expanded(
+                flex: 3,
+                child: MenuMessage(),
+              ),
 
-            Expanded(
-              flex: 3,
-              child: MenuLastClass(),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, bottom: 8),
-                  child: Text(
-                    'Homework: ',
-                    style: TextStyle(fontSize: 16),
+              Expanded(
+                flex: 3,
+                child: MenuLastClass(),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, bottom: 8),
+                    child: Text(
+                      'Homework: ',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              flex: 2,
-              child: MenuCalendar(),
-            ),
-          ],
+                ],
+              ),
+              Expanded(
+                flex: 2,
+                child: MenuCalendar(),
+              ),
+            ],
+          ),
         ),
       ),
     );

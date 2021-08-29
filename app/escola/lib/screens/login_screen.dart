@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,50 +30,85 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Seed:',
-                style: Theme.of(context).textTheme.headline6,
+      body: Stack(
+        children: [
+          Container(
+            height: deviceSize.height,
+            width: deviceSize.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                ],
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter a seed',
-                ),
-                validator: (String? value) {
-                  var textoInserido = value!.trim();
-                  print(textoInserido);
-                  if (textoInserido.isEmpty) {
-                    return 'Please enter with a seed';
-                  }
-                  if ('Leo' != textoInserido) {
-                    return 'Seed doesn\'t match';
-                  }
-                  this.seed = textoInserido;
-                  return null;
-                },
+            ),
+          ),
+          Center(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      successSubmit(context);
-                    }
-                  },
-                  child: const Text(
-                    'Login',
+              elevation: 20,
+              child: Container(
+                alignment: Alignment.center,
+                height: deviceSize.height * 0.5,
+                width: deviceSize.width,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Seed:',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Insert your seed',
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (String? value) {
+                              var textoInserido = value!.trim();
+                              print(textoInserido);
+                              if (textoInserido.isEmpty) {
+                                return 'Please enter with a seed';
+                              }
+                              if ('Leo' != textoInserido) {
+                                return 'Seed doesn\'t match';
+                              }
+                              this.seed = textoInserido;
+                              return null;
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  successSubmit(context);
+                                }
+                              },
+                              child: const Text(
+                                'Login',
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              )
-            ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

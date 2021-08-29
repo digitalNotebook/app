@@ -8,7 +8,8 @@ class Aulas with ChangeNotifier {
         id: 'a1',
         title: 'Simple Present',
         subtitle: 'Action verbs',
-        imagesUrl: 'varios links de imagem',
+        imagesUrl:
+            'https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYyNDg1MjE3MTI1MjEzODYy/topic-london-gettyimages-760251843-feature.jpg',
         dataAula: DateTime.utc(2021, 08, 05),
         description: 'Simple Present',
         videoUrl: 'videoUrl - Part 1',
@@ -19,7 +20,8 @@ class Aulas with ChangeNotifier {
         id: 'a1',
         title: 'Irregular verbs',
         subtitle: 'Part 1',
-        imagesUrl: 'varios links de imagem',
+        imagesUrl:
+            'https://d2brulbsscz39x.cloudfront.net/_imager/files/22442/Film-London-Brochure-2019-COVER-IMAGE_9eed5a99b701ba360780d44a67c674dc.jpg',
         dataAula: DateTime.utc(2021, 08, 01),
         description: 'description',
         videoUrl: 'videoUrl - Part 1',
@@ -30,7 +32,8 @@ class Aulas with ChangeNotifier {
         id: 'a1',
         title: 'Daily Routine',
         subtitle: 'Part 1',
-        imagesUrl: 'varios links de imagem',
+        imagesUrl:
+            'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bG9uZG9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
         dataAula: DateTime.utc(2021, 07, 20),
         description: 'description',
         horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 10)),
@@ -41,7 +44,8 @@ class Aulas with ChangeNotifier {
         id: 'a1',
         title: 'Awkward, Odd, Strange',
         subtitle: 'Part 1',
-        imagesUrl: 'varios links de imagem',
+        imagesUrl:
+            'https://media.istockphoto.com/photos/boulevard-next-to-the-river-thames-picture-id1133845967?k=20&m=1133845967&s=612x612&w=0&h=MwmQv6LpVneuqxDU3Qw-1EtDatXwmnEo9PXFb7vGTkQ=',
         dataAula: DateTime.utc(2021, 07, 05),
         description: 'description',
         horaInicio: DateTime.now().subtract(Duration(hours: 2, days: 20)),
@@ -52,7 +56,8 @@ class Aulas with ChangeNotifier {
         id: 'a1',
         title: 'Present Continuous',
         subtitle: 'Part 1',
-        imagesUrl: 'varios links de imagem',
+        imagesUrl:
+            'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         dataAula: DateTime.utc(2021, 06, 20),
         description: 'description',
         videoUrl: 'videoUrl - Part 1',
