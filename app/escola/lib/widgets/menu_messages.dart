@@ -47,9 +47,10 @@ class MenuMessage extends StatelessWidget {
             onTap: () {
               pushNewScreenWithRouteSettings(
                 context,
-                screen: MessagesScreen(),
+                pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+                screen: MessageDetailScreen(),
                 settings: RouteSettings(
-                  name: MessagesScreen.pageName,
+                  name: MessageDetailScreen.pageName,
                   arguments: mensagem,
                 ),
               );
