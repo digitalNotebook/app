@@ -1,3 +1,4 @@
+import 'package:escola/screens/insert_class_screen.dart';
 import 'package:escola/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     print('Buildei a tela Calendar');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar'),
+        title: Text(
+          'Calendar',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
         leading: IconButton(
           onPressed: () {
             pushNewScreen(
@@ -43,7 +47,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              pushNewScreenWithRouteSettings(
+                context,
+                screen: InsertClassScreen(),
+                withNavBar: false,
+                settings: RouteSettings(
+                  name: InsertClassScreen.pageName,
+                  arguments: _focusedDay,
+                ),
+              );
+            },
             icon: Icon(Icons.add),
           ),
         ],
@@ -82,20 +96,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Dia Selecionado: ${DateFormat.d().format(_focusedDay)}'),
-              SizedBox(
-                width: 10,
-              ),
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: Icon(Icons.add),
-                label: Text('Adicionar aula'),
-              ),
-            ],
-          ),
+          Text('Eventos do dia : ${DateFormat.d().format(_focusedDay)}'),
+          Container(
+            width: double.infinity,
+            alignment: Alignment.topCenter,
+            constraints: BoxConstraints(minHeight: 50),
+            child: Text('Lista de eventos'),
+            decoration: BoxDecoration(
+              border: Border.all(),
+            ),
+          )
         ],
       ),
     );

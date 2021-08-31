@@ -29,7 +29,10 @@ class MenuScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Home'),
+          title: Text(
+            'Home',
+            style: Theme.of(context).appBarTheme.titleTextStyle,
+          ),
           leading: IconButton(
             onPressed: () {
               pushNewScreen(

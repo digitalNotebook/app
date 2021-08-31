@@ -10,7 +10,10 @@ class MessagesScreen extends StatelessWidget {
     print('Messages build');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages'),
+        title: Text(
+          'Messages',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Center(
         child: Text('Lista das mensagens'),

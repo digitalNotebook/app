@@ -15,7 +15,10 @@ class ExerciciosOverview extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exercises Time'),
+        title: Text(
+          'Exercises Time',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Center(
         child: Text('Exercicios do ID homework: ${exercicios.idHomework}'),

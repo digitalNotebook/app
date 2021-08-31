@@ -1,6 +1,7 @@
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:escola/screens/error_screen.dart';
 import 'package:escola/screens/exercicios_screen.dart';
+import 'package:escola/screens/insert_class_screen.dart';
 import 'package:escola/screens/login_screen.dart';
 import 'package:escola/screens/message_screen_detail.dart';
 import 'package:escola/screens/profile_screen.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Digital Notebook',
       theme: ThemeData(
+        textTheme: TextTheme(
+          headline6: TextStyle(fontFamily: 'IndieFlower'),
+        ),
         //cor de fundo da tela
         scaffoldBackgroundColor: Colors.white,
         //cor dos
@@ -36,15 +40,15 @@ class MyApp extends StatelessWidget {
         //tema do upAppBar
         appBarTheme: AppBarTheme(
           centerTitle: true,
+
           //cor dos icones
           iconTheme: IconThemeData(
             color: Colors.black87,
           ),
           //cor de fundo da appBar
           backgroundColor: Colors.white,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-          ),
+          titleTextStyle:
+              TextStyle(color: Colors.black, fontFamily: 'IndieFlower'),
           elevation: 0, //tira a sombra embaixo da upAppBar
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -106,6 +110,11 @@ class MyApp extends StatelessWidget {
         SettingsScreen.pageName: (ctx) {
           return SettingsScreen(
             key: ValueKey('settings-screen'),
+          );
+        },
+        InsertClassScreen.pageName: (ctx) {
+          return InsertClassScreen(
+            key: ValueKey('insert-class-screen'),
           );
         }
         //outra rota aqui

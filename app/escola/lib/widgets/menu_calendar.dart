@@ -16,8 +16,9 @@ class _MenuCalendarState extends State<MenuCalendar> {
 
   late DateTime _kFirstDay;
   late DateTime _kLastDay;
-  late DateTime _focusedDay;
+  DateTime _focusedDay = DateTime.now();
   late DateTime _selectedDay;
+  var _isInit = true;
 
   DateTime _setKFirstDay() {
     var firstDay;
@@ -55,14 +56,14 @@ class _MenuCalendarState extends State<MenuCalendar> {
   void initState() {
     Future.delayed(Duration.zero).then(
       (value) {
-        //sempre retorna segunda
-        _kFirstDay = _setKFirstDay();
-        //sempre será sexta
-        _kLastDay = _kFirstDay.subtract(Duration(days: -4));
-        //o dia corrente
-        _focusedDay = _kFirstDay;
-        //o dia corrente
-        _selectedDay = _focusedDay;
+        // //sempre retorna segunda
+        // _kFirstDay = _setKFirstDay();
+        // //sempre será sexta
+        // _kLastDay = _kFirstDay.subtract(Duration(days: -4));
+        // //o dia corrente
+        // _focusedDay = _kFirstDay;
+        // //o dia corrente
+        // _selectedDay = _focusedDay;
       },
     );
 
@@ -71,6 +72,17 @@ class _MenuCalendarState extends State<MenuCalendar> {
 
   @override
   void didChangeDependencies() {
+    if (_isInit) {
+      //sempre retorna segunda
+      _kFirstDay = _setKFirstDay();
+      //sempre será sexta
+      _kLastDay = _kFirstDay.subtract(Duration(days: -4));
+      //o dia corrente
+      _focusedDay = _kFirstDay;
+      //o dia corrente
+      _selectedDay = _focusedDay;
+    }
+    _isInit = false;
     super.didChangeDependencies();
   }
 

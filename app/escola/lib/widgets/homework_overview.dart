@@ -11,7 +11,10 @@ class HomeworkOverview extends StatelessWidget {
     print('Homeworks build');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Homeworks'),
+        title: Text(
+          'Homeworks',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: SafeArea(
           child:

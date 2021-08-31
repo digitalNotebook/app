@@ -52,7 +52,10 @@ class _ClassOverviewState extends State<ClassOverview> {
         toolbarHeight: 45,
         title: Text(
           'Classes',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            fontFamily: 'IndieFlower',
+            color: Colors.white,
+          ),
         ),
         actions: [
           IconButton(

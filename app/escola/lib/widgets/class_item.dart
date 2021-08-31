@@ -40,6 +40,11 @@ class ClassItem extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                     width: double.infinity,
                     height: 150,
+                    errorBuilder: (ctx, exception, stack) {
+                      return Placeholder(
+                        fallbackHeight: 150,
+                      );
+                    },
                   ),
                 ),
                 IconButton(
@@ -78,15 +83,6 @@ class ClassItem extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 50,
-                  child: Container(
-                    transform: Matrix4.rotationZ(-25 * pi / 180)
-                      ..translate(-5.0),
-                    child: Icon(Icons.push_pin_outlined),
                   ),
                 ),
               ],

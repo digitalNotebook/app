@@ -13,7 +13,10 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
     var message = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Message Details'),
+        title: Text(
+          'Message Details',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

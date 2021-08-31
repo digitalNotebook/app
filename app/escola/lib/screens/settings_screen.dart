@@ -9,7 +9,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(
+          'Settings',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Center(
         child: Text('Settings options here!'),
