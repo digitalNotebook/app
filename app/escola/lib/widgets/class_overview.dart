@@ -1,6 +1,9 @@
+import 'package:escola/models/aula.dart';
+import 'package:escola/providers/aulas.dart';
 import 'package:escola/widgets/class_list.dart';
 import 'package:escola/widgets/class_tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../enums/filters_class.dart';
 
@@ -13,26 +16,11 @@ class _ClassOverviewState extends State<ClassOverview> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _searchController = TextEditingController();
   var _isSearchPressed = false;
-
+  late List<Aula> _aulas;
+  List<Aula> _foundAulas = [];
   var _classFilter = Filters.UNDONE;
-
-  void _handleDoneButton() {
-    setState(() {
-      _classFilter = Filters.DONE;
-    });
-  }
-
-  void _handleUndoneButton() {
-    setState(() {
-      _classFilter = Filters.UNDONE;
-    });
-  }
-
-  void _handleFavoriteButton() {
-    setState(() {
-      _classFilter = Filters.FAVORITES;
-    });
-  }
+  var _isInit = true;
+  late final _aulasData;
 
   @override
   void dispose() {
@@ -42,11 +30,75 @@ class _ClassOverviewState extends State<ClassOverview> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      _aulasData = Provider.of<Aulas>(context, listen: false);
+      _setFilterProvider();
+      _foundAulas = _aulas;
+    }
+    super.didChangeDependencies();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Aula> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = _aulas;
+    } else {
+      results = _aulas
+          .where(
+            (aula) => aula.title.toLowerCase().contains(
+                  enteredKeyword.toLowerCase(),
+                ),
+          )
+          .toList();
+      print('FOUND CLASS: ${results.length}');
+    }
+    setState(() {
+      _foundAulas = results;
+    });
+  }
+
+  void _handleDoneButton() {
+    setState(() {
+      _classFilter = Filters.DONE;
+      _setFilterProvider();
+    });
+  }
+
+  void _handleUndoneButton() {
+    setState(() {
+      _classFilter = Filters.UNDONE;
+      _setFilterProvider();
+    });
+  }
+
+  void _handleFavoriteButton() {
+    setState(() {
+      _classFilter = Filters.FAVORITES;
+      _setFilterProvider();
+    });
+  }
+
+  void _setFilterProvider() {
+    if (_classFilter == Filters.DONE)
+      _aulas = _aulasData.doneClasses;
+    else if (_classFilter == Filters.UNDONE)
+      _aulas = _aulasData.undoneClasses;
+    else
+      _aulas = _aulasData.favoriteClasses;
+  }
+
+  @override
   Widget build(BuildContext context) {
     print('Buildei a ClassesOverview');
-    var deviceSize = MediaQuery.of(context).size;
-
     return Scaffold(
+      //evita que o softkeyboard traga tudo para cima
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.black,
         toolbarHeight: 45,
@@ -65,7 +117,7 @@ class _ClassOverviewState extends State<ClassOverview> {
               });
             },
             icon: Icon(
-              Icons.search,
+              _isSearchPressed ? Icons.close : Icons.search,
               color: Colors.white,
             ),
           ),
@@ -75,6 +127,7 @@ class _ClassOverviewState extends State<ClassOverview> {
         child: Stack(
           children: [
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
                   flex: 2,
@@ -91,6 +144,7 @@ class _ClassOverviewState extends State<ClassOverview> {
               ],
             ),
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
                   flex: 2,
@@ -119,45 +173,37 @@ class _ClassOverviewState extends State<ClassOverview> {
               ],
             ),
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                _isSearchPressed
-                    ? SizedBox(
-                        height: deviceSize.height * 0.05,
-                      )
-                    : SizedBox(),
-                _isSearchPressed
-                    ? Expanded(
-                        flex: 2,
-                        child: Padding(
+                Expanded(
+                  flex: 2,
+                  child: _isSearchPressed
+                      ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Form(
                             key: _formKey,
                             child: TextField(
+                              onChanged: (text) => _runFilter(text),
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 labelText: 'Search',
                                 border: OutlineInputBorder(),
+                                suffixIcon: Icon(Icons.search),
+                                hintText: 'Insert class name here',
                               ),
-                              controller: _searchController,
                             ),
                           ),
-                        ),
-                      )
-                    : SizedBox(),
-                _isSearchPressed
-                    ? SizedBox()
-                    : Expanded(
-                        flex: 2,
-                        child: ClassTabs(
+                        )
+                      : ClassTabs(
                           handleDoneButton: _handleDoneButton,
                           handleUndoneButton: _handleUndoneButton,
                           handleFavoriteButton: _handleFavoriteButton,
                           status: _classFilter,
                         ),
-                      ),
+                ),
                 Expanded(
-                  flex: _isSearchPressed ? 4 : 10,
-                  child: ClassList(_classFilter),
+                  flex: 10,
+                  child: ClassList(_foundAulas),
                 ),
               ],
             )

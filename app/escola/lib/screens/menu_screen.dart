@@ -11,10 +11,27 @@ import '../widgets/menu_messages.dart';
 import '../widgets/menu_undone_class.dart';
 import '../widgets/menu_saudacao.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   static const pageName = '/menu';
+
+  @override
+  _MenuScreenState createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  var _isInit = true;
+
+  @override
+  void initState() {
+    Future.delayed(Duration(milliseconds: 1800), () {
+      setState(() {
+        _isInit = false;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,41 +73,45 @@ class MenuScreen extends StatelessWidget {
             )
           ],
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              //SAUDAÇÃO
-              Expanded(
-                child: Saudacao(),
-              ),
-
-              Expanded(
-                flex: 3,
-                child: MenuMessage(),
-              ),
-
-              Expanded(
-                flex: 3,
-                child: MenuLastClass(),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, bottom: 8),
-                    child: Text(
-                      'Homework: ',
-                      style: TextStyle(fontSize: 16),
+        body: _isInit
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SafeArea(
+                child: Column(
+                  children: [
+                    //SAUDAÇÃO
+                    Expanded(
+                      child: Saudacao(),
                     ),
-                  ),
-                ],
+
+                    Expanded(
+                      flex: 3,
+                      child: MenuMessage(),
+                    ),
+
+                    Expanded(
+                      flex: 3,
+                      child: MenuLastClass(),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, bottom: 8),
+                          child: Text(
+                            'Homework: ',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: MenuCalendar(),
+                    ),
+                  ],
+                ),
               ),
-              Expanded(
-                flex: 2,
-                child: MenuCalendar(),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
