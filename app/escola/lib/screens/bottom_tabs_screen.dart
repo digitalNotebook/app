@@ -17,6 +17,15 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  var _index = 0;
+
+  @override
+  void didChangeDependencies() {
+    print('didChangeDependencies Bottom Tabs Screen');
+
+    super.didChangeDependencies();
+  }
+
   List<Widget> _buildScreen() {
     return [
       MenuScreen(),
@@ -38,6 +47,7 @@ class _TabsScreenState extends State<TabsScreen> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.assignment_outlined),
         title: 'Classes',
+        textStyle: TextStyle(fontSize: 16),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.grey,
       ),
@@ -67,6 +77,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Bottom Tab build');
     return PersistentTabView(
       context,
       controller: _controller,
@@ -79,6 +90,7 @@ class _TabsScreenState extends State<TabsScreen> {
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
+      onItemSelected: (index) {},
     );
   }
 }

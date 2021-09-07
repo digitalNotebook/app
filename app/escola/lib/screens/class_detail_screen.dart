@@ -13,6 +13,11 @@ class ClassDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                icon: Icon(Icons.keyboard_arrow_left_sharp)),
             expandedHeight: 100,
             title: Text(
               '${aula.title}',

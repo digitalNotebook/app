@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:escola/screens/class_detail_screen.dart';
+import 'package:escola/widgets/class_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -9,18 +10,20 @@ import 'package:provider/provider.dart';
 import '../models/aula.dart';
 
 class ClassItem extends StatelessWidget {
+  final Function _refreshClass;
+  ClassItem(this._refreshClass);
   @override
   Widget build(BuildContext context) {
     print('Buildei a ClassItem');
     final aula = Provider.of<Aula>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        pushNewScreenWithRouteSettings(
-          context,
-          screen: ClassDetailScreen(),
-          settings:
-              RouteSettings(name: ClassDetailScreen.pageName, arguments: aula),
-        );
+        pushNewScreenWithRouteSettings(context,
+                screen: ClassDetailScreen(),
+                settings: RouteSettings(
+                    name: ClassDetailScreen.pageName, arguments: aula),
+                pageTransitionAnimation: PageTransitionAnimation.fade)
+            .then((value) => _refreshClass());
         // Navigator.of(context)
         //     .pushNamed(ClassDetailScreen.pageName, arguments: aula);
       },

@@ -8,7 +8,8 @@ import 'package:escola/enums/filters_class.dart';
 
 class ClassList extends StatelessWidget {
   final List<Aula> _aulas;
-  ClassList(this._aulas);
+  final Function _refreshClass;
+  ClassList(this._aulas, this._refreshClass);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ClassList extends StatelessWidget {
           value: _aulas[index],
           child: Column(
             children: [
-              ClassItem(),
+              ClassItem(_refreshClass),
               SizedBox(
                 height: 5,
               )

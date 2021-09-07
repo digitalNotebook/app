@@ -13,19 +13,26 @@ class ClassOverview extends StatefulWidget {
 }
 
 class _ClassOverviewState extends State<ClassOverview> {
+  //fazem parte do search
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _searchController = TextEditingController();
   var _isSearchPressed = false;
   late List<Aula> _aulas;
   List<Aula> _foundAulas = [];
+
+  var _showKeyboard = true;
+
+  //Buttons
   var _classFilter = Filters.UNDONE;
+
   var _isInit = true;
-  late final _aulasData;
+
+  //Provider
+  late final Aulas _aulasData;
 
   @override
   void dispose() {
     _searchController.dispose();
-
     super.dispose();
   }
 
@@ -37,10 +44,13 @@ class _ClassOverviewState extends State<ClassOverview> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      //carrega as aulas
       _aulasData = Provider.of<Aulas>(context, listen: false);
       _setFilterProvider();
       _foundAulas = _aulas;
+      print('Aulas: ${_foundAulas.length}');
     }
+
     super.didChangeDependencies();
   }
 
@@ -56,7 +66,6 @@ class _ClassOverviewState extends State<ClassOverview> {
                 ),
           )
           .toList();
-      print('FOUND CLASS: ${results.length}');
     }
     setState(() {
       _foundAulas = results;
@@ -64,24 +73,18 @@ class _ClassOverviewState extends State<ClassOverview> {
   }
 
   void _handleDoneButton() {
-    setState(() {
-      _classFilter = Filters.DONE;
-      _setFilterProvider();
-    });
+    _classFilter = Filters.DONE;
+    _setFilterProvider();
   }
 
   void _handleUndoneButton() {
-    setState(() {
-      _classFilter = Filters.UNDONE;
-      _setFilterProvider();
-    });
+    _classFilter = Filters.UNDONE;
+    _setFilterProvider();
   }
 
   void _handleFavoriteButton() {
-    setState(() {
-      _classFilter = Filters.FAVORITES;
-      _setFilterProvider();
-    });
+    _classFilter = Filters.FAVORITES;
+    _setFilterProvider();
   }
 
   void _setFilterProvider() {
@@ -91,6 +94,26 @@ class _ClassOverviewState extends State<ClassOverview> {
       _aulas = _aulasData.undoneClasses;
     else
       _aulas = _aulasData.favoriteClasses;
+    setState(() {
+      _foundAulas = _aulas;
+    });
+
+    print('Aulas: ${_aulas.length}');
+  }
+
+  void _switchSearchButton() {
+    setState(() {
+      _isSearchPressed = !_isSearchPressed;
+    });
+  }
+
+  void _resetIsSearchPressed() {
+    if (_isSearchPressed) {
+      setState(() {
+        _isSearchPressed = false;
+        _foundAulas = _aulas;
+      });
+    }
   }
 
   @override
@@ -107,14 +130,13 @@ class _ClassOverviewState extends State<ClassOverview> {
           style: TextStyle(
             fontFamily: 'IndieFlower',
             color: Colors.white,
+            fontSize: 40,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                _isSearchPressed = !_isSearchPressed;
-              });
+              _switchSearchButton();
             },
             icon: Icon(
               _isSearchPressed ? Icons.close : Icons.search,
@@ -126,52 +148,8 @@ class _ClassOverviewState extends State<ClassOverview> {
       body: SafeArea(
         child: Stack(
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.black,
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                      ),
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            const ClassBackground(),
+            const ClassBackgroundTop(),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -185,12 +163,17 @@ class _ClassOverviewState extends State<ClassOverview> {
                             child: TextField(
                               onChanged: (text) => _runFilter(text),
                               keyboardType: TextInputType.text,
+                              autofocus: true,
                               decoration: InputDecoration(
                                 labelText: 'Search',
                                 border: OutlineInputBorder(),
                                 suffixIcon: Icon(Icons.search),
                                 hintText: 'Insert class name here',
                               ),
+                              onSubmitted: (_) {
+                                _showKeyboard = false;
+                                _foundAulas = _aulas;
+                              },
                             ),
                           ),
                         )
@@ -203,59 +186,81 @@ class _ClassOverviewState extends State<ClassOverview> {
                 ),
                 Expanded(
                   flex: 10,
-                  child: ClassList(_foundAulas),
+                  child: ClassList(_foundAulas, _resetIsSearchPressed),
                 ),
               ],
             )
           ],
-          // child: Column(
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: [
-          //     SizedBox(
-          //       height: deviceSize.height * 0.01,
-          //     ),
-          //     _isSearchPressed
-          //         ? Form(
-          //             key: _formKey,
-          //             child: TextField(
-          //               keyboardType: TextInputType.text,
-          //               decoration: InputDecoration(
-          //                 labelText: 'Search',
-          //                 border: OutlineInputBorder(),
-          //               ),
-          //               controller: _searchController,
-          //             ),
-          //           )
-          //         : SizedBox(),
-          //     //BUTTONS
-          //     _isSearchPressed
-          //         ? SizedBox(
-          //             height: 20,
-          //           )
-          //         : Expanded(
-          //             flex: 2,
-          //             child: ClassTabs(
-          //               handleDoneButton: _handleDoneButton,
-          //               handleUndoneButton: _handleUndoneButton,
-          //               handleFavoriteButton: _handleFavoriteButton,
-          //               status: _classFilter,
-          //             ),
-          //           ),
-          //     //CONTAINER COM AS AULAS
-          //     _isSearchPressed
-          //         ? SingleChildScrollView(
-          //             child: Container(
-          //                 height: deviceSize.height * 0.6,
-          //                 child: ClassList(_classFilter)),
-          //           )
-          //         : Expanded(
-          //             flex: 8,
-          //             child: ClassList(_classFilter),
-          //           ),
-          //   ],
-          // ),
         ),
       ),
+    );
+  }
+}
+
+class ClassBackgroundTop extends StatelessWidget {
+  const ClassBackgroundTop({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print('Background Top');
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ClassBackground extends StatelessWidget {
+  const ClassBackground({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print('Background Bottom');
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
   }
 }
