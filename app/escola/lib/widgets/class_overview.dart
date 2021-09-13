@@ -12,13 +12,18 @@ class ClassOverview extends StatefulWidget {
   _ClassOverviewState createState() => _ClassOverviewState();
 }
 
-class _ClassOverviewState extends State<ClassOverview> {
+class _ClassOverviewState extends State<ClassOverview>
+    with SingleTickerProviderStateMixin {
   //fazem parte do search
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _searchController = TextEditingController();
   var _isSearchPressed = false;
   late List<Aula> _aulas;
   List<Aula> _foundAulas = [];
+
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _opacityAnimation;
 
   var _showKeyboard = true;
 
@@ -33,11 +38,33 @@ class _ClassOverviewState extends State<ClassOverview> {
   @override
   void dispose() {
     _searchController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(1.5, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.elasticIn,
+      ),
+    );
+    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
     super.initState();
   }
 
@@ -50,7 +77,7 @@ class _ClassOverviewState extends State<ClassOverview> {
       _foundAulas = _aulas;
       print('Aulas: ${_foundAulas.length}');
     }
-
+    _isInit = false;
     super.didChangeDependencies();
   }
 
@@ -105,6 +132,11 @@ class _ClassOverviewState extends State<ClassOverview> {
     setState(() {
       _isSearchPressed = !_isSearchPressed;
     });
+    if (_isSearchPressed) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
   }
 
   void _resetIsSearchPressed() {
@@ -160,20 +192,26 @@ class _ClassOverviewState extends State<ClassOverview> {
                           padding: const EdgeInsets.all(8.0),
                           child: Form(
                             key: _formKey,
-                            child: TextField(
-                              onChanged: (text) => _runFilter(text),
-                              keyboardType: TextInputType.text,
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                labelText: 'Search',
-                                border: OutlineInputBorder(),
-                                suffixIcon: Icon(Icons.search),
-                                hintText: 'Insert class name here',
+                            child: FadeTransition(
+                              opacity: _opacityAnimation,
+                              child: SlideTransition(
+                                position: _slideAnimation,
+                                child: TextField(
+                                  onChanged: (text) => _runFilter(text),
+                                  keyboardType: TextInputType.text,
+                                  autofocus: true,
+                                  decoration: InputDecoration(
+                                    labelText: 'Search',
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.search),
+                                    hintText: 'Insert class name here',
+                                  ),
+                                  onSubmitted: (_) {
+                                    _showKeyboard = false;
+                                    _foundAulas = _aulas;
+                                  },
+                                ),
                               ),
-                              onSubmitted: (_) {
-                                _showKeyboard = false;
-                                _foundAulas = _aulas;
-                              },
                             ),
                           ),
                         )

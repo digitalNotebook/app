@@ -36,12 +36,27 @@ class ClassDetailScreen extends StatelessWidget {
                     vertical: 30,
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    'Aula: ${aula.title} - ${aula.subtitle}',
-                    style: TextStyle(
-                      fontFamily: 'IndieFlower',
-                      fontSize: 20,
-                    ),
+                  child: Column(
+                    children: [
+                      Hero(
+                        tag: aula.id,
+                        child: Image.network(
+                          aula.imagesUrl,
+                          errorBuilder: (ctx, exception, stack) {
+                            return Placeholder(
+                              fallbackHeight: 200,
+                            );
+                          },
+                        ),
+                      ),
+                      Text(
+                        'Aula: ${aula.title} - ${aula.subtitle}',
+                        style: TextStyle(
+                          fontFamily: 'IndieFlower',
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

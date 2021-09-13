@@ -38,16 +38,36 @@ class ClassItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    aula.imagesUrl,
-                    fit: BoxFit.fitWidth,
-                    width: double.infinity,
-                    height: 150,
-                    errorBuilder: (ctx, exception, stack) {
-                      return Placeholder(
-                        fallbackHeight: 150,
-                      );
-                    },
+                  child: Hero(
+                    tag: aula.id,
+                    child: FadeInImage(
+                      fadeInDuration: Duration(milliseconds: 100),
+                      fadeOutDuration: Duration(milliseconds: 100),
+                      placeholder:
+                          AssetImage('assets/images/placeholder-images.jpg'),
+                      image: NetworkImage(
+                        aula.imagesUrl,
+                      ),
+                      fit: BoxFit.fitWidth,
+                      height: 150,
+                      width: double.infinity,
+                      imageErrorBuilder: (ctx, exception, stack) {
+                        return Placeholder(
+                          fallbackHeight: 150,
+                        );
+                      },
+                    ),
+                    // child: Image.network(
+                    //   aula.imagesUrl,
+                    //   fit: BoxFit.fitWidth,
+                    //   width: double.infinity,
+                    //   height: 150,
+                    //   errorBuilder: (ctx, exception, stack) {
+                    //     return Placeholder(
+                    //       fallbackHeight: 150,
+                    //     );
+                    //   },
+                    // ),
                   ),
                 ),
                 IconButton(
