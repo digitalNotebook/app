@@ -1,11 +1,3 @@
-import 'package:escola/screens/class_detail_screen.dart';
-import 'package:escola/screens/error_screen.dart';
-import 'package:escola/screens/exercicios_screen.dart';
-import 'package:escola/screens/insert_class_screen.dart';
-import 'package:escola/screens/login_screen.dart';
-import 'package:escola/screens/message_screen_detail.dart';
-import 'package:escola/screens/profile_screen.dart';
-import 'package:escola/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 import './screens/calendar_screen.dart';
@@ -13,6 +5,14 @@ import './screens/menu_screen.dart';
 import './screens/classes_screen.dart';
 import './screens/homeworks_screen.dart';
 import 'screens/bottom_tabs_screen.dart';
+import '../screens/class_detail_screen.dart';
+import '../screens/error_screen.dart';
+import '../screens/exercicios_screen.dart';
+import '../screens/insert_class_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/message_screen_detail.dart';
+import '../screens/profile_screen.dart';
+import '../screens/settings_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,8 +47,11 @@ class MyApp extends StatelessWidget {
           ),
           //cor de fundo da appBar
           backgroundColor: Colors.white,
-          titleTextStyle:
-              TextStyle(color: Colors.black, fontFamily: 'IndieFlower'),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontFamily: 'IndieFlower',
+            fontSize: 40,
+          ),
           elevation: 0, //tira a sombra embaixo da upAppBar
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

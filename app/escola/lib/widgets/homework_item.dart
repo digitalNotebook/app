@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:escola/screens/exercicios_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,21 +18,20 @@ class HomeworkItem extends StatelessWidget {
             .pushNamed(ExerciciosScreen.pageName, arguments: homework.id);
       },
       child: Card(
-        elevation: 1,
+        elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
         ),
         child: Column(
           children: [
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(20),
-                    topRight: const Radius.circular(20),
-                  ),
+                  borderRadius: BorderRadius.circular(20),
                   child: Placeholder(
-                    fallbackHeight: 70,
+                    fallbackHeight: 150,
                     color: Colors.amber,
                   ),
                   // child: Image.network(
@@ -44,29 +45,39 @@ class HomeworkItem extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(Icons.favorite_border),
                 ),
+                Positioned(
+                  top: 15,
+                  right: 10,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        transform: Matrix4.rotationZ(-5 * pi / 180)
+                          ..translate(-5.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${homework.id} - ${homework.title}',
+                          softWrap: true,
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontFamily: 'IndieFlower',
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: const Radius.circular(20),
-                        bottomRight: const Radius.circular(20),
-                      ),
-                    ),
-                    padding: EdgeInsets.only(top: 5, left: 10),
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '${homework.title} - ${homework.description}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

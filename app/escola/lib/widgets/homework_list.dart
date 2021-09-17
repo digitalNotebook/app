@@ -15,11 +15,11 @@ class HomeworkList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(15),
-            topRight: const Radius.circular(15),
-          ),
-          color: Theme.of(context).accentColor),
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(15),
+          topRight: const Radius.circular(15),
+        ),
+      ),
       alignment: Alignment.center,
       child: ListView.builder(
         itemCount: homeworks.length,

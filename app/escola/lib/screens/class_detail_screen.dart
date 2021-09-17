@@ -39,7 +39,7 @@ class ClassDetailScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Hero(
-                        tag: aula.id,
+                        tag: aula.id as String,
                         child: Image.network(
                           aula.imagesUrl,
                           errorBuilder: (ctx, exception, stack) {

@@ -31,11 +31,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     print('Buildei a tela Calendar');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        toolbarHeight: 45,
         title: Text(
           'Calendar',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         leading: IconButton(
+          color: Colors.white,
           onPressed: () {
             pushNewScreen(
               context,
@@ -47,6 +50,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         actions: [
           IconButton(
+            color: Colors.white,
             onPressed: () {
               pushNewScreenWithRouteSettings(
                 context,

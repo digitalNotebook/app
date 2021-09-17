@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/filters_class.dart';
+import 'topBackground.dart';
+import 'bottomBackground.dart';
 
 class ClassOverview extends StatefulWidget {
   @override
@@ -159,11 +161,7 @@ class _ClassOverviewState extends State<ClassOverview>
         toolbarHeight: 45,
         title: Text(
           'Classes',
-          style: TextStyle(
-            fontFamily: 'IndieFlower',
-            color: Colors.white,
-            fontSize: 40,
-          ),
+          style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
           IconButton(
@@ -231,74 +229,6 @@ class _ClassOverviewState extends State<ClassOverview>
           ],
         ),
       ),
-    );
-  }
-}
-
-class ClassBackgroundTop extends StatelessWidget {
-  const ClassBackgroundTop({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    print('Background Top');
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ClassBackground extends StatelessWidget {
-  const ClassBackground({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    print('Background Bottom');
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            color: Colors.black,
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            color: Colors.black,
-          ),
-        ),
-      ],
     );
   }
 }

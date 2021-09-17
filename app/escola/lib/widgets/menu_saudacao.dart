@@ -1,6 +1,7 @@
-import 'package:escola/mediaQuery/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../mediaQuery/size_config.dart';
 
 class Saudacao extends StatelessWidget {
   const Saudacao({Key? key}) : super(key: key);

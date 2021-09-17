@@ -13,6 +13,16 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
     var message = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            color: Colors.white,
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+            )),
+        backgroundColor: Colors.black,
+        toolbarHeight: 45,
         title: Text(
           'Message Details',
           style: Theme.of(context).appBarTheme.titleTextStyle,

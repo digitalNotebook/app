@@ -46,11 +46,14 @@ class _MenuScreenState extends State<MenuScreen> {
       ],
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
+          toolbarHeight: 45,
           title: Text(
             'Home',
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
           leading: IconButton(
+            color: Colors.white,
             onPressed: () {
               pushNewScreen(
                 context,
@@ -62,6 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           actions: [
             IconButton(
+              color: Colors.white,
               onPressed: () {
                 pushNewScreen(
                   context,

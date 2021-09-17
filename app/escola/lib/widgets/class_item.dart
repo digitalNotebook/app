@@ -30,7 +30,9 @@ class ClassItem extends StatelessWidget {
       child: Card(
         elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
         ),
         child: Column(
           children: [
@@ -39,7 +41,7 @@ class ClassItem extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Hero(
-                    tag: aula.id,
+                    tag: aula.id as String,
                     child: FadeInImage(
                       fadeInDuration: Duration(milliseconds: 100),
                       fadeOutDuration: Duration(milliseconds: 100),

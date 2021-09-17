@@ -6,7 +6,7 @@ enum Status {
 }
 
 class Aula with ChangeNotifier {
-  final String id;
+  final String? id;
   final String title;
   final String subtitle;
   final String imagesUrl;
@@ -20,7 +20,7 @@ class Aula with ChangeNotifier {
   bool isFavorite;
 
   Aula({
-    required this.id,
+    this.id,
     required this.title,
     required this.subtitle,
     required this.imagesUrl,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../models/aula.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class Aulas with ChangeNotifier {
   //dummy data de aulas
   List<Aula> _aulas = [
     Aula(
-        id: 'a1',
         title: 'Simple Present',
         subtitle: 'Action verbs',
         imagesUrl:
@@ -17,7 +19,6 @@ class Aulas with ChangeNotifier {
         horaFim: DateTime.now().subtract(Duration(hours: 4)),
         status: Status.UNDONE),
     Aula(
-        id: 'a1',
         title: 'Irregular verbs',
         subtitle: 'Part 1',
         imagesUrl:
@@ -29,7 +30,6 @@ class Aulas with ChangeNotifier {
         horaFim: DateTime.now().subtract(Duration(hours: 4, days: 5)),
         status: Status.DONE),
     Aula(
-        id: 'a1',
         title: 'Daily Routine',
         subtitle: 'Part 1',
         imagesUrl:
@@ -41,7 +41,6 @@ class Aulas with ChangeNotifier {
         videoUrl: 'videoUrl - Part 1',
         status: Status.DONE),
     Aula(
-        id: 'a1',
         title: 'Awkward, Odd, Strange',
         subtitle: 'Part 1',
         imagesUrl:
@@ -53,7 +52,6 @@ class Aulas with ChangeNotifier {
         videoUrl: 'videoUrl - Part 1',
         status: Status.DONE),
     Aula(
-        id: 'a1',
         title: 'Present Continuous',
         subtitle: 'Part 1',
         imagesUrl:
@@ -87,5 +85,35 @@ class Aulas with ChangeNotifier {
 
   List<Aula> get favoriteClasses {
     return _aulas.where((cadaAula) => cadaAula.isFavorite).toList();
+  }
+
+  Future<void> fetchClasses() async {
+    var url =
+        Uri.parse('https://digitalnotebook-b4e8d-default-rtdb.firebaseio.com/');
+  }
+
+  //esse método rodará apenas uma vez
+  Future<void> addClasses() async {
+    var url = Uri.parse(
+        'https://digitalnotebook-b4e8d-default-rtdb.firebaseio.com/aulas.json');
+
+    var response = await http.post(url,
+        body: json.encode({
+          _aulas
+              .map((eachAula) => {
+                    'title': eachAula.title,
+                    'subtitle': eachAula.subtitle,
+                    'imageUrl': eachAula.imagesUrl,
+                    'dataAula': eachAula.dataAula.toIso8601String(),
+                    'description': eachAula.description,
+                    'videoUrl': eachAula.videoUrl,
+                    'horaInicio': eachAula.horaInicio.toIso8601String(),
+                    'horaFim': eachAula.horaFim.toIso8601String(),
+                    'status': eachAula.status.index,
+                  })
+              .toList()
+        }));
+
+    print(json.decode(response.body));
   }
 }

@@ -10,6 +10,8 @@ class MessagesScreen extends StatelessWidget {
     print('Messages build');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        toolbarHeight: 45,
         title: Text(
           'Messages',
           style: Theme.of(context).appBarTheme.titleTextStyle,
