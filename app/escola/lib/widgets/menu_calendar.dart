@@ -72,6 +72,8 @@ class _MenuCalendarState extends State<MenuCalendar> {
 
   List<Aula> _getEventsForDay(DateTime day) {
     print('Entrei aqui para ver os eventos do dia: $day');
+    //futuramente carregar os homeworks
+
     var aulas = Provider.of<Aulas>(context, listen: false).items;
     return aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
   }
@@ -160,6 +162,14 @@ class _MenuCalendarState extends State<MenuCalendar> {
                   style: TextStyle(fontSize: 10),
                 ),
               );
+            }
+          },
+          markerBuilder: (ctx, date, events) {
+            var numberOfEvents = events.length;
+            if (numberOfEvents > 0) {
+              return Icon(Icons.video_library_rounded);
+            } else {
+              return Icon(Icons.clear);
             }
           },
           selectedBuilder: (ctx, date, events) {},
