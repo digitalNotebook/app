@@ -8,17 +8,19 @@ class Aulas with ChangeNotifier {
   //dummy data de aulas
   List<Aula> _aulas = [
     Aula(
+        id: 'A1',
         title: 'Simple Present',
         subtitle: 'Action verbs',
         imagesUrl:
             'https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYyNDg1MjE3MTI1MjEzODYy/topic-london-gettyimages-760251843-feature.jpg',
-        dataAula: DateTime.utc(2021, 08, 05),
+        dataAula: DateTime.utc(2021, 09, 21),
         description: 'Simple Present',
         videoUrl: 'videoUrl - Part 1',
         horaInicio: DateTime.now().subtract(Duration(hours: 2)),
         horaFim: DateTime.now().subtract(Duration(hours: 4)),
         status: Status.UNDONE),
     Aula(
+        id: 'A2',
         title: 'Irregular verbs',
         subtitle: 'Part 1',
         imagesUrl:
@@ -30,6 +32,7 @@ class Aulas with ChangeNotifier {
         horaFim: DateTime.now().subtract(Duration(hours: 4, days: 5)),
         status: Status.DONE),
     Aula(
+        id: 'A3',
         title: 'Daily Routine',
         subtitle: 'Part 1',
         imagesUrl:
@@ -41,6 +44,7 @@ class Aulas with ChangeNotifier {
         videoUrl: 'videoUrl - Part 1',
         status: Status.DONE),
     Aula(
+        id: 'A4',
         title: 'Awkward, Odd, Strange',
         subtitle: 'Part 1',
         imagesUrl:
@@ -52,6 +56,7 @@ class Aulas with ChangeNotifier {
         videoUrl: 'videoUrl - Part 1',
         status: Status.DONE),
     Aula(
+        id: 'A5',
         title: 'Present Continuous',
         subtitle: 'Part 1',
         imagesUrl:

@@ -41,7 +41,7 @@ class ClassItem extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Hero(
-                    tag: aula.id as String,
+                    tag: aula.id,
                     child: FadeInImage(
                       fadeInDuration: Duration(milliseconds: 100),
                       fadeOutDuration: Duration(milliseconds: 100),
@@ -59,17 +59,6 @@ class ClassItem extends StatelessWidget {
                         );
                       },
                     ),
-                    // child: Image.network(
-                    //   aula.imagesUrl,
-                    //   fit: BoxFit.fitWidth,
-                    //   width: double.infinity,
-                    //   height: 150,
-                    //   errorBuilder: (ctx, exception, stack) {
-                    //     return Placeholder(
-                    //       fallbackHeight: 150,
-                    //     );
-                    //   },
-                    // ),
                   ),
                 ),
                 IconButton(

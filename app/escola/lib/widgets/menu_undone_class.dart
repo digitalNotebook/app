@@ -27,26 +27,33 @@ class MenuLastClass extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Consumer<Aulas>(
-                builder: (ctx, aula, ch) => ListTile(
-                  shape: Border.all(color: Theme.of(context).accentColor),
-                  leading: CircleAvatar(
-                    child: Icon(Icons.person),
+                builder: (ctx, aula, ch) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
-                  title: Text(aula.undoneClasses.first.title),
-                  subtitle: Text(aula.undoneClasses.first.subtitle),
-                  trailing: Icon(Icons.play_arrow),
-                  onTap: () {
-                    pushNewScreenWithRouteSettings(
-                      context,
-                      screen: ClassDetailScreen(),
-                      settings: RouteSettings(
-                        name: ClassDetailScreen.pageName,
-                        arguments: aula.undoneClasses.first,
-                      ),
-                    );
-                    // Navigator.of(context).pushNamed(ClassDetailScreen.pageName,
-                    //     arguments: aula.undoneClasses.first);
-                  },
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Icon(Icons.person),
+                    ),
+                    title: Text(aula.undoneClasses.first.title),
+                    subtitle: Text(aula.undoneClasses.first.subtitle),
+                    trailing: Icon(Icons.play_arrow),
+                    onTap: () {
+                      pushNewScreenWithRouteSettings(
+                        context,
+                        screen: ClassDetailScreen(),
+                        settings: RouteSettings(
+                          name: ClassDetailScreen.pageName,
+                          arguments: aula.undoneClasses.first,
+                        ),
+                      );
+                      // Navigator.of(context).pushNamed(ClassDetailScreen.pageName,
+                      //     arguments: aula.undoneClasses.first);
+                    },
+                  ),
                 ),
               ),
             ),

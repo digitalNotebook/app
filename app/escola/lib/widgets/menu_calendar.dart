@@ -1,5 +1,8 @@
+import 'package:escola/models/aula.dart';
+import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MenuCalendar extends StatefulWidget {
@@ -50,6 +53,29 @@ class _MenuCalendarState extends State<MenuCalendar> {
     return firstDay;
   }
 
+  void _handleonDisabledDayTapped(DateTime day) {
+    String weekday;
+    if (day.weekday == 6) {
+      weekday = 'Saturdays';
+    } else {
+      weekday = 'Sundays';
+    }
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('There is no homework on $weekday'),
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
+
+  List<Aula> _getEventsForDay(DateTime day) {
+    print('Entrei aqui para ver os eventos do dia: $day');
+    var aulas = Provider.of<Aulas>(context, listen: false).items;
+    return aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
+  }
+
   @override
   void initState() {
     Future.delayed(Duration.zero).then(
@@ -92,6 +118,10 @@ class _MenuCalendarState extends State<MenuCalendar> {
         focusedDay: _focusedDay,
         firstDay: _kFirstDay,
         lastDay: _kLastDay,
+        onDisabledDayTapped: _handleonDisabledDayTapped,
+        eventLoader: (day) {
+          return _getEventsForDay(day);
+        },
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {

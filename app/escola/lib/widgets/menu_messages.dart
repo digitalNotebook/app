@@ -58,6 +58,11 @@ class MenuMessage extends StatelessWidget {
             },
             child: Card(
               elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
               child: Container(
                 padding: EdgeInsets.all(8),
                 child: ListView(
