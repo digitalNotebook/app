@@ -1,5 +1,6 @@
 import 'package:escola/mediaQuery/size_config.dart';
 import 'package:escola/providers/aulas.dart';
+import 'package:escola/providers/messages.dart';
 import 'package:escola/screens/profile_screen.dart';
 import 'package:escola/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ChangeNotifierProvider(
           create: (ctx) => Aulas(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx2) => Messages(),
+        )
         //demais providers aqui
       ],
       child: Scaffold(

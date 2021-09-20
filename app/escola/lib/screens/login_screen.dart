@@ -24,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        toolbarHeight: 60,
         title: Text(
           'Digital Notebook',
           style: Theme.of(context).appBarTheme.titleTextStyle,
