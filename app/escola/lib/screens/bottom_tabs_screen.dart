@@ -76,21 +76,43 @@ class _TabsScreenState extends State<TabsScreen> {
       PersistentTabController(initialIndex: 0);
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print('Bottom Tab build');
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: _buildScreen(),
-      items: _navBarsItems(),
-      backgroundColor: Colors.black,
-      navBarStyle: NavBarStyle.simple,
-      itemAnimationProperties: ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
+    return GestureDetector(
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (details.primaryVelocity! > 0) {
+          print('left');
+          _index--;
+          if (_index < 0) _index = 4;
+        } else if (details.primaryVelocity! < 0) {
+          print('right');
+          _index++;
+          if (_index > 4) _index = 0;
+        }
+        _controller.jumpToTab(_index);
+      },
+      child: PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _buildScreen(),
+        items: _navBarsItems(),
+        backgroundColor: Colors.black,
+        navBarStyle: NavBarStyle.simple,
+        itemAnimationProperties: ItemAnimationProperties(
+          // Navigation Bar's items animation properties.
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        onItemSelected: (index) {
+          _index = index;
+        },
       ),
-      onItemSelected: (index) {},
     );
   }
 }
