@@ -14,8 +14,17 @@ class MenuMessage extends StatefulWidget {
   _MenuMessageState createState() => _MenuMessageState();
 }
 
-class _MenuMessageState extends State<MenuMessage>
-    with SingleTickerProviderStateMixin {
+class _MenuMessageState extends State<MenuMessage> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   var _isInit = true;
   late List<Message> _items;
   late Message _displayMessage;
@@ -106,67 +115,71 @@ class _MenuMessageState extends State<MenuMessage>
               // Navigator.of(context)
               //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
             },
-            child: Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              child: Card(
+                key: ValueKey<String>(_displayMessage.id),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
                 ),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Stack(
-                          children: [
-                            CircleAvatar(
-                              child: Icon(Icons.person),
-                            ),
-                            Positioned(
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Stack(
+                            children: [
+                              CircleAvatar(
+                                child: Icon(Icons.person),
+                              ),
+                              Positioned(
+                                child: Text(
+                                  '1',
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.blockSizeHorizontal! * 5),
+                                ),
+                                top: 0,
+                                right: 0,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
                               child: Text(
-                                '5',
+                                _displayMessage.teacherName,
                                 style: TextStyle(
                                     fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 5),
+                                        SizeConfig.blockSizeHorizontal! * 6),
                               ),
-                              top: 0,
-                              right: 0,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              _displayMessage.teacherName,
-                              style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal! * 6),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: createMessageBox(
-                              SizeConfig.screenHeight!,
-                              SizeConfig.blockSizeVertical!,
-                              _displayMessage.description),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: createMessageBox(
+                                SizeConfig.screenHeight!,
+                                SizeConfig.blockSizeVertical!,
+                                _displayMessage.description),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
