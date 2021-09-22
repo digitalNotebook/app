@@ -19,7 +19,7 @@ class ClassDetailScreen extends StatelessWidget {
             SliverAppBar(
               backgroundColor: Colors.black,
               //appbar não fica vísivel quando scrollar
-              pinned: false,
+              pinned: true,
               //botão para voltar
               leading: IconButton(
                 onPressed: () {
@@ -34,7 +34,8 @@ class ClassDetailScreen extends StatelessWidget {
               //o que teremos dentro da appbar
               flexibleSpace: FlexibleSpaceBar(
                 title: Container(
-                  color: Colors.white.withOpacity(0.8),
+                  transform: Matrix4.rotationZ(-5 * pi / 180)..translate(-5.0),
+                  color: Colors.yellow.withOpacity(0.8),
                   child: Text(
                     aula.title,
                     style: TextStyle(

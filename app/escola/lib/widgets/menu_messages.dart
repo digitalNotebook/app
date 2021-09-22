@@ -15,6 +15,10 @@ class MenuMessage extends StatefulWidget {
 }
 
 class _MenuMessageState extends State<MenuMessage> {
+  var _isInit = true;
+  late List<Message> _items;
+  var _index = 0;
+
   @override
   void dispose() {
     super.dispose();
@@ -25,52 +29,74 @@ class _MenuMessageState extends State<MenuMessage> {
     super.initState();
   }
 
-  var _isInit = true;
-  late List<Message> _items;
-  late Message _displayMessage;
-  var _index = 0;
   @override
   void didChangeDependencies() {
     if (_isInit) {
       _items = Provider.of<Messages>(context, listen: false).items;
       _index = _items.length > 0 ? (_items.length - 1) : 0;
-      print('Qtde de messagens: ${_items.length}');
-      _displayMessage = _items.length > 0
-          ? _items[_index]
-          : Message(
-              'e1',
-              'Nothing new',
-              'System',
-              DateTime.now(),
-            );
     }
     _isInit = false;
     super.didChangeDependencies();
   }
 
-  void _nextMessage() {
-    print('Index atual: $_index, próximo index: ${_index + 1}');
-    if (!(_index + 1 >= _items.length)) {
-      setState(() {
-        _index++;
-        _displayMessage = _items[_index];
-      });
-    }
-    return;
+  // void _nextMessage() {
+  //   print('Index atual: $_index, próximo index: ${_index + 1}');
+  //   if (!(_index + 1 >= _items.length)) {
+  //     setState(() {
+  //       _index++;
+  //       _displayMessage = _items[_index];
+  //     });
+  //   }
+  //   return;
+  // }
+
+  // void _previousMessage() {
+  //   print('Index atual: $_index, index anterior: ${_index - 1}');
+  //   if (!(_index - 1 < 0)) {
+  //     setState(() {
+  //       _index--;
+  //       _displayMessage = _items[_index];
+  //     });
+  //   }
+  //   return;
+  // }
+
+  Widget _buildListMessages(double heightAvailable) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: _items.length,
+      itemBuilder: (ctx, index) => Container(
+        width: (SizeConfig.screenWidth! - 100),
+        height: heightAvailable,
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                CardHeader(
+                  message: _items[index],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                _createMessageBox(SizeConfig.screenHeight!,
+                    SizeConfig.blockSizeVertical!, _items[index].description),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  void _previousMessage() {
-    print('Index atual: $_index, index anterior: ${_index - 1}');
-    if (!(_index - 1 < 0)) {
-      setState(() {
-        _index--;
-        _displayMessage = _items[_index];
-      });
-    }
-    return;
-  }
-
-  Widget createMessageBox(double height, double textScale, String message) {
+  Widget _createMessageBox(double height, double textScale, String message) {
     return height > 800
         ? Text(message,
             softWrap: true,
@@ -91,106 +117,167 @@ class _MenuMessageState extends State<MenuMessage> {
   @override
   Widget build(BuildContext context) {
     print(SizeConfig.screenHeight);
+    print(SizeConfig.screenWidth);
+    return LayoutBuilder(
+      builder: (ctx, constraints) => GestureDetector(
+        onTap: () => pushNewScreenWithRouteSettings(
+          context,
+          pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+          screen: MessageDetailScreen(),
+          settings: RouteSettings(
+              name: MessageDetailScreen.pageName,
+              arguments: _items[_index].description),
+        ),
+        child: _buildListMessages(
+          constraints.maxHeight,
+        ),
+      ),
+    );
+  }
+}
+
+class CardHeader extends StatelessWidget {
+  const CardHeader({
+    Key? key,
+    required Message message,
+  })  : _message = message,
+        super(key: key);
+
+  final Message _message;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        //seta
-        IconButton(
-          onPressed: _previousMessage,
-          icon: const Icon(Icons.arrow_back),
-        ),
-
-        Flexible(
-          fit: FlexFit.tight,
-          child: GestureDetector(
-            onTap: () {
-              pushNewScreenWithRouteSettings(
-                context,
-                pageTransitionAnimation: PageTransitionAnimation.sizeUp,
-                screen: MessageDetailScreen(),
-                settings: RouteSettings(
-                    name: MessageDetailScreen.pageName,
-                    arguments: _displayMessage.description),
-              );
-              // Navigator.of(context)
-              //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
-            },
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              child: Card(
-                key: ValueKey<String>(_displayMessage.id),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Stack(
-                            children: [
-                              CircleAvatar(
-                                child: Icon(Icons.person),
-                              ),
-                              Positioned(
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.blockSizeHorizontal! * 5),
-                                ),
-                                top: 0,
-                                right: 0,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                _displayMessage.teacherName,
-                                style: TextStyle(
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 6),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        children: [
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: createMessageBox(
-                                SizeConfig.screenHeight!,
-                                SizeConfig.blockSizeVertical!,
-                                _displayMessage.description),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+        Stack(
+          children: [
+            CircleAvatar(
+              child: Icon(Icons.person),
             ),
-          ),
+            Positioned(
+              child: Text(
+                '1',
+                style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 5),
+              ),
+              top: 0,
+              right: 0,
+            ),
+          ],
         ),
-
-        IconButton(
-          onPressed: _nextMessage,
-          icon: const Icon(Icons.arrow_forward),
+        SizedBox(
+          width: 15,
+        ),
+        FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            _message.teacherName,
+            style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 6),
+          ),
         ),
       ],
     );
   }
 }
+      // return Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     // //seta
+      //     // IconButton(
+      //     //   onPressed: _previousMessage,
+      //     //   icon: const Icon(Icons.arrow_back),
+      //     // ),
+
+      //     // Flexible(
+      //     //   fit: FlexFit.tight,
+      //     //   child: GestureDetector(
+      //     //     onTap: () {
+      //     //       pushNewScreenWithRouteSettings(
+      //     //         context,
+      //     //         pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+      //     //         screen: MessageDetailScreen(),
+      //     //         settings: RouteSettings(
+      //     //             name: MessageDetailScreen.pageName,
+      //     //             arguments: _displayMessage.description),
+      //     //       );
+      //     //       // Navigator.of(context)
+      //     //       //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
+      //     //     },
+      //     //     child: AnimatedSwitcher(
+      //     //       duration: Duration(milliseconds: 500),
+      //     //       child: Card(
+      //     //         key: ValueKey<String>(_displayMessage.id),
+      //     //         elevation: 5,
+      //     //         shape: RoundedRectangleBorder(
+      //     //           borderRadius: BorderRadius.all(
+      //     //             Radius.circular(20),
+      //     //           ),
+      //     //         ),
+      //     //         child: Container(
+      //     //           padding: EdgeInsets.all(8),
+      //     //           child: Column(
+      //     //             children: [
+      //     //               Row(
+      //     //                 children: [
+      //     //                   Stack(
+      //     //                     children: [
+      //     //                       CircleAvatar(
+      //     //                         child: Icon(Icons.person),
+      //     //                       ),
+      //     //                       Positioned(
+      //     //                         child: Text(
+      //     //                           '1',
+      //     //                           style: TextStyle(
+      //     //                               fontSize:
+      //     //                                   SizeConfig.blockSizeHorizontal! * 5),
+      //     //                         ),
+      //     //                         top: 0,
+      //     //                         right: 0,
+      //     //                       ),
+      //     //                     ],
+      //     //                   ),
+      //     //                   SizedBox(
+      //     //                     width: 15,
+      //     //                   ),
+      //     //                   Flexible(
+      //     //                     child: FittedBox(
+      //     //                       fit: BoxFit.fitWidth,
+      //     //                       child: Text(
+      //     //                         _displayMessage.teacherName,
+      //     //                         style: TextStyle(
+      //     //                             fontSize:
+      //     //                                 SizeConfig.blockSizeHorizontal! * 6),
+      //     //                       ),
+      //     //                     ),
+      //     //                   ),
+      //     //                 ],
+      //     //               ),
+      //     //               SizedBox(
+      //     //                 height: 16,
+      //     //               ),
+      //     //               Row(
+      //     //                 children: [
+      //     //                   Flexible(
+      //     //                     fit: FlexFit.tight,
+      //     //                     child: createMessageBox(
+      //     //                         SizeConfig.screenHeight!,
+      //     //                         SizeConfig.blockSizeVertical!,
+      //     //                         _displayMessage.description),
+      //     //                   ),
+      //     //                 ],
+      //     //               ),
+      //     //             ],
+      //     //           ),
+      //     //         ),
+      //     //       ),
+      //     //     ),
+      //     //   ),
+      //     // ),
+
+      //     // IconButton(
+      //     //   onPressed: _nextMessage,
+      //     //   icon: const Icon(Icons.arrow_forward),
+      //     // ),
+      //   ],
+      // );
+      
+    

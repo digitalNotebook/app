@@ -18,9 +18,16 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   var _index = 0;
+  // var _isInit = true;
+  // PageController _pageController = PageController(initialPage: 0);
+
+  PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   @override
   void didChangeDependencies() {
+    // if (_isInit) {}
+    // _isInit = false;
     print('didChangeDependencies Bottom Tabs Screen');
 
     super.didChangeDependencies();
@@ -72,165 +79,51 @@ class _TabsScreenState extends State<TabsScreen> {
     ];
   }
 
-  PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
-
   @override
   void dispose() {
+    // _pageController.dispose();
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // var mediaQuery = MediaQuery.of(context).size;
     print('Bottom Tab build');
-    return GestureDetector(
-      onHorizontalDragEnd: (DragEndDetails details) {
-        if (details.primaryVelocity! > 0) {
-          print('left');
-          _index--;
-          if (_index < 0) _index = 4;
-        } else if (details.primaryVelocity! < 0) {
-          print('right');
-          _index++;
-          if (_index > 4) _index = 0;
-        }
-        _controller.jumpToTab(_index);
+    // return GestureDetector(
+    //   onHorizontalDragEnd: (DragEndDetails details) {
+    //     if (details.primaryVelocity! > 0) {
+    //       print('left');
+    //       _index--;
+    //       if (_index < 0) _index = 4;
+    //     } else if (details.primaryVelocity! < 0) {
+    //       print('right');
+    //       _index++;
+    //       if (_index > 4) _index = 0;
+    //     }
+
+    //     _controller.jumpToTab(_index);
+    //   },
+    //   child:
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreen(),
+      items: _navBarsItems(),
+      backgroundColor: Colors.black,
+      navBarStyle: NavBarStyle.simple,
+      itemAnimationProperties: ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      onItemSelected: (index) {
+        _index = index;
       },
-      child: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreen(),
-        items: _navBarsItems(),
-        backgroundColor: Colors.black,
-        navBarStyle: NavBarStyle.simple,
-        itemAnimationProperties: ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        onItemSelected: (index) {
-          _index = index;
-        },
+      screenTransitionAnimation: ScreenTransitionAnimation(
+        duration: Duration(milliseconds: 400),
+        curve: Curves.fastOutSlowIn,
       ),
     );
   }
 }
-
-//   //lista de screens e titles
-//   final List<Map<String, dynamic>> _pages = [
-//     {'page': MenuScreen(), 'title': 'Home'},
-//     {'page': ClassesScreen(), 'title': 'Classes'},
-//     {'page': CalendarScreen(), 'title': 'Calendar'},
-//     {'page': HomeworkScreen(), 'title': 'Homeworks'},
-//     {'page': MessagesScreen(), 'title': 'Messages'}
-//   ];
-
-//   //saber qual index está selecionado, por padrão é o Home
-//   int _selectedPageIndex = 0;
-
-//   @override
-//   void didUpdateWidget(covariant TabsScreen oldWidget) {
-//     super.didUpdateWidget(oldWidget);
-//   }
-
-//   //captura o index da página selecionada
-//   void _selectPage(int index) {
-//     setState(() {
-//       _selectedPageIndex = index;
-//     });
-//     // print(_pages[index]['page']);
-//     // Navigator.pushNamed(context, _pages[index]['page']);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     print('Método Build da TabsScreen acionado');
-
-//     //recupera a seed enviada de loginScreen
-//     // final seedId = ModalRoute.of(context)?.settings.arguments;
-
-//     // final deviceInfo = MediaQuery.of(context);
-//     // print(
-//     //     'Height: ${deviceInfo.size.height} and Width: ${deviceInfo.size.width}');
-//     return Scaffold(
-//       appBar: AppBar(
-//         leading: IconButton(
-//           onPressed: () {
-//             Navigator.of(context).pushNamed(ProfileScreen.pageName);
-//           },
-//           icon: Icon(Icons.person),
-//         ),
-//         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-//         shadowColor: Theme.of(context).appBarTheme.shadowColor,
-//         iconTheme: Theme.of(context).appBarTheme.iconTheme,
-//         title: Text(
-//           _pages[_selectedPageIndex]['title'],
-//           style: Theme.of(context).appBarTheme.titleTextStyle,
-//         ),
-//         elevation: Theme.of(context).appBarTheme.elevation,
-//         actions: [
-//           IconButton(
-//             onPressed: _selectedPageIndex == 1
-//                 ? () {}
-//                 : () {
-//                     Navigator.of(context).pushNamed(SettingsScreen.pageName);
-//                   },
-//             icon: Icon(
-//               _selectedPageIndex == 1 ? Icons.search : Icons.settings,
-//               color: Theme.of(context).accentColor,
-//             ),
-//           ),
-//         ],
-//       ),
-//       body: _pages[_selectedPageIndex]['page'],
-//       // body: Navigator(
-//       //   onGenerateRoute: (settings) {
-//       //     print(settings.name);
-//       //     Widget page = MenuScreen();
-
-//       //     if (settings.name == ClassesScreen.pageName) page = ClassesScreen();
-//       //     return MaterialPageRoute(builder: (_) => page);
-//       //   },
-//       // ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         onTap: _selectPage,
-//         backgroundColor: Theme.of(context).bottomAppBarTheme.color,
-//         unselectedItemColor: Colors.white30,
-//         selectedItemColor: Colors.white,
-//         showUnselectedLabels: true,
-//         currentIndex: _selectedPageIndex,
-//         selectedFontSize: 12,
-//         unselectedFontSize: 12,
-//         type: BottomNavigationBarType.fixed,
-//         items: [
-//           BottomNavigationBarItem(
-//             backgroundColor: Colors.black,
-//             icon: Icon(Icons.apartment_outlined),
-//             label: 'Home',
-//           ),
-//           BottomNavigationBarItem(
-//             backgroundColor: Colors.black,
-//             icon: Icon(Icons.assignment_outlined),
-//             label: 'Classes',
-//           ),
-//           BottomNavigationBarItem(
-//             backgroundColor: Colors.black,
-//             icon: Icon(Icons.calendar_today_outlined),
-//             label: 'Calendar',
-//           ),
-//           BottomNavigationBarItem(
-//             backgroundColor: Colors.black,
-//             icon: Icon(Icons.auto_stories_outlined),
-//             label: 'Homeworks',
-//           ),
-//           BottomNavigationBarItem(
-//             backgroundColor: Colors.black,
-//             icon: Icon(Icons.message_outlined),
-//             label: 'Messages',
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
