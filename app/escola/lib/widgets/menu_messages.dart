@@ -15,17 +15,28 @@ class MenuMessage extends StatefulWidget {
 }
 
 class _MenuMessageState extends State<MenuMessage> {
+  //solução nova
+  late PageController _controller;
+  int _currentCard = 0;
+
+  //scroll da solução antiga
   var _isInit = true;
   late List<Message> _items;
   var _index = 0;
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
+    _controller = PageController(
+      initialPage: _currentCard,
+      keepPage: false,
+      viewportFraction: 0.5,
+    );
     super.initState();
   }
 
@@ -61,19 +72,31 @@ class _MenuMessageState extends State<MenuMessage> {
   //   return;
   // }
 
-  Widget _buildListMessages(double heightAvailable) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: _items.length,
-      itemBuilder: (ctx, index) => Container(
-        width: (SizeConfig.screenWidth! - 100),
-        height: heightAvailable,
-        margin: EdgeInsets.symmetric(horizontal: 5),
+  Widget _buildListMessages(int index) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (ctx, child) {
+        double value = 1.0;
+        if (_controller.position.haveDimensions) {
+          value = _controller.page! - index;
+          value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
+        }
+
+        return Center(
+          child: Container(
+            height: Curves.easeOut.transform(value) * 300,
+            width: Curves.easeOut.transform(value) * 250,
+            child: child,
+          ),
+        );
+      },
+      child: Transform.scale(
+        scale: index == _currentCard ? 1 : 0.9,
         child: Card(
-          elevation: 5,
+          elevation: index == _currentCard ? 7 : 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(20),
+              Radius.circular(index == _currentCard ? 20 : 10),
             ),
           ),
           child: Container(
@@ -86,14 +109,50 @@ class _MenuMessageState extends State<MenuMessage> {
                 SizedBox(
                   height: 16,
                 ),
-                _createMessageBox(SizeConfig.screenHeight!,
-                    SizeConfig.blockSizeVertical!, _items[index].description),
+                Flexible(
+                  child: _createMessageBox(
+                    SizeConfig.screenHeight!,
+                    SizeConfig.blockSizeVertical!,
+                    _items[index].description,
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+    // return ListView.builder(
+    //   scrollDirection: Axis.horizontal,
+    //   itemCount: _items.length,
+    //   itemBuilder: (ctx, index) => Container(
+    //     width: (SizeConfig.screenWidth! - 100),
+    //     margin: EdgeInsets.symmetric(horizontal: 5),
+    //     child: Card(
+    //       elevation: 5,
+    //       shape: RoundedRectangleBorder(
+    //         borderRadius: BorderRadius.all(
+    //           Radius.circular(20),
+    //         ),
+    //       ),
+    //       child: Container(
+    //         padding: const EdgeInsets.all(8),
+    //         child: Column(
+    //           children: [
+    //             CardHeader(
+    //               message: _items[index],
+    //             ),
+    //             SizedBox(
+    //               height: 16,
+    //             ),
+    //             _createMessageBox(SizeConfig.screenHeight!,
+    //                 SizeConfig.blockSizeVertical!, _items[index].description),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget _createMessageBox(double height, double textScale, String message) {
@@ -116,23 +175,33 @@ class _MenuMessageState extends State<MenuMessage> {
 
   @override
   Widget build(BuildContext context) {
-    print(SizeConfig.screenHeight);
-    print(SizeConfig.screenWidth);
-    return LayoutBuilder(
-      builder: (ctx, constraints) => GestureDetector(
-        onTap: () => pushNewScreenWithRouteSettings(
-          context,
-          pageTransitionAnimation: PageTransitionAnimation.sizeUp,
-          screen: MessageDetailScreen(),
-          settings: RouteSettings(
-              name: MessageDetailScreen.pageName,
-              arguments: _items[_index].description),
-        ),
-        child: _buildListMessages(
-          constraints.maxHeight,
-        ),
-      ),
+    // print(SizeConfig.screenHeight);
+    // print(SizeConfig.screenWidth);
+    return PageView.builder(
+      itemCount: _items.length,
+      itemBuilder: (ctx, index) => _buildListMessages(index),
+      controller: _controller,
+      onPageChanged: (value) {
+        setState(() {
+          _currentCard = value;
+        });
+      },
     );
+    // return LayoutBuilder(
+    //   builder: (ctx, constraints) => GestureDetector(
+    //     onTap: () => pushNewScreenWithRouteSettings(
+    //       context,
+    //       pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+    //       screen: MessageDetailScreen(),
+    //       settings: RouteSettings(
+    //           name: MessageDetailScreen.pageName,
+    //           arguments: _items[_index].description),
+    //     ),
+    //     child: _buildListMessages(
+    //       constraints.maxHeight,
+    //     ),
+    //   ),
+    // );
   }
 }
 
@@ -167,117 +236,118 @@ class CardHeader extends StatelessWidget {
         SizedBox(
           width: 15,
         ),
-        FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            _message.teacherName,
-            style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 6),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              _message.teacherName,
+              style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 4),
+              overflow: TextOverflow.fade,
+            ),
           ),
-        ),
+        )
       ],
     );
   }
 }
-      // return Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     // //seta
-      //     // IconButton(
-      //     //   onPressed: _previousMessage,
-      //     //   icon: const Icon(Icons.arrow_back),
-      //     // ),
+// return Row(
+//   mainAxisAlignment: MainAxisAlignment.center,
+//   children: [
+//     // //seta
+//     // IconButton(
+//     //   onPressed: _previousMessage,
+//     //   icon: const Icon(Icons.arrow_back),
+//     // ),
 
-      //     // Flexible(
-      //     //   fit: FlexFit.tight,
-      //     //   child: GestureDetector(
-      //     //     onTap: () {
-      //     //       pushNewScreenWithRouteSettings(
-      //     //         context,
-      //     //         pageTransitionAnimation: PageTransitionAnimation.sizeUp,
-      //     //         screen: MessageDetailScreen(),
-      //     //         settings: RouteSettings(
-      //     //             name: MessageDetailScreen.pageName,
-      //     //             arguments: _displayMessage.description),
-      //     //       );
-      //     //       // Navigator.of(context)
-      //     //       //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
-      //     //     },
-      //     //     child: AnimatedSwitcher(
-      //     //       duration: Duration(milliseconds: 500),
-      //     //       child: Card(
-      //     //         key: ValueKey<String>(_displayMessage.id),
-      //     //         elevation: 5,
-      //     //         shape: RoundedRectangleBorder(
-      //     //           borderRadius: BorderRadius.all(
-      //     //             Radius.circular(20),
-      //     //           ),
-      //     //         ),
-      //     //         child: Container(
-      //     //           padding: EdgeInsets.all(8),
-      //     //           child: Column(
-      //     //             children: [
-      //     //               Row(
-      //     //                 children: [
-      //     //                   Stack(
-      //     //                     children: [
-      //     //                       CircleAvatar(
-      //     //                         child: Icon(Icons.person),
-      //     //                       ),
-      //     //                       Positioned(
-      //     //                         child: Text(
-      //     //                           '1',
-      //     //                           style: TextStyle(
-      //     //                               fontSize:
-      //     //                                   SizeConfig.blockSizeHorizontal! * 5),
-      //     //                         ),
-      //     //                         top: 0,
-      //     //                         right: 0,
-      //     //                       ),
-      //     //                     ],
-      //     //                   ),
-      //     //                   SizedBox(
-      //     //                     width: 15,
-      //     //                   ),
-      //     //                   Flexible(
-      //     //                     child: FittedBox(
-      //     //                       fit: BoxFit.fitWidth,
-      //     //                       child: Text(
-      //     //                         _displayMessage.teacherName,
-      //     //                         style: TextStyle(
-      //     //                             fontSize:
-      //     //                                 SizeConfig.blockSizeHorizontal! * 6),
-      //     //                       ),
-      //     //                     ),
-      //     //                   ),
-      //     //                 ],
-      //     //               ),
-      //     //               SizedBox(
-      //     //                 height: 16,
-      //     //               ),
-      //     //               Row(
-      //     //                 children: [
-      //     //                   Flexible(
-      //     //                     fit: FlexFit.tight,
-      //     //                     child: createMessageBox(
-      //     //                         SizeConfig.screenHeight!,
-      //     //                         SizeConfig.blockSizeVertical!,
-      //     //                         _displayMessage.description),
-      //     //                   ),
-      //     //                 ],
-      //     //               ),
-      //     //             ],
-      //     //           ),
-      //     //         ),
-      //     //       ),
-      //     //     ),
-      //     //   ),
-      //     // ),
+//     // Flexible(
+//     //   fit: FlexFit.tight,
+//     //   child: GestureDetector(
+//     //     onTap: () {
+//     //       pushNewScreenWithRouteSettings(
+//     //         context,
+//     //         pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+//     //         screen: MessageDetailScreen(),
+//     //         settings: RouteSettings(
+//     //             name: MessageDetailScreen.pageName,
+//     //             arguments: _displayMessage.description),
+//     //       );
+//     //       // Navigator.of(context)
+//     //       //     .pushNamed(MessageDetailScreen.pageName, arguments: mensagem);
+//     //     },
+//     //     child: AnimatedSwitcher(
+//     //       duration: Duration(milliseconds: 500),
+//     //       child: Card(
+//     //         key: ValueKey<String>(_displayMessage.id),
+//     //         elevation: 5,
+//     //         shape: RoundedRectangleBorder(
+//     //           borderRadius: BorderRadius.all(
+//     //             Radius.circular(20),
+//     //           ),
+//     //         ),
+//     //         child: Container(
+//     //           padding: EdgeInsets.all(8),
+//     //           child: Column(
+//     //             children: [
+//     //               Row(
+//     //                 children: [
+//     //                   Stack(
+//     //                     children: [
+//     //                       CircleAvatar(
+//     //                         child: Icon(Icons.person),
+//     //                       ),
+//     //                       Positioned(
+//     //                         child: Text(
+//     //                           '1',
+//     //                           style: TextStyle(
+//     //                               fontSize:
+//     //                                   SizeConfig.blockSizeHorizontal! * 5),
+//     //                         ),
+//     //                         top: 0,
+//     //                         right: 0,
+//     //                       ),
+//     //                     ],
+//     //                   ),
+//     //                   SizedBox(
+//     //                     width: 15,
+//     //                   ),
+//     //                   Flexible(
+//     //                     child: FittedBox(
+//     //                       fit: BoxFit.fitWidth,
+//     //                       child: Text(
+//     //                         _displayMessage.teacherName,
+//     //                         style: TextStyle(
+//     //                             fontSize:
+//     //                                 SizeConfig.blockSizeHorizontal! * 6),
+//     //                       ),
+//     //                     ),
+//     //                   ),
+//     //                 ],
+//     //               ),
+//     //               SizedBox(
+//     //                 height: 16,
+//     //               ),
+//     //               Row(
+//     //                 children: [
+//     //                   Flexible(
+//     //                     fit: FlexFit.tight,
+//     //                     child: createMessageBox(
+//     //                         SizeConfig.screenHeight!,
+//     //                         SizeConfig.blockSizeVertical!,
+//     //                         _displayMessage.description),
+//     //                   ),
+//     //                 ],
+//     //               ),
+//     //             ],
+//     //           ),
+//     //         ),
+//     //       ),
+//     //     ),
+//     //   ),
+//     // ),
 
-      //     // IconButton(
-      //     //   onPressed: _nextMessage,
-      //     //   icon: const Icon(Icons.arrow_forward),
-      //     // ),
-      //   ],
-      // );
-      
-    
+//     // IconButton(
+//     //   onPressed: _nextMessage,
+//     //   icon: const Icon(Icons.arrow_forward),
+//     // ),
+//   ],
+// );
