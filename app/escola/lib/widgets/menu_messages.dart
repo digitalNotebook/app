@@ -35,7 +35,7 @@ class _MenuMessageState extends State<MenuMessage> {
     _controller = PageController(
       initialPage: _currentCard,
       keepPage: false,
-      viewportFraction: 0.5,
+      viewportFraction: 0.65,
     );
     super.initState();
   }

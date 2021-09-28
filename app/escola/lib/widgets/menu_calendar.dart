@@ -53,7 +53,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
     return firstDay;
   }
 
-  void _handleonDisabledDayTapped(DateTime day) {
+  void _onTapDisabledDay(DateTime day) {
     String weekday;
     if (day.weekday == 6) {
       weekday = 'Saturdays';
@@ -69,6 +69,10 @@ class _MenuCalendarState extends State<MenuCalendar> {
       ),
     );
   }
+
+  void _onTapDayAfterToday(DateTime currentDay) {}
+
+  void _onTapDayBeforeToday(DateTime currentDay) {}
 
   List<Aula> _getEventsForDay(DateTime day) {
     print('Entrei aqui para ver os eventos do dia: $day');
@@ -104,7 +108,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
       //sempre será sexta
       _kLastDay = _kFirstDay.subtract(Duration(days: -4));
       //o dia corrente
-      _focusedDay = _kFirstDay;
+      _focusedDay = DateTime.now().subtract(Duration(days: 1));
       //o dia corrente
       _selectedDay = _focusedDay;
     }
@@ -118,9 +122,10 @@ class _MenuCalendarState extends State<MenuCalendar> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TableCalendar(
         focusedDay: _focusedDay,
+        currentDay: _focusedDay,
         firstDay: _kFirstDay,
         lastDay: _kLastDay,
-        onDisabledDayTapped: _handleonDisabledDayTapped,
+        onDisabledDayTapped: _onTapDisabledDay,
         eventLoader: (day) {
           return _getEventsForDay(day);
         },
@@ -166,8 +171,13 @@ class _MenuCalendarState extends State<MenuCalendar> {
           },
           markerBuilder: (ctx, date, events) {
             var numberOfEvents = events.length;
+
             if (numberOfEvents > 0) {
               return Icon(Icons.video_library_rounded);
+            } else if (date.isAfter(_focusedDay)) {
+              return Icon(Icons.alarm);
+            } else if (date.isBefore(_focusedDay)) {
+              return Icon(Icons.alarm_off_sharp);
             } else {
               return Icon(Icons.clear);
             }

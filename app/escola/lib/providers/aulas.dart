@@ -13,7 +13,7 @@ class Aulas with ChangeNotifier {
         subtitle: 'Action verbs',
         imagesUrl:
             'https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYyNDg1MjE3MTI1MjEzODYy/topic-london-gettyimages-760251843-feature.jpg',
-        dataAula: DateTime.utc(2021, 09, 21),
+        dataAula: DateTime.utc(2021, 09, 29),
         description: 'Simple Present',
         videoUrl: 'videoUrl - Part 1',
         horaInicio: DateTime.now().subtract(Duration(hours: 2)),
