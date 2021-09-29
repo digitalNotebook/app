@@ -1,7 +1,9 @@
 import 'package:escola/models/aula.dart';
 import 'package:escola/providers/aulas.dart';
+import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -17,8 +19,9 @@ class _MenuCalendarState extends State<MenuCalendar> {
 
   late DateTime _kFirstDay;
   late DateTime _kLastDay;
-  DateTime _focusedDay = DateTime.now();
+  late DateTime _currentDay;
   late DateTime _selectedDay;
+  late List<Aula> _aulas;
   var _isInit = true;
 
   DateTime _setKFirstDay() {
@@ -54,32 +57,52 @@ class _MenuCalendarState extends State<MenuCalendar> {
   }
 
   void _onTapDisabledDay(DateTime day) {
-    String weekday;
-    if (day.weekday == 6) {
-      weekday = 'Saturdays';
-    } else {
-      weekday = 'Sundays';
-    }
-
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('There is no homework on $weekday'),
+        content:
+            Text('There is no homework on ${DateFormat.EEEE().format(day)}'),
         duration: Duration(seconds: 1),
       ),
     );
   }
 
-  void _onTapDayAfterToday(DateTime currentDay) {}
+  void _onTapDayIsNotToday(DateTime selectedDay) {
+    String message;
+    if (selectedDay.isAfter(_currentDay)) {
+      message = 'Homework not avalaible yet!';
+    } else {
+      message = 'You cannot do this homework anymore';
+    }
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
 
-  void _onTapDayBeforeToday(DateTime currentDay) {}
+  void _onTapToday() {
+    var currentDayFormated = DateFormat.yMMMMEEEEd().format(_currentDay);
+    var index = _aulas.indexWhere((aula) =>
+        DateFormat.yMMMMEEEEd()
+            .format(aula.dataAula)
+            .compareTo(currentDayFormated) ==
+        0);
+    pushNewScreenWithRouteSettings(context,
+        screen: ClassDetailScreen(),
+        settings: RouteSettings(
+            name: ClassDetailScreen.pageName, arguments: _aulas[index]),
+        pageTransitionAnimation: PageTransitionAnimation.fade);
+  }
 
   List<Aula> _getEventsForDay(DateTime day) {
     print('Entrei aqui para ver os eventos do dia: $day');
     //futuramente carregar os homeworks
 
-    var aulas = Provider.of<Aulas>(context, listen: false).items;
-    return aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
+    _aulas = Provider.of<Aulas>(context, listen: false).items;
+    return _aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
   }
 
   @override
@@ -91,9 +114,9 @@ class _MenuCalendarState extends State<MenuCalendar> {
         // //sempre será sexta
         // _kLastDay = _kFirstDay.subtract(Duration(days: -4));
         // //o dia corrente
-        // _focusedDay = _kFirstDay;
+        // _currentDay = _kFirstDay;
         // //o dia corrente
-        // _selectedDay = _focusedDay;
+        // _selectedDay = _currentDay;
       },
     );
 
@@ -108,9 +131,8 @@ class _MenuCalendarState extends State<MenuCalendar> {
       //sempre será sexta
       _kLastDay = _kFirstDay.subtract(Duration(days: -4));
       //o dia corrente
-      _focusedDay = DateTime.now().subtract(Duration(days: 1));
-      //o dia corrente
-      _selectedDay = _focusedDay;
+      _currentDay = DateTime.now();
+      _selectedDay = _currentDay;
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -121,8 +143,8 @@ class _MenuCalendarState extends State<MenuCalendar> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TableCalendar(
-        focusedDay: _focusedDay,
-        currentDay: _focusedDay,
+        focusedDay: _currentDay,
+        currentDay: _currentDay,
         firstDay: _kFirstDay,
         lastDay: _kLastDay,
         onDisabledDayTapped: _onTapDisabledDay,
@@ -131,15 +153,14 @@ class _MenuCalendarState extends State<MenuCalendar> {
         },
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
         onDaySelected: (selectedDay, focusedDay) {
-          if (!isSameDay(_selectedDay, selectedDay)) {
-            setState(() {
-              _selectedDay = selectedDay;
-              _focusedDay = focusedDay;
-            });
+          if (!isSameDay(selectedDay, _currentDay)) {
+            _onTapDayIsNotToday(selectedDay);
+          } else {
+            _onTapToday();
           }
         },
         onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
+          _currentDay = focusedDay;
         },
         headerVisible: false,
         calendarFormat: CalendarFormat.week,
@@ -174,15 +195,21 @@ class _MenuCalendarState extends State<MenuCalendar> {
 
             if (numberOfEvents > 0) {
               return Icon(Icons.video_library_rounded);
-            } else if (date.isAfter(_focusedDay)) {
+            } else if (date.isAfter(_currentDay)) {
               return Icon(Icons.alarm);
-            } else if (date.isBefore(_focusedDay)) {
+            } else if (date.isBefore(_currentDay)) {
               return Icon(Icons.alarm_off_sharp);
             } else {
               return Icon(Icons.clear);
             }
           },
-          selectedBuilder: (ctx, date, events) {},
+          selectedBuilder: (ctx, date, events) {
+            return Center(
+              child: Text(
+                date.day.toString(),
+              ),
+            );
+          },
           dowBuilder: (ctx, day) {
             if (!(day.weekday == DateTime.sunday ||
                 day.weekday == DateTime.saturday)) {
