@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:escola/mediaQuery/size_config.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/providers/messages.dart';
@@ -23,6 +24,21 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   var _isInit = true;
+  File? _profileImage;
+
+  void _selectedProfileImage(File image) {
+    _profileImage = image;
+  }
+
+  void _goToProfileScreen() {
+    pushNewScreen(
+      context,
+      screen: ProfileScreen(
+        handleProfilePhoto: _selectedProfileImage,
+      ),
+      pageTransitionAnimation: PageTransitionAnimation.fade,
+    );
+  }
 
   @override
   void initState() {
@@ -56,17 +72,19 @@ class _MenuScreenState extends State<MenuScreen> {
             'Home',
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
-          leading: IconButton(
-            color: Colors.white,
-            onPressed: () {
-              pushNewScreen(
-                context,
-                screen: ProfileScreen(),
-                pageTransitionAnimation: PageTransitionAnimation.fade,
-              );
-            },
-            icon: Icon(Icons.person),
-          ),
+          leading: _profileImage != null
+              ? GestureDetector(
+                  onTap: _goToProfileScreen,
+                  child: CircleAvatar(
+                    maxRadius: 20,
+                    backgroundImage: FileImage(_profileImage!),
+                  ),
+                )
+              : IconButton(
+                  color: Colors.white,
+                  onPressed: _goToProfileScreen,
+                  icon: Icon(Icons.person),
+                ),
           actions: [
             IconButton(
               color: Colors.white,

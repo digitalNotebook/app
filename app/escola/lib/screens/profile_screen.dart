@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import '../widgets/image_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final Function? handleProfilePhoto;
+
+  const ProfileScreen({
+    Key? key,
+    this.handleProfilePhoto,
+  }) : super(key: key);
   static const pageName = '/profile-screen';
   @override
   Widget build(BuildContext context) {
@@ -26,8 +32,23 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            SizedBox(
+              height: 15,
+            ),
+            ImageProfile(
+              onHandleProfilePicture: handleProfilePhoto!,
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Text('Nome'),
+            SizedBox(
+              height: 15,
+            ),
             Text('Estatisticas'),
+            SizedBox(
+              height: 15,
+            ),
           ],
         ),
       ),

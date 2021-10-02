@@ -128,10 +128,14 @@ class _MenuCalendarState extends State<MenuCalendar> {
     if (_isInit) {
       //sempre retorna segunda
       _kFirstDay = _setKFirstDay();
+      print(_kFirstDay);
       //sempre será sexta
       _kLastDay = _kFirstDay.subtract(Duration(days: -4));
       //o dia corrente
       _currentDay = DateTime.now();
+      if (_currentDay.isBefore(_kFirstDay)) {
+        _currentDay = _kFirstDay;
+      }
       _selectedDay = _currentDay;
     }
     _isInit = false;
@@ -151,10 +155,10 @@ class _MenuCalendarState extends State<MenuCalendar> {
         eventLoader: (day) {
           return _getEventsForDay(day);
         },
-        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(selectedDay, _currentDay)) {
             _onTapDayIsNotToday(selectedDay);
+            _selectedDay = selectedDay;
           } else {
             _onTapToday();
           }
