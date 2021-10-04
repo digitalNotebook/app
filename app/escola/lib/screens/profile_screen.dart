@@ -1,14 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../widgets/image_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final Function? handleProfilePhoto;
-
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     Key? key,
-    this.handleProfilePhoto,
   }) : super(key: key);
   static const pageName = '/profile-screen';
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  File? _profileImage;
+
+  void _selectedProfileImage(File image) {
+    _profileImage = image;
+  }
+
+  @override
+  void didChangeDependencies() {
+    var arguments = ModalRoute.of(context)!.settings.arguments;
+    if (arguments != null) _profileImage = arguments as File;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +39,11 @@ class ProfileScreen extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            if (_profileImage == null) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).pop(_profileImage);
+            }
           },
           color: Colors.white,
           icon: Icon(
@@ -36,7 +58,8 @@ class ProfileScreen extends StatelessWidget {
               height: 15,
             ),
             ImageProfile(
-              onHandleProfilePicture: handleProfilePhoto!,
+              profilePicture: _profileImage != null ? _profileImage : null,
+              onHandleProfilePicture: _selectedProfileImage,
             ),
             SizedBox(
               height: 15,

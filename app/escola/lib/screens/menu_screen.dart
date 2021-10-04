@@ -27,16 +27,23 @@ class _MenuScreenState extends State<MenuScreen> {
   File? _profileImage;
 
   void _selectedProfileImage(File image) {
-    _profileImage = image;
+    setState(() {
+      _profileImage = image;
+    });
   }
 
   void _goToProfileScreen() {
-    pushNewScreen(
+    print('pushNewScreenWithRouteSettings');
+    pushNewScreenWithRouteSettings(
       context,
-      screen: ProfileScreen(
-        handleProfilePhoto: _selectedProfileImage,
-      ),
+      screen: ProfileScreen(),
       pageTransitionAnimation: PageTransitionAnimation.fade,
+      settings: RouteSettings(arguments: _profileImage),
+    ).then(
+      (profileImage) {
+        if (profileImage == null) return;
+        _selectedProfileImage(profileImage);
+      },
     );
   }
 
@@ -76,8 +83,8 @@ class _MenuScreenState extends State<MenuScreen> {
               ? GestureDetector(
                   onTap: _goToProfileScreen,
                   child: CircleAvatar(
-                    maxRadius: 20,
-                    backgroundImage: FileImage(_profileImage!),
+                    maxRadius: 10,
+                    foregroundImage: FileImage(_profileImage!),
                   ),
                 )
               : IconButton(
