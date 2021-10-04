@@ -35,7 +35,7 @@ class _MenuMessageState extends State<MenuMessage> {
     _controller = PageController(
       initialPage: _currentCard,
       keepPage: false,
-      viewportFraction: 0.65,
+      viewportFraction: 0.75,
     );
     super.initState();
   }
@@ -79,7 +79,7 @@ class _MenuMessageState extends State<MenuMessage> {
         double value = 1.0;
         if (_controller.position.haveDimensions) {
           value = _controller.page! - index;
-          value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
+          value = (1 - (value.abs() * .25)).clamp(0.0, 1.0);
         }
 
         return Center(
@@ -90,34 +90,31 @@ class _MenuMessageState extends State<MenuMessage> {
           ),
         );
       },
-      child: Transform.scale(
-        scale: index == _currentCard ? 1 : 0.9,
-        child: Card(
-          elevation: index == _currentCard ? 7 : 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(index == _currentCard ? 20 : 10),
-            ),
+      child: Card(
+        elevation: index == _currentCard ? 7 : 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(index == _currentCard ? 20 : 10),
           ),
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                CardHeader(
-                  message: _items[index],
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              CardHeader(
+                message: _items[index],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Flexible(
+                child: _createMessageBox(
+                  SizeConfig.screenHeight!,
+                  SizeConfig.blockSizeVertical!,
+                  _items[index].description,
                 ),
-                SizedBox(
-                  height: 16,
-                ),
-                Flexible(
-                  child: _createMessageBox(
-                    SizeConfig.screenHeight!,
-                    SizeConfig.blockSizeVertical!,
-                    _items[index].description,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

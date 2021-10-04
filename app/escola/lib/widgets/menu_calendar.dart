@@ -58,13 +58,16 @@ class _MenuCalendarState extends State<MenuCalendar> {
   }
 
   void _onTapDisabledDay(DateTime day) {
-    var message = 'There is no homework  on ${DateFormat.EEEE().format(day)}';
-    if (day.isAfter(_currentDay)) {
-      message =
-          '${DateFormat.EEEE().format(day)}\'s homework not avalaible yet!';
-    } else if (day.isBefore(_currentDay)) {
-      message =
-          'It\'s not possible to do ${DateFormat.EEEE().format(day)}\'s homework';
+    var message = 'There is no homework on ${DateFormat.EEEE().format(day)}';
+
+    if (!(day.weekday == DateTime.saturday || day.weekday == DateTime.sunday)) {
+      if (day.isAfter(_currentDay)) {
+        message =
+            '${DateFormat.EEEE().format(day)}\'s homework not avalaible yet!';
+      } else if (day.isBefore(_currentDay)) {
+        message =
+            'It\'s not possible to do ${DateFormat.EEEE().format(day)}\'s homework';
+      }
     }
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
