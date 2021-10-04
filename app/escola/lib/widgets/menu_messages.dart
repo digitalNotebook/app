@@ -35,7 +35,7 @@ class _MenuMessageState extends State<MenuMessage> {
     _controller = PageController(
       initialPage: _currentCard,
       keepPage: false,
-      viewportFraction: 0.75,
+      viewportFraction: 0.65,
     );
     super.initState();
   }
@@ -85,12 +85,13 @@ class _MenuMessageState extends State<MenuMessage> {
         return Center(
           child: Container(
             height: Curves.easeOut.transform(value) * 300,
-            width: Curves.easeOut.transform(value) * 250,
+            width: Curves.easeOut.transform(value) * 350,
             child: child,
           ),
         );
       },
       child: Card(
+        shadowColor: index == _currentCard ? Colors.amber[300] : Colors.black12,
         elevation: index == _currentCard ? 7 : 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
