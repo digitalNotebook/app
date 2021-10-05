@@ -54,7 +54,6 @@ class _TabsScreenState extends State<TabsScreen> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.assignment_outlined),
         title: 'Classes',
-        textStyle: TextStyle(fontSize: 16),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.grey,
       ),

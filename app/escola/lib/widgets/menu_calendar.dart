@@ -22,6 +22,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
   late DateTime _kLastDay;
   late DateTime _currentDay;
   late DateTime _selectedDay;
+  late DateTime _focusedDay;
   late List<Aula> _aulas;
   var _isInit = true;
 
@@ -134,9 +135,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
       _kLastDay = _kFirstDay.subtract(Duration(days: -4));
       //o dia corrente
       _currentDay = DateTime.now();
-      if (_currentDay.isBefore(_kFirstDay)) {
-        _currentDay = _kFirstDay;
-      }
+      _focusedDay = _currentDay;
       _selectedDay = _currentDay;
     }
     _isInit = false;
@@ -148,7 +147,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TableCalendar(
-        focusedDay: _currentDay,
+        focusedDay: _focusedDay,
         currentDay: _currentDay,
         firstDay: _kFirstDay,
         lastDay: _kLastDay,
@@ -208,13 +207,22 @@ class _MenuCalendarState extends State<MenuCalendar> {
               return Icon(Icons.clear);
             }
           },
-          selectedBuilder: (ctx, date, events) {
+          //remover a marca do focusedDay
+          todayBuilder: (ctx, date, events) {
             return Center(
               child: Text(
                 date.day.toString(),
               ),
             );
           },
+
+          // selectedBuilder: (ctx, date, events) {
+          //   return Center(
+          //     child: Text(
+          //       date.day.toString(),
+          //     ),
+          //   );
+          // },
           dowBuilder: (ctx, day) {
             if (!(day.weekday == DateTime.sunday ||
                 day.weekday == DateTime.saturday)) {

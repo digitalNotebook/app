@@ -80,11 +80,29 @@ class _MenuScreenState extends State<MenuScreen> {
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
           leading: _profileImage != null
+              // ? GestureDetector(
+              //     onTap: _goToProfileScreen,
+              //     child: CircleAvatar(
+              //       backgroundColor: Colors.transparent,
+              //       radius: 10,
+              //       child: ClipOval(
+              //         child: Image.file(
+              //           _profileImage!,
+              //           fit: BoxFit.cover,
+              //           width: 50,
+              //           height: 50,
+              //         ),
+              //       ),
+              //     ),
+              //   )
               ? GestureDetector(
                   onTap: _goToProfileScreen,
-                  child: CircleAvatar(
-                    maxRadius: 10,
-                    foregroundImage: FileImage(_profileImage!),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 58,
+                    child: CircleAvatar(
+                      backgroundImage: FileImage(_profileImage!),
+                    ),
                   ),
                 )
               : IconButton(
