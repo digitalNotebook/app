@@ -88,32 +88,44 @@ class _MenuMessageState extends State<MenuMessage> {
           child: child,
         );
       },
-      child: Card(
-        shadowColor: index == _currentCard ? Colors.black87 : Colors.black45,
-        elevation: index == _currentCard ? 7 : 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(index == _currentCard ? 20 : 10),
+      child: GestureDetector(
+        onTap: () {
+          pushNewScreenWithRouteSettings(
+            context,
+            pageTransitionAnimation: PageTransitionAnimation.sizeUp,
+            screen: MessageDetailScreen(),
+            settings: RouteSettings(
+                name: MessageDetailScreen.pageName,
+                arguments: _items[index].description),
+          );
+        },
+        child: Card(
+          shadowColor: index == _currentCard ? Colors.black87 : Colors.black45,
+          elevation: index == _currentCard ? 7 : 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(index == _currentCard ? 20 : 10),
+            ),
           ),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              CardHeader(
-                message: _items[index],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Flexible(
-                child: _createMessageBox(
-                  SizeConfig.screenHeight!,
-                  SizeConfig.blockSizeVertical!,
-                  _items[index].description,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                CardHeader(
+                  message: _items[index],
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 16,
+                ),
+                Flexible(
+                  child: _createMessageBox(
+                    SizeConfig.screenHeight!,
+                    SizeConfig.blockSizeVertical!,
+                    _items[index].description,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
