@@ -59,16 +59,25 @@ class _MenuCalendarState extends State<MenuCalendar> {
   }
 
   void _onTapDisabledDay(DateTime day) {
-    var message = 'There is no homework on ${DateFormat.EEEE().format(day)}';
+    var currentDay = DateTime.now();
+    String message = '';
 
+    //DIA DA SEMANA
     if (!(day.weekday == DateTime.saturday || day.weekday == DateTime.sunday)) {
-      if (day.isAfter(_currentDay)) {
+      //NÃO DISPONIVEL AINDA
+      if (day.isAfter(currentDay)) {
         message =
             '${DateFormat.EEEE().format(day)}\'s homework not avalaible yet!';
-      } else if (day.isBefore(_currentDay)) {
+      }
+      //NÃO É POSSÍVEL FAZER MAIS
+      else if (day.isBefore(currentDay)) {
         message =
             'It\'s not possible to do ${DateFormat.EEEE().format(day)}\'s homework';
       }
+    }
+    //FINAL DE SEMANA
+    else {
+      message = 'There is no homework on ${DateFormat.EEEE().format(day)}';
     }
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -130,12 +139,22 @@ class _MenuCalendarState extends State<MenuCalendar> {
       _aulas = Provider.of<Aulas>(context, listen: false).items;
       //sempre retorna segunda
       _kFirstDay = _setKFirstDay();
-      print(_kFirstDay);
+      print('Primeiro dia do calendário: $_kFirstDay');
       //sempre será sexta
       _kLastDay = _kFirstDay.subtract(Duration(days: -4));
       //o dia corrente
       _currentDay = DateTime.now();
-      _focusedDay = _currentDay;
+      print('Dia atual $_currentDay');
+
+      if (_kFirstDay.isAfter(_currentDay)) {
+        print('Testando IF');
+        _focusedDay = _kFirstDay;
+        _currentDay = _focusedDay;
+      } else {
+        print('Testando ELSE');
+        _focusedDay = _currentDay;
+      }
+
       _selectedDay = _currentDay;
     }
     _isInit = false;
