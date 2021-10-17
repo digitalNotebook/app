@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../helpers/calendar_helpers.dart';
 
 class CalendarItem extends StatefulWidget {
   const CalendarItem({Key? key}) : super(key: key);
@@ -18,12 +19,14 @@ class _CalendarItemState extends State<CalendarItem> {
   DateTime? _selectedDay;
   var _isInit = true;
   late List<Aula> _aulas;
+  late DateTime _currentDay;
 
   @override
   void didChangeDependencies() {
     //executa somente uma vez
     if (_isInit) {
       _aulas = Provider.of<Aulas>(context, listen: false).items;
+      _currentDay = DateTime.now();
     }
     super.didChangeDependencies();
   }
@@ -64,6 +67,37 @@ class _CalendarItemState extends State<CalendarItem> {
           eventLoader: (day) {
             return _getClassesOfThis(day);
           },
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (ctx, date, events) {
+              var numberOfEvents = events.length;
+              print('Número de eventos ${events.length} do dia $date');
+              if (numberOfEvents > 0) {
+                if (CalendarHelper.compareDates(_currentDay, date)) {
+                  //se entrou aqui encontrou a aula, temos 5 dias de homework
+                  //icone para a aula
+                  return Icon(
+                    Icons.video_library_rounded,
+                    size: 14,
+                  );
+                } else if (date.isAfter(_currentDay)) {
+                  return Icon(
+                    Icons.alarm,
+                    size: 14,
+                  );
+                } else {
+                  return Icon(
+                    Icons.alarm_off_sharp,
+                    size: 14,
+                  );
+                }
+              } else {
+                return Icon(
+                  Icons.clear,
+                  size: 14,
+                );
+              }
+            },
+          ),
         ),
         const SizedBox(
           height: 20,

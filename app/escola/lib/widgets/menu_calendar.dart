@@ -1,3 +1,4 @@
+import 'package:escola/helpers/calendar_helpers.dart';
 import 'package:escola/models/aula.dart';
 import 'package:escola/models/homework.dart';
 import 'package:escola/providers/aulas.dart';
@@ -112,11 +113,6 @@ class _MenuCalendarState extends State<MenuCalendar> {
     }
   }
 
-  bool _compareDates(DateTime a, DateTime b) {
-    var format = DateFormat.yMMMMEEEEd().format(a);
-    return DateFormat.yMMMMEEEEd().format(a).compareTo(format) == 0;
-  }
-
   List<Aula> _getClassesOfThis(DateTime day) {
     print('Entrei aqui para ver os eventos do dia: $day');
     return _aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
@@ -213,7 +209,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
             var numberOfEvents = events.length;
             print('Número de eventos ${events.length} do dia $date');
             if (numberOfEvents > 0) {
-              if (_compareDates(_currentDay, date)) {
+              if (CalendarHelper.compareDates(_currentDay, date)) {
                 //se entrou aqui encontrou a aula, temos 5 dias de homework
                 //icone para a aula
                 return Icon(Icons.video_library_rounded);
