@@ -59,65 +59,6 @@ class _MenuCalendarState extends State<MenuCalendar> {
     return firstDay;
   }
 
-  void _onTapDisabledDay(DateTime day) {
-    var currentDay = DateTime.now();
-    String message = '';
-
-    //DIA DA SEMANA
-    if (!(day.weekday == DateTime.saturday || day.weekday == DateTime.sunday)) {
-      //NÃO DISPONIVEL AINDA
-      if (day.isAfter(currentDay)) {
-        message =
-            '${DateFormat.EEEE().format(day)}\'s homework not avalaible yet!';
-      }
-      //NÃO É POSSÍVEL FAZER MAIS
-      else if (day.isBefore(currentDay)) {
-        message =
-            'It\'s not possible to do ${DateFormat.EEEE().format(day)}\'s homework';
-      }
-    }
-    //FINAL DE SEMANA
-    else {
-      message = 'There is no homework on ${DateFormat.EEEE().format(day)}';
-    }
-
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 1),
-      ),
-    );
-  }
-
-  void _onTapThisDay(DateTime selectedDay) {
-    var events = _getClassesOfThis(selectedDay);
-
-    if (events.length > 0) {
-      //formatamos a data para fazer a comparação
-      var currentDayFormated = DateFormat.yMMMMEEEEd().format(selectedDay);
-
-      //comparamos as datas
-      var index = _aulas.indexWhere((aula) =>
-          DateFormat.yMMMMEEEEd()
-              .format(aula.dataAula)
-              .compareTo(currentDayFormated) ==
-          0);
-      pushNewScreenWithRouteSettings(context,
-          screen: ClassDetailScreen(),
-          settings: RouteSettings(
-              name: ClassDetailScreen.pageName, arguments: _aulas[index]),
-          pageTransitionAnimation: PageTransitionAnimation.fade);
-    } else {
-      _onTapDisabledDay(selectedDay);
-    }
-  }
-
-  List<Aula> _getClassesOfThis(DateTime day) {
-    print('Entrei aqui para ver os eventos do dia: $day');
-    return _aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
-  }
-
   // List<Homework> _getHomeworkOfThis(DateTime day) {
   //   print('Entrei aqui para ver os eventos do dia: $day');
   //   return;
@@ -166,13 +107,19 @@ class _MenuCalendarState extends State<MenuCalendar> {
         currentDay: _currentDay,
         firstDay: _kFirstDay,
         lastDay: _kLastDay,
-        onDisabledDayTapped: _onTapDisabledDay,
+        onDisabledDayTapped: (day) {
+          CalendarHelper.onTapDisabledDay(day, context);
+        },
         eventLoader: (day) {
-          return _getClassesOfThis(day);
+          return CalendarHelper.getClassesOfThis(day, _aulas);
         },
         onDaySelected: (selectedDay, focusedDay) {
-          _onTapThisDay(selectedDay);
-          _selectedDay = selectedDay;
+          if (!(selectedDay.isAfter(_currentDay))) {
+            CalendarHelper.onTapThisDay(selectedDay, context, _aulas);
+            _selectedDay = selectedDay;
+          } else {
+            CalendarHelper.onTapDisabledDay(selectedDay, context);
+          }
         },
         onPageChanged: (focusedDay) {
           _currentDay = focusedDay;
