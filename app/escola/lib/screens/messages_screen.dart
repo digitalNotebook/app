@@ -1,3 +1,4 @@
+import 'package:escola/widgets/master_background.dart';
 import 'package:flutter/material.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -17,9 +18,10 @@ class MessagesScreen extends StatelessWidget {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
-      body: Center(
+      body: MasterBackground(
+          child: Center(
         child: Text('Lista das mensagens'),
-      ),
+      )),
     );
   }
 }

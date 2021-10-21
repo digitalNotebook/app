@@ -1,6 +1,10 @@
 import 'package:escola/providers/aulas.dart';
+import 'package:escola/providers/homeworks.dart';
 import 'package:escola/screens/profile_screen.dart';
+import 'package:escola/widgets/bottomBackground.dart';
 import 'package:escola/widgets/calendar_item.dart';
+import 'package:escola/widgets/master_background.dart';
+import 'package:escola/widgets/topBackground.dart';
 import 'package:flutter/material.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -14,8 +18,15 @@ class CalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Buildei a tela Calendar');
-    return ChangeNotifierProvider(
-      create: (_) => Aulas(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => Aulas(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Homeworks(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -36,14 +47,8 @@ class CalendarScreen extends StatelessWidget {
             icon: Icon(Icons.person),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            CalendarItem(),
-          ],
+        body: MasterBackground(
+          child: CalendarItem(),
         ),
       ),
     );

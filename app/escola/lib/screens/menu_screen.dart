@@ -4,6 +4,7 @@ import 'package:escola/providers/aulas.dart';
 import 'package:escola/providers/messages.dart';
 import 'package:escola/screens/profile_screen.dart';
 import 'package:escola/screens/settings_screen.dart';
+import 'package:escola/widgets/master_background.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +129,7 @@ class _MenuScreenState extends State<MenuScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : SafeArea(
+            : MasterBackground(
                 child: Column(
                   children: [
                     //SAUDAÇÃO

@@ -159,14 +159,14 @@ class _MenuCalendarState extends State<MenuCalendar> {
               if (CalendarHelper.compareDates(_currentDay, date)) {
                 //se entrou aqui encontrou a aula, temos 5 dias de homework
                 //icone para a aula
-                return Icon(Icons.video_library_rounded);
+                return Icon(Icons.check_box_outline_blank_sharp);
               } else if (date.isAfter(_currentDay)) {
                 return Icon(Icons.alarm);
               } else {
                 return Icon(Icons.alarm_off_sharp);
               }
             } else {
-              return Icon(Icons.clear);
+              return Icon(Icons.indeterminate_check_box_outlined);
             }
           },
           //remover a marca do focusedDay

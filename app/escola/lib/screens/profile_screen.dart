@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:escola/widgets/master_background.dart';
 import 'package:flutter/material.dart';
 import '../widgets/image_profile.dart';
 
@@ -30,51 +31,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        toolbarHeight: 45,
-        title: Text(
-          'My Profile',
-          style: Theme.of(context).appBarTheme.titleTextStyle,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            if (_profileImage == null) {
-              Navigator.of(context).pop();
-            } else {
-              Navigator.of(context).pop(_profileImage);
-            }
-          },
-          color: Colors.white,
-          icon: Icon(
-            Icons.arrow_back_ios_new,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          toolbarHeight: 45,
+          title: Text(
+            'My Profile',
+            style: Theme.of(context).appBarTheme.titleTextStyle,
+          ),
+          leading: IconButton(
+            onPressed: () {
+              if (_profileImage == null) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pop(_profileImage);
+              }
+            },
+            color: Colors.white,
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+            ),
           ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
+        body: MasterBackground(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                ImageProfile(
+                  profilePicture: _profileImage != null ? _profileImage : null,
+                  onHandleProfilePicture: _selectedProfileImage,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text('Nome'),
+                SizedBox(
+                  height: 15,
+                ),
+                Text('Estatisticas'),
+                SizedBox(
+                  height: 15,
+                ),
+              ],
             ),
-            ImageProfile(
-              profilePicture: _profileImage != null ? _profileImage : null,
-              onHandleProfilePicture: _selectedProfileImage,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text('Nome'),
-            SizedBox(
-              height: 15,
-            ),
-            Text('Estatisticas'),
-            SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

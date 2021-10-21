@@ -1,4 +1,5 @@
 import 'package:escola/models/aula.dart';
+import 'package:escola/models/homework.dart';
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +16,9 @@ class CalendarHelper {
     BuildContext context,
     List<Aula> aulas,
   ) {
-    var events = CalendarHelper.getClassesOfThis(selectedDay, aulas);
+    var aulasMarcadas = CalendarHelper.getClassesOfThis(selectedDay, aulas);
 
-    if (events.length > 0) {
+    if (aulasMarcadas.length > 0) {
       //formatamos a data para fazer a comparação
       var selectedDayFormatted = DateFormat.yMMMMEEEEd().format(selectedDay);
 
@@ -40,6 +41,28 @@ class CalendarHelper {
   static List<Aula> getClassesOfThis(DateTime day, List<Aula> aulas) {
     // print('Entrei aqui para ver os eventos do dia: $day');
     return aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
+  }
+
+  static List<Homework> getHomeworksOfThis(
+      DateTime day, List<Homework> homeworks) {
+    // print('Entrei aqui para ver os eventos do dia: $day');
+    return homeworks
+        .where((homework) => homework.dataParaSerFeito.compareTo(day) == 0)
+        .toList();
+  }
+
+  //ao inves de passar dynamic usar alguma classe abstrata ou interface
+  static List<dynamic> getClassesAndHomeworks(
+      DateTime day, List<Homework> homeworks, List<Aula> aulas) {
+    List<dynamic> classesAndHomeworks = [];
+
+    var allClasses = CalendarHelper.getClassesOfThis(day, aulas);
+    var allHomeworks = CalendarHelper.getHomeworksOfThis(day, homeworks);
+
+    classesAndHomeworks.addAll(allClasses);
+    classesAndHomeworks.addAll(allHomeworks);
+
+    return classesAndHomeworks;
   }
 
   static void onTapDisabledDay(DateTime day, BuildContext context) {

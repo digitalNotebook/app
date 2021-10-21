@@ -12,7 +12,8 @@ class Homework with ChangeNotifier {
   final String title;
   final String description;
   final Status status;
-  final DateTime dataRealizado;
+  final DateTime dataParaSerFeito;
+  final DateTime? dataRealizadoPeloAluno;
   // final List<Exercicio> exercicios;
 
   Homework({
@@ -20,7 +21,8 @@ class Homework with ChangeNotifier {
     required this.title,
     required this.description,
     required this.status,
-    required this.dataRealizado,
+    required this.dataParaSerFeito,
+    this.dataRealizadoPeloAluno,
     // required this.exercicios,
   });
 }

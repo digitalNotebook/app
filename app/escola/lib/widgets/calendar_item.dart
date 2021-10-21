@@ -75,7 +75,7 @@ class _CalendarItemState extends State<CalendarItem> {
                 //se entrou aqui encontrou a aula, temos 5 dias de homework
                 //icone para a aula
                 return Icon(
-                  Icons.video_library_rounded,
+                  Icons.check_box_outlined,
                   size: 14,
                 );
               } else if (date.isAfter(_currentDay)) {

@@ -11,6 +11,29 @@ class ClassDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var aula = ModalRoute.of(context)?.settings.arguments as Aula;
+    var container = Container(
+      transform: Matrix4.rotationZ(-5 * pi / 180)..translate(-5.0),
+      color: Colors.yellow.withOpacity(0.8),
+      child: Text(
+        aula.title,
+        style: TextStyle(
+          color: Colors.black,
+          fontFamily: 'IndieFlower',
+          fontSize: 20,
+        ),
+      ),
+    );
+    var hero = Hero(
+      tag: aula.id,
+      child: Image.network(
+        aula.imagesUrl,
+        errorBuilder: (ctx, exception, stack) {
+          return Placeholder(
+            fallbackHeight: 200,
+          );
+        },
+      ),
+    );
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
@@ -18,7 +41,7 @@ class ClassDetailScreen extends StatelessWidget {
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.black,
-              //appbar não fica vísivel quando scrollar
+              //appbar fica vísivel quando scrollar
               pinned: true,
               //botão para voltar
               leading: IconButton(
@@ -30,32 +53,12 @@ class ClassDetailScreen extends StatelessWidget {
                 iconSize: 30,
               ),
               //mesmo tamanho do container da imagem da aula
-              expandedHeight: 200,
+              // expandedHeight: 200,
+
               //o que teremos dentro da appbar
               flexibleSpace: FlexibleSpaceBar(
-                title: Container(
-                  transform: Matrix4.rotationZ(-5 * pi / 180)..translate(-5.0),
-                  color: Colors.yellow.withOpacity(0.8),
-                  child: Text(
-                    aula.title,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'IndieFlower',
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                background: Hero(
-                  tag: aula.id,
-                  child: Image.network(
-                    aula.imagesUrl,
-                    errorBuilder: (ctx, exception, stack) {
-                      return Placeholder(
-                        fallbackHeight: 200,
-                      );
-                    },
-                  ),
-                ),
+                title: container,
+                background: hero,
               ),
             ),
             SliverList(

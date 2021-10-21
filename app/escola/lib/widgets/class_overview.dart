@@ -2,6 +2,7 @@ import 'package:escola/models/aula.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/widgets/class_list.dart';
 import 'package:escola/widgets/class_tabs.dart';
+import 'package:escola/widgets/master_background.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -154,81 +155,74 @@ class _ClassOverviewState extends State<ClassOverview>
   Widget build(BuildContext context) {
     print('Buildei a ClassesOverview');
     return Scaffold(
-      //evita que o softkeyboard traga tudo para cima
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        toolbarHeight: 45,
-        title: Text(
-          'Classes',
-          style: Theme.of(context).appBarTheme.titleTextStyle,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _switchSearchButton();
-            },
-            icon: Icon(
-              _isSearchPressed ? Icons.close : Icons.search,
-              color: Colors.white,
-            ),
+        //evita que o softkeyboard traga tudo para cima
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          toolbarHeight: 45,
+          title: Text(
+            'Classes',
+            style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const ClassBackground(),
-            const ClassBackgroundTop(),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: _isSearchPressed
-                      ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Form(
-                            key: _formKey,
-                            child: FadeTransition(
-                              opacity: _opacityAnimation,
-                              child: SlideTransition(
-                                position: _slideAnimation,
-                                child: TextField(
-                                  onChanged: (text) => _runFilter(text),
-                                  keyboardType: TextInputType.text,
-                                  autofocus: true,
-                                  decoration: InputDecoration(
-                                    labelText: 'Search',
-                                    border: OutlineInputBorder(),
-                                    suffixIcon: Icon(Icons.search),
-                                    hintText: 'Insert class name here',
-                                  ),
-                                  onSubmitted: (_) {
-                                    _showKeyboard = false;
-                                    _foundAulas = _aulas;
-                                  },
+          actions: [
+            IconButton(
+              onPressed: () {
+                _switchSearchButton();
+              },
+              icon: Icon(
+                _isSearchPressed ? Icons.close : Icons.search,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        body: MasterBackground(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                flex: 2,
+                child: _isSearchPressed
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Form(
+                          key: _formKey,
+                          child: FadeTransition(
+                            opacity: _opacityAnimation,
+                            child: SlideTransition(
+                              position: _slideAnimation,
+                              child: TextField(
+                                onChanged: (text) => _runFilter(text),
+                                keyboardType: TextInputType.text,
+                                autofocus: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Search',
+                                  border: OutlineInputBorder(),
+                                  suffixIcon: Icon(Icons.search),
+                                  hintText: 'Insert class name here',
                                 ),
+                                onSubmitted: (_) {
+                                  _showKeyboard = false;
+                                  _foundAulas = _aulas;
+                                },
                               ),
                             ),
                           ),
-                        )
-                      : ClassTabs(
-                          handleDoneButton: _handleDoneButton,
-                          handleUndoneButton: _handleUndoneButton,
-                          handleFavoriteButton: _handleFavoriteButton,
-                          status: _classFilter,
                         ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: ClassList(_foundAulas, _resetIsSearchPressed),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+                      )
+                    : ClassTabs(
+                        handleDoneButton: _handleDoneButton,
+                        handleUndoneButton: _handleUndoneButton,
+                        handleFavoriteButton: _handleFavoriteButton,
+                        status: _classFilter,
+                      ),
+              ),
+              Expanded(
+                flex: 10,
+                child: ClassList(_foundAulas, _resetIsSearchPressed),
+              ),
+            ],
+          ),
+        ));
   }
 }
