@@ -11,7 +11,7 @@ class HomeworkList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homeworks = Provider.of<Homeworks>(context).items;
+    var homeworks = Provider.of<Homeworks>(context).getAll();
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
       decoration: BoxDecoration(

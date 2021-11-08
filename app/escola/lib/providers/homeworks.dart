@@ -1,7 +1,9 @@
+import 'package:escola/models/iescola.dart';
+
 import '../models/homework.dart';
 import 'package:flutter/foundation.dart';
 
-class Homeworks with ChangeNotifier {
+class Homeworks with ChangeNotifier implements IEscola {
   List<Homework> _items = [
     Homework(
       id: 'h1',
@@ -31,7 +33,12 @@ class Homeworks with ChangeNotifier {
         dataParaSerFeito: DateTime.utc(2021, 10, 27)),
   ];
 
-  List<Homework> get items {
+  // List<Homework> get items {
+  //   return [..._items];
+  // }
+
+  @override
+  List<Homework> getAll() {
     return [..._items];
   }
 }

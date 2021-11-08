@@ -73,7 +73,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
   void didChangeDependencies() {
     if (_isInit) {
       //Carrega uma lista de aulas
-      _aulas = Provider.of<Aulas>(context, listen: false).items;
+      _aulas = Provider.of<Aulas>(context, listen: false).getAll();
       //sempre retorna segunda
       _kFirstDay = _setKFirstDay();
       print('Primeiro dia do calendário: $_kFirstDay');

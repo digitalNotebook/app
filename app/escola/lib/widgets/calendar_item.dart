@@ -1,4 +1,5 @@
 import 'package:escola/models/aula.dart';
+import 'package:escola/models/iescola.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,14 +19,14 @@ class _CalendarItemState extends State<CalendarItem> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   var _isInit = true;
-  late List<Aula> _aulas;
+  late List<IEscola> _aulas;
   late DateTime _currentDay;
 
   @override
   void didChangeDependencies() {
     //executa somente uma vez
     if (_isInit) {
-      _aulas = Provider.of<Aulas>(context, listen: false).items;
+      _aulas = Provider.of<Aulas>(context, listen: false).getAll();
       _currentDay = DateTime.now();
     }
     super.didChangeDependencies();

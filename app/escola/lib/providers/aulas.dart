@@ -1,10 +1,11 @@
+import 'package:escola/models/iescola.dart';
 import 'package:flutter/material.dart';
 import '../models/aula.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Aulas with ChangeNotifier {
+class Aulas with ChangeNotifier implements IEscola {
   //dummy data de aulas
   List<Aula> _aulas = [
     Aula(
@@ -70,7 +71,12 @@ class Aulas with ChangeNotifier {
   ];
 
   //retornamos uma cópia da propriedade _aulas
-  List<Aula> get items {
+  // List<Aula> get items {
+  //   return [..._aulas];
+  // }
+
+  @override
+  List<Aula> getAll() {
     return [..._aulas];
   }
 
