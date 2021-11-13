@@ -1,13 +1,13 @@
 // import 'package:escola/models/exercicio.dart';
 
-import 'package:flutter/cupertino.dart';
+import 'package:escola/models/subject.dart';
 
 enum Status {
   DONE,
   UNDONE,
 }
 
-class Homework with ChangeNotifier {
+class Homework extends Subject {
   final String id;
   final String title;
   final String description;
@@ -24,5 +24,10 @@ class Homework with ChangeNotifier {
     required this.dataParaSerFeito,
     this.dataRealizadoPeloAluno,
     // required this.exercicios,
-  });
+  }) {
+    super.id = this.id;
+    super.dataParaSerFeito = this.dataParaSerFeito;
+    super.description = this.description;
+    super.title = this.title;
+  }
 }

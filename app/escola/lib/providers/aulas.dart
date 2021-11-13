@@ -1,11 +1,12 @@
-import 'package:escola/models/iescola.dart';
+import 'package:escola/models/iprovider.dart';
+import 'package:escola/models/subject.dart';
 import 'package:flutter/material.dart';
 import '../models/aula.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Aulas with ChangeNotifier implements IEscola {
+class Aulas with ChangeNotifier implements IProvider {
   //dummy data de aulas
   List<Aula> _aulas = [
     Aula(
@@ -70,19 +71,24 @@ class Aulas with ChangeNotifier implements IEscola {
         status: Status.DONE),
   ];
 
-  //retornamos uma cópia da propriedade _aulas
+  // retornamos uma cópia da propriedade _aulas
   // List<Aula> get items {
   //   return [..._aulas];
   // }
 
   @override
-  List<Aula> getAll() {
+  List<Subject> getAll() {
     return [..._aulas];
   }
 
-  Aula findById(String id) {
+  @override
+  Subject findById(String id) {
     return _aulas.firstWhere((cadaAula) => cadaAula.id == id);
   }
+
+  // Aula findById(String id) {
+  //   return _aulas.firstWhere((cadaAula) => cadaAula.id == id);
+  // }
 
   List<Aula> get undoneClasses {
     return _aulas

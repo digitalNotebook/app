@@ -1,10 +1,11 @@
-import 'package:escola/models/iescola.dart';
+import 'package:escola/models/iprovider.dart';
+import 'package:escola/models/subject.dart';
 
 import '../models/homework.dart';
 import 'package:flutter/foundation.dart';
 
-class Homeworks with ChangeNotifier implements IEscola {
-  List<Homework> _items = [
+class Homeworks with ChangeNotifier {
+  List<Homework> _homeworks = [
     Homework(
       id: 'h1',
       title: 'Present Simple',
@@ -33,12 +34,17 @@ class Homeworks with ChangeNotifier implements IEscola {
         dataParaSerFeito: DateTime.utc(2021, 10, 27)),
   ];
 
+  @override
+  Subject findById(String id) {
+    return _homeworks.firstWhere((cadaHomework) => cadaHomework.id == id);
+  }
+
+  @override
+  List<Subject> getAll() {
+    return [..._homeworks];
+  }
+
   // List<Homework> get items {
   //   return [..._items];
   // }
-
-  @override
-  List<Homework> getAll() {
-    return [..._items];
-  }
 }

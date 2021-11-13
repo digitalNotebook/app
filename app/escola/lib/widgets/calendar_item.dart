@@ -1,6 +1,8 @@
 import 'package:escola/models/aula.dart';
-import 'package:escola/models/iescola.dart';
+import 'package:escola/models/iprovider.dart';
+import 'package:escola/models/subject.dart';
 import 'package:escola/providers/aulas.dart';
+import 'package:escola/providers/homeworks.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +21,25 @@ class _CalendarItemState extends State<CalendarItem> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   var _isInit = true;
-  late List<IEscola> _aulas;
+
   late DateTime _currentDay;
+
+  late List<Subject> _aulasEHomeworks;
+  late List<Subject> _aulas;
+  late List<Subject> _homeworks;
 
   @override
   void didChangeDependencies() {
     //executa somente uma vez
     if (_isInit) {
       _aulas = Provider.of<Aulas>(context, listen: false).getAll();
+      _homeworks = Provider.of<Homeworks>(context, listen: false).getAll();
+
+      _aulasEHomeworks = [];
+
+      _aulasEHomeworks.addAll(_aulas);
+      _aulasEHomeworks.addAll(_homeworks);
+
       _currentDay = DateTime.now();
     }
     super.didChangeDependencies();
@@ -58,14 +71,15 @@ class _CalendarItemState extends State<CalendarItem> {
               CalendarHelper.onTapDisabledDay(selectedDay, context);
             } else {
               //abre a aula ou homework
-              CalendarHelper.onTapThisDay(selectedDay, context, _aulas);
+              CalendarHelper.onTapThisDay(
+                  selectedDay, context, _aulasEHomeworks);
             }
             setState(() {
               _selectedDay = selectedDay;
             });
           },
           eventLoader: (day) {
-            return CalendarHelper.getClassesOfThis(day, _aulas);
+            return CalendarHelper.getSubjectOfThis(day, _aulasEHomeworks);
           },
           calendarBuilders:
               CalendarBuilders(markerBuilder: (ctx, date, events) {

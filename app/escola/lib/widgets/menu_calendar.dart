@@ -1,6 +1,7 @@
 import 'package:escola/helpers/calendar_helpers.dart';
 import 'package:escola/models/aula.dart';
 import 'package:escola/models/homework.dart';
+import 'package:escola/models/subject.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
   late DateTime _currentDay;
   late DateTime _selectedDay;
   late DateTime _focusedDay;
-  late List<Aula> _aulas;
+  late List<Subject> _aulas;
   var _isInit = true;
 
   DateTime _setKFirstDay() {
@@ -111,7 +112,7 @@ class _MenuCalendarState extends State<MenuCalendar> {
           CalendarHelper.onTapDisabledDay(day, context);
         },
         eventLoader: (day) {
-          return CalendarHelper.getClassesOfThis(day, _aulas);
+          return CalendarHelper.getSubjectOfThis(day, _aulas);
         },
         onDaySelected: (selectedDay, focusedDay) {
           if (!(selectedDay.isAfter(_currentDay))) {

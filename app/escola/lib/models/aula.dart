@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:escola/models/subject.dart';
 
 enum Status {
   DONE,
   UNDONE,
 }
 
-class Aula with ChangeNotifier {
+class Aula extends Subject {
   final String id;
   final String title;
   final String subtitle;
@@ -31,7 +31,12 @@ class Aula with ChangeNotifier {
     required this.horaInicio,
     required this.horaFim,
     this.isFavorite = false,
-  });
+  }) {
+    super.id = this.id;
+    super.dataParaSerFeito = this.dataAula;
+    super.description = this.description;
+    super.title = this.title;
+  }
 
   void toggleFavorite() {
     isFavorite = !isFavorite;

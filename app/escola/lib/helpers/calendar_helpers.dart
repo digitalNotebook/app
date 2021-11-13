@@ -1,5 +1,6 @@
 import 'package:escola/models/aula.dart';
 import 'package:escola/models/homework.dart';
+import 'package:escola/models/subject.dart';
 import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,55 +15,35 @@ class CalendarHelper {
   static void onTapThisDay(
     DateTime selectedDay,
     BuildContext context,
-    List<Aula> aulas,
+    List<Subject> subjects,
   ) {
-    var aulasMarcadas = CalendarHelper.getClassesOfThis(selectedDay, aulas);
+    var aulasMarcadas = CalendarHelper.getSubjectOfThis(selectedDay, subjects);
 
     if (aulasMarcadas.length > 0) {
       //formatamos a data para fazer a comparação
       var selectedDayFormatted = DateFormat.yMMMMEEEEd().format(selectedDay);
 
       //comparamos as datas
-      var index = aulas.indexWhere((aula) =>
+      var index = subjects.indexWhere((aula) =>
           DateFormat.yMMMMEEEEd()
-              .format(aula.dataAula)
+              .format(aula.dataParaSerFeito)
               .compareTo(selectedDayFormatted) ==
           0);
       pushNewScreenWithRouteSettings(context,
           screen: ClassDetailScreen(),
           settings: RouteSettings(
-              name: ClassDetailScreen.pageName, arguments: aulas[index]),
+              name: ClassDetailScreen.pageName, arguments: subjects[index]),
           pageTransitionAnimation: PageTransitionAnimation.fade);
     } else {
       CalendarHelper.onTapDisabledDay(selectedDay, context);
     }
   }
 
-  static List<Aula> getClassesOfThis(DateTime day, List<Aula> aulas) {
+  static List<Subject> getSubjectOfThis(DateTime day, List<Subject> subjects) {
     // print('Entrei aqui para ver os eventos do dia: $day');
-    return aulas.where((aula) => aula.dataAula.compareTo(day) == 0).toList();
-  }
-
-  static List<Homework> getHomeworksOfThis(
-      DateTime day, List<Homework> homeworks) {
-    // print('Entrei aqui para ver os eventos do dia: $day');
-    return homeworks
-        .where((homework) => homework.dataParaSerFeito.compareTo(day) == 0)
+    return subjects
+        .where((subject) => subject.dataParaSerFeito.compareTo(day) == 0)
         .toList();
-  }
-
-  //ao inves de passar dynamic usar alguma classe abstrata ou interface
-  static List<dynamic> getClassesAndHomeworks(
-      DateTime day, List<Homework> homeworks, List<Aula> aulas) {
-    List<dynamic> classesAndHomeworks = [];
-
-    var allClasses = CalendarHelper.getClassesOfThis(day, aulas);
-    var allHomeworks = CalendarHelper.getHomeworksOfThis(day, homeworks);
-
-    classesAndHomeworks.addAll(allClasses);
-    classesAndHomeworks.addAll(allHomeworks);
-
-    return classesAndHomeworks;
   }
 
   static void onTapDisabledDay(DateTime day, BuildContext context) {
