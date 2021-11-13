@@ -1,10 +1,10 @@
 import 'package:escola/models/iprovider.dart';
-import 'package:escola/models/subject.dart';
+
+import 'package:escola/providers/subjects.dart';
 
 import '../models/homework.dart';
-import 'package:flutter/foundation.dart';
 
-class Homeworks with ChangeNotifier {
+class Homeworks extends Subjects {
   List<Homework> _homeworks = [
     Homework(
       id: 'h1',
@@ -35,12 +35,12 @@ class Homeworks with ChangeNotifier {
   ];
 
   @override
-  Subject findById(String id) {
+  Homework findById(String id) {
     return _homeworks.firstWhere((cadaHomework) => cadaHomework.id == id);
   }
 
   @override
-  List<Subject> getAll() {
+  List<Homework> getAll() {
     return [..._homeworks];
   }
 

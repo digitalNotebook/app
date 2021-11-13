@@ -2,6 +2,7 @@ import 'package:escola/models/aula.dart';
 import 'package:escola/models/homework.dart';
 import 'package:escola/models/subject.dart';
 import 'package:escola/screens/class_detail_screen.dart';
+import 'package:escola/screens/exercicios_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -17,26 +18,42 @@ class CalendarHelper {
     BuildContext context,
     List<Subject> subjects,
   ) {
-    var aulasMarcadas = CalendarHelper.getSubjectOfThis(selectedDay, subjects);
+    var itensDoCalendario =
+        CalendarHelper.getSubjectOfThis(selectedDay, subjects);
 
-    if (aulasMarcadas.length > 0) {
-      //formatamos a data para fazer a comparação
-      var selectedDayFormatted = DateFormat.yMMMMEEEEd().format(selectedDay);
-
-      //comparamos as datas
-      var index = subjects.indexWhere((aula) =>
-          DateFormat.yMMMMEEEEd()
-              .format(aula.dataParaSerFeito)
-              .compareTo(selectedDayFormatted) ==
-          0);
+    if (itensDoCalendario[0].runtimeType == Homework) {
+      int index = getIndex(selectedDay, subjects);
       pushNewScreenWithRouteSettings(context,
-          screen: ClassDetailScreen(),
+          screen: ExerciciosScreen(),
           settings: RouteSettings(
-              name: ClassDetailScreen.pageName, arguments: subjects[index]),
+              name: ExerciciosScreen.pageName, arguments: subjects[index].id),
           pageTransitionAnimation: PageTransitionAnimation.fade);
+    } else if (itensDoCalendario[0].runtimeType == Aula) {
+      if (itensDoCalendario.length > 0) {
+        //formatamos a data para fazer a comparação
+        int index = getIndex(selectedDay, subjects);
+
+        pushNewScreenWithRouteSettings(context,
+            screen: ClassDetailScreen(),
+            settings: RouteSettings(
+                name: ClassDetailScreen.pageName, arguments: subjects[index]),
+            pageTransitionAnimation: PageTransitionAnimation.fade);
+      }
     } else {
       CalendarHelper.onTapDisabledDay(selectedDay, context);
     }
+  }
+
+  static int getIndex(DateTime selectedDay, List<Subject> subjects) {
+    var selectedDayFormatted = DateFormat.yMMMMEEEEd().format(selectedDay);
+
+    //comparamos as datas
+    var index = subjects.indexWhere((aula) =>
+        DateFormat.yMMMMEEEEd()
+            .format(aula.dataParaSerFeito)
+            .compareTo(selectedDayFormatted) ==
+        0);
+    return index;
   }
 
   static List<Subject> getSubjectOfThis(DateTime day, List<Subject> subjects) {

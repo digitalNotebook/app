@@ -1,12 +1,13 @@
 import 'package:escola/models/iprovider.dart';
-import 'package:escola/models/subject.dart';
-import 'package:flutter/material.dart';
+
+import 'package:escola/providers/subjects.dart';
+
 import '../models/aula.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Aulas with ChangeNotifier implements IProvider {
+class Aulas extends Subjects {
   //dummy data de aulas
   List<Aula> _aulas = [
     Aula(
@@ -76,13 +77,15 @@ class Aulas with ChangeNotifier implements IProvider {
   //   return [..._aulas];
   // }
 
+  //liskov substitution principle
   @override
-  List<Subject> getAll() {
+  List<Aula> getAll() {
     return [..._aulas];
   }
 
+  //liskov substitution principle
   @override
-  Subject findById(String id) {
+  Aula findById(String id) {
     return _aulas.firstWhere((cadaAula) => cadaAula.id == id);
   }
 
