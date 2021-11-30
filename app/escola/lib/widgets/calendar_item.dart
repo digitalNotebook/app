@@ -1,13 +1,15 @@
 import 'package:escola/models/aula.dart';
-import 'package:escola/models/iprovider.dart';
+import 'package:escola/models/homework.dart';
 import 'package:escola/models/subject.dart';
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/providers/homeworks.dart';
+import 'package:escola/screens/class_detail_screen.dart';
+import 'package:escola/screens/exercicios_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../helpers/calendar_helpers.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class CalendarItem extends StatefulWidget {
   const CalendarItem({Key? key}) : super(key: key);
@@ -27,6 +29,7 @@ class _CalendarItemState extends State<CalendarItem> {
   late List<Subject> _aulasEHomeworks;
   late List<Subject> _aulas;
   late List<Subject> _homeworks;
+  late List<Subject> _subjectsEvents;
 
   @override
   void didChangeDependencies() {
@@ -36,13 +39,31 @@ class _CalendarItemState extends State<CalendarItem> {
       _homeworks = Provider.of<Homeworks>(context, listen: false).getAll();
 
       _aulasEHomeworks = [];
+      _subjectsEvents = [];
 
       _aulasEHomeworks.addAll(_aulas);
       _aulasEHomeworks.addAll(_homeworks);
 
       _currentDay = DateTime.now();
+      _selectedDay = _currentDay;
     }
     super.didChangeDependencies();
+  }
+
+  void _openScreen(Subject subject) {
+    if (subject.runtimeType == Homework) {
+      pushNewScreenWithRouteSettings(context,
+          screen: ExerciciosScreen(),
+          settings: RouteSettings(
+              name: ExerciciosScreen.pageName, arguments: subject.id),
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    } else if (subject.runtimeType == Aula) {
+      pushNewScreenWithRouteSettings(context,
+          screen: ClassDetailScreen(),
+          settings: RouteSettings(
+              name: ClassDetailScreen.pageName, arguments: subject),
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    }
   }
 
   @override
@@ -71,8 +92,11 @@ class _CalendarItemState extends State<CalendarItem> {
               CalendarHelper.onTapDisabledDay(selectedDay, context);
             } else {
               //abre a aula ou homework
-              CalendarHelper.onTapThisDay(
-                  selectedDay, context, _aulasEHomeworks);
+              // CalendarHelper.onTapThisDay(
+              //     selectedDay, context, _aulasEHomeworks);
+              //preciso exibir os eventos do dia selecionado, se houver
+              _subjectsEvents = CalendarHelper.getSubjectOfThis(
+                  selectedDay, _aulasEHomeworks);
             }
             setState(() {
               _selectedDay = selectedDay;
@@ -134,17 +158,29 @@ class _CalendarItemState extends State<CalendarItem> {
           }),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
-        Text('Eventos do dia : ${DateFormat.d().format(_focusedDay)}'),
-        Container(
-          width: double.infinity,
-          alignment: Alignment.topCenter,
-          constraints: BoxConstraints(minHeight: 50),
-          child: Text('Lista de eventos'),
-          decoration: BoxDecoration(
-            border: Border.all(),
-          ),
+        Expanded(
+          child: _subjectsEvents.isNotEmpty
+              ? ListView.builder(
+                  itemCount: _subjectsEvents.length,
+                  itemBuilder: (ctx, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      elevation: 3,
+                      child: ListTile(
+                        title: Text(_subjectsEvents[index].title),
+                        leading: Icon(Icons.play_arrow_rounded),
+                        onTap: () {
+                          _openScreen(_subjectsEvents[index]);
+                        },
+                      ),
+                    );
+                  },
+                )
+              : Text('No events'),
         )
       ],
     );

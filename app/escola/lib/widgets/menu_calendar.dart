@@ -1,12 +1,8 @@
 import 'package:escola/helpers/calendar_helpers.dart';
-import 'package:escola/models/aula.dart';
-import 'package:escola/models/homework.dart';
 import 'package:escola/models/subject.dart';
 import 'package:escola/providers/aulas.dart';
-import 'package:escola/screens/class_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 

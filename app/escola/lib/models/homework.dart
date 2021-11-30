@@ -26,7 +26,7 @@ class Homework extends Subject {
     // required this.exercicios,
   }) {
     super.id = this.id;
-    super.dataParaSerFeito = this.dataParaSerFeito;
+    super.dateToBeMade = this.dataParaSerFeito;
     super.description = this.description;
     super.title = this.title;
   }

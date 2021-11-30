@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/filters_class.dart';
-import 'topBackground.dart';
-import 'bottomBackground.dart';
 
 class ClassOverview extends StatefulWidget {
   @override

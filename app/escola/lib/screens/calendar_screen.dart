@@ -1,10 +1,8 @@
 import 'package:escola/providers/aulas.dart';
 import 'package:escola/providers/homeworks.dart';
 import 'package:escola/screens/profile_screen.dart';
-import 'package:escola/widgets/bottomBackground.dart';
 import 'package:escola/widgets/calendar_item.dart';
 import 'package:escola/widgets/master_background.dart';
-import 'package:escola/widgets/topBackground.dart';
 import 'package:flutter/material.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';

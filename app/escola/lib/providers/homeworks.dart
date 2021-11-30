@@ -1,5 +1,3 @@
-import 'package:escola/models/iprovider.dart';
-
 import 'package:escola/providers/subjects.dart';
 
 import '../models/homework.dart';

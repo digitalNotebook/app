@@ -1,5 +1,3 @@
-import 'package:escola/models/iprovider.dart';
-
 import 'package:escola/providers/subjects.dart';
 
 import '../models/aula.dart';
@@ -108,6 +106,7 @@ class Aulas extends Subjects {
   }
 
   Future<void> fetchClasses() async {
+    // ignore: unused_local_variable
     var url =
         Uri.parse('https://digitalnotebook-b4e8d-default-rtdb.firebaseio.com/');
   }

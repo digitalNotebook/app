@@ -33,7 +33,7 @@ class Aula extends Subject {
     this.isFavorite = false,
   }) {
     super.id = this.id;
-    super.dataParaSerFeito = this.dataAula;
+    super.dateToBeMade = this.dataAula;
     super.description = this.description;
     super.title = this.title;
   }

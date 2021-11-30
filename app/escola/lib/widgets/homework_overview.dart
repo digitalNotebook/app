@@ -5,8 +5,25 @@ import '../widgets/homework_tabs.dart';
 import 'bottomBackground.dart';
 import 'topBackground.dart';
 
-class HomeworkOverview extends StatelessWidget {
+class HomeworkOverview extends StatefulWidget {
   const HomeworkOverview({Key? key}) : super(key: key);
+
+  @override
+  _HomeworkOverviewState createState() => _HomeworkOverviewState();
+}
+
+class _HomeworkOverviewState extends State<HomeworkOverview> {
+  void _handleToDo() {
+    //todo
+  }
+
+  void _handleFavorites() {
+    //todo
+  }
+
+  void _handleDone() {
+    //todo
+  }
 
   @override
   Widget build(BuildContext context) {

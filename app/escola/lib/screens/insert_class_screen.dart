@@ -44,6 +44,7 @@ class _InsertClassScreenState extends State<InsertClassScreen> {
     super.didChangeDependencies();
   }
 
+  // ignore: unused_field
   var _aula = Aula(
     id: '',
     title: '',

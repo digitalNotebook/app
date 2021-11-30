@@ -1,10 +1,7 @@
 import 'package:escola/models/aula.dart';
-import 'package:escola/providers/aulas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/class_item.dart';
-
-import 'package:escola/enums/filters_class.dart';
 
 class ClassList extends StatelessWidget {
   final List<Aula> _aulas;

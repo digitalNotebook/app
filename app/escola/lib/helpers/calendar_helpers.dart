@@ -21,23 +21,27 @@ class CalendarHelper {
     var itensDoCalendario =
         CalendarHelper.getSubjectOfThis(selectedDay, subjects);
 
-    if (itensDoCalendario[0].runtimeType == Homework) {
-      int index = getIndex(selectedDay, subjects);
-      pushNewScreenWithRouteSettings(context,
-          screen: ExerciciosScreen(),
-          settings: RouteSettings(
-              name: ExerciciosScreen.pageName, arguments: subjects[index].id),
-          pageTransitionAnimation: PageTransitionAnimation.fade);
-    } else if (itensDoCalendario[0].runtimeType == Aula) {
-      if (itensDoCalendario.length > 0) {
-        //formatamos a data para fazer a comparação
-        int index = getIndex(selectedDay, subjects);
+    print('Itens do Calendário: $itensDoCalendario');
 
+    if (itensDoCalendario.isNotEmpty) {
+      if (itensDoCalendario[0].runtimeType == Homework) {
+        int index = getIndex(selectedDay, subjects);
         pushNewScreenWithRouteSettings(context,
-            screen: ClassDetailScreen(),
+            screen: ExerciciosScreen(),
             settings: RouteSettings(
-                name: ClassDetailScreen.pageName, arguments: subjects[index]),
+                name: ExerciciosScreen.pageName, arguments: subjects[index].id),
             pageTransitionAnimation: PageTransitionAnimation.fade);
+      } else if (itensDoCalendario[0].runtimeType == Aula) {
+        if (itensDoCalendario.length > 0) {
+          //formatamos a data para fazer a comparação
+          int index = getIndex(selectedDay, subjects);
+
+          pushNewScreenWithRouteSettings(context,
+              screen: ClassDetailScreen(),
+              settings: RouteSettings(
+                  name: ClassDetailScreen.pageName, arguments: subjects[index]),
+              pageTransitionAnimation: PageTransitionAnimation.fade);
+        }
       }
     } else {
       CalendarHelper.onTapDisabledDay(selectedDay, context);
@@ -50,7 +54,7 @@ class CalendarHelper {
     //comparamos as datas
     var index = subjects.indexWhere((aula) =>
         DateFormat.yMMMMEEEEd()
-            .format(aula.dataParaSerFeito)
+            .format(aula.dateToBeMade)
             .compareTo(selectedDayFormatted) ==
         0);
     return index;
@@ -59,7 +63,7 @@ class CalendarHelper {
   static List<Subject> getSubjectOfThis(DateTime day, List<Subject> subjects) {
     // print('Entrei aqui para ver os eventos do dia: $day');
     return subjects
-        .where((subject) => subject.dataParaSerFeito.compareTo(day) == 0)
+        .where((subject) => subject.dateToBeMade.compareTo(day) == 0)
         .toList();
   }
 
