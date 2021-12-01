@@ -1,6 +1,7 @@
 import 'package:escola/providers/subjects.dart';
 
 import '../models/homework.dart';
+import '../enums/filters_class.dart';
 
 class Homeworks extends Subjects {
   List<Homework> _homeworks = [
@@ -8,27 +9,27 @@ class Homeworks extends Subjects {
       id: 'h1',
       title: 'Present Simple',
       description: 'Questions about present simple',
-      status: Status.UNDONE,
+      status: Filters.DONE,
       dataParaSerFeito: DateTime.utc(2021, 10, 22),
     ),
     Homework(
       id: 'h2',
       title: 'Irregular verbs',
       description: 'Questions about irregular verbs',
-      status: Status.UNDONE,
+      status: Filters.UNDONE,
       dataParaSerFeito: DateTime.utc(2021, 10, 25),
     ),
     Homework(
         id: 'h3',
         title: 'Daily Routine',
         description: 'Questions about Daily Routine',
-        status: Status.UNDONE,
+        status: Filters.DONE,
         dataParaSerFeito: DateTime.utc(2021, 10, 26)),
     Homework(
         id: 'h4',
         title: 'Awkward, Odd, Strange',
         description: 'The difference among them',
-        status: Status.UNDONE,
+        status: Filters.UNDONE,
         dataParaSerFeito: DateTime.utc(2021, 10, 27)),
   ];
 
@@ -40,6 +41,12 @@ class Homeworks extends Subjects {
   @override
   List<Homework> getAll() {
     return [..._homeworks];
+  }
+
+  List<Homework> getHomeworksWithThisFilter(Filters filter) {
+    return _homeworks
+        .where((cadaHomework) => cadaHomework.status == filter)
+        .toList();
   }
 
   // List<Homework> get items {

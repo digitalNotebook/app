@@ -1,17 +1,13 @@
 // import 'package:escola/models/exercicio.dart';
 
+import 'package:escola/enums/filters_class.dart';
 import 'package:escola/models/subject.dart';
-
-enum Status {
-  DONE,
-  UNDONE,
-}
 
 class Homework extends Subject {
   final String id;
   final String title;
   final String description;
-  final Status status;
+  final Filters status;
   final DateTime dataParaSerFeito;
   final DateTime? dataRealizadoPeloAluno;
   // final List<Exercicio> exercicios;

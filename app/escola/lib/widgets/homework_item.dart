@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:escola/screens/exercicios_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../models/homework.dart';
@@ -14,8 +15,11 @@ class HomeworkItem extends StatelessWidget {
     var homework = Provider.of<Homework>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(ExerciciosScreen.pageName, arguments: homework.id);
+        pushNewScreenWithRouteSettings(context,
+            screen: ExerciciosScreen(),
+            settings: RouteSettings(
+                name: ExerciciosScreen.pageName, arguments: homework.id),
+            pageTransitionAnimation: PageTransitionAnimation.fade);
       },
       child: Card(
         elevation: 8,
@@ -30,16 +34,24 @@ class HomeworkItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Placeholder(
-                    fallbackHeight: 150,
-                    color: Colors.amber,
+                  child: Hero(
+                    tag: homework.id,
+                    child: FadeInImage(
+                      fadeInDuration: Duration(milliseconds: 100),
+                      fadeOutDuration: Duration(milliseconds: 100),
+                      placeholder:
+                          AssetImage('assets/images/placeholder-images.jpg'),
+                      image: AssetImage('assets/images/placeholder-images.jpg'),
+                      fit: BoxFit.fitWidth,
+                      height: 150,
+                      width: double.infinity,
+                      imageErrorBuilder: (ctx, exception, stack) {
+                        return Placeholder(
+                          fallbackHeight: 150,
+                        );
+                      },
+                    ),
                   ),
-                  // child: Image.network(
-                  //   'https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2018/10/Hand-Luggage-Only-12.jpg?w=1600&ssl=1',
-                  //   fit: BoxFit.fitWidth,
-                  //   width: double.infinity,
-                  //   height: 100,
-                  // ),
                 ),
                 IconButton(
                   onPressed: () {},
