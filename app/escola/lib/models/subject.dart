@@ -5,6 +5,7 @@ abstract class Subject with ChangeNotifier {
   late final String title;
   late final String description;
   late final DateTime dateToBeMade;
+  late bool isFavorite;
 
   String get getId => this.id;
   String get getTitle => this.title;

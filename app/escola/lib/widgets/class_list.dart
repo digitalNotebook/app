@@ -21,21 +21,25 @@ class ClassList extends StatelessWidget {
         ),
       ),
       alignment: Alignment.center,
-      child: ListView.builder(
-        itemCount: _aulas.length,
-        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-          key: ValueKey(_aulas[index].id),
-          value: _aulas[index],
-          child: Column(
-            children: [
-              ClassItem(_refreshClass),
-              SizedBox(
-                height: 5,
-              )
-            ],
-          ),
-        ),
-      ),
+      child: _aulas.length > 0
+          ? ListView.builder(
+              itemCount: _aulas.length,
+              itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                key: ValueKey(_aulas[index].id),
+                value: _aulas[index],
+                child: Column(
+                  children: [
+                    ClassItem(_refreshClass),
+                    SizedBox(
+                      height: 5,
+                    )
+                  ],
+                ),
+              ),
+            )
+          : Center(
+              child: Text('Nothing here yet!'),
+            ),
     );
   }
 }

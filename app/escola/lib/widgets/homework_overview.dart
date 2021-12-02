@@ -17,6 +17,7 @@ class HomeworkOverview extends StatefulWidget {
 
 class _HomeworkOverviewState extends State<HomeworkOverview> {
   var _filter = Filters.UNDONE;
+  late Homeworks _provider;
   late List<Subject> _homeworks;
   var _isInit = true;
 
@@ -27,7 +28,7 @@ class _HomeworkOverviewState extends State<HomeworkOverview> {
 
   void _handleFavorites() {
     _filter = Filters.FAVORITES;
-    getHomeworksWithThisFilter(_filter);
+    getFavorites();
   }
 
   void _handleDone() {
@@ -36,16 +37,20 @@ class _HomeworkOverviewState extends State<HomeworkOverview> {
   }
 
   void getHomeworksWithThisFilter(Filters filter) {
-    _homeworks = Provider.of<Homeworks>(context, listen: false)
-        .getHomeworksWithThisFilter(filter);
-    print('Filter: $filter e qtde _homeworks: ${_homeworks.length}');
+    _homeworks = _provider.getHomeworksWithThisFilter(filter);
+    setState(() {});
+  }
+
+  void getFavorites() {
+    _homeworks = _provider.favoriteClasses;
     setState(() {});
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      getHomeworksWithThisFilter(_filter);
+      _provider = Provider.of<Homeworks>(context, listen: false);
+      _homeworks = [];
     }
     _isInit = false;
     super.didChangeDependencies();

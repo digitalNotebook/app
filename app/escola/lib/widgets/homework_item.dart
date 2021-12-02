@@ -12,7 +12,7 @@ class HomeworkItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homework = Provider.of<Homework>(context, listen: false);
+    var homework = Provider.of<Homework>(context);
     return GestureDetector(
       onTap: () {
         pushNewScreenWithRouteSettings(context,
@@ -54,8 +54,12 @@ class HomeworkItem extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_border),
+                  onPressed: () {
+                    homework.toggleFavorite();
+                  },
+                  icon: Icon(homework.isFavorite
+                      ? Icons.favorite
+                      : Icons.favorite_border),
                 ),
                 Positioned(
                   top: 15,

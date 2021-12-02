@@ -91,6 +91,12 @@ class Aulas extends Subjects {
   //   return _aulas.firstWhere((cadaAula) => cadaAula.id == id);
   // }
 
+  List<Aula> getHomeworksWithThisFilter(Status filter) {
+    return _aulas
+        .where((cadaHomework) => cadaHomework.status == filter)
+        .toList();
+  }
+
   List<Aula> get undoneClasses {
     return _aulas
         .where((cadaAula) => cadaAula.status == Status.UNDONE)

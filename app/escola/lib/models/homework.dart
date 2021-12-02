@@ -11,6 +11,7 @@ class Homework extends Subject {
   final DateTime dataParaSerFeito;
   final DateTime? dataRealizadoPeloAluno;
   // final List<Exercicio> exercicios;
+  bool isFavorite;
 
   Homework({
     required this.id,
@@ -19,11 +20,17 @@ class Homework extends Subject {
     required this.status,
     required this.dataParaSerFeito,
     this.dataRealizadoPeloAluno,
+    this.isFavorite = false,
     // required this.exercicios,
   }) {
     super.id = this.id;
     super.dateToBeMade = this.dataParaSerFeito;
     super.description = this.description;
     super.title = this.title;
+  }
+
+  void toggleFavorite() {
+    isFavorite = !isFavorite;
+    notifyListeners();
   }
 }

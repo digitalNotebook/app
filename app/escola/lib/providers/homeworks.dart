@@ -49,6 +49,10 @@ class Homeworks extends Subjects {
         .toList();
   }
 
+  List<Homework> get favoriteClasses {
+    return _homeworks.where((eachHomework) => eachHomework.isFavorite).toList();
+  }
+
   // List<Homework> get items {
   //   return [..._items];
   // }
