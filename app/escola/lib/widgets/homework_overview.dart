@@ -16,6 +16,7 @@ class HomeworkOverview extends StatefulWidget {
 }
 
 class _HomeworkOverviewState extends State<HomeworkOverview> {
+  var _isSearchPressed = false;
   var _filter = Filters.UNDONE;
   late Homeworks _provider;
   late List<Subject> _homeworks;
@@ -46,11 +47,17 @@ class _HomeworkOverviewState extends State<HomeworkOverview> {
     setState(() {});
   }
 
+  void _switchSearchButton() {
+    setState(() {
+      _isSearchPressed = !_isSearchPressed;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
       _provider = Provider.of<Homeworks>(context, listen: false);
-      _homeworks = [];
+      _homeworks = _provider.getHomeworksWithThisFilter(_filter);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -67,6 +74,15 @@ class _HomeworkOverviewState extends State<HomeworkOverview> {
           'Homeworks',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
+        actions: [
+          IconButton(
+            onPressed: _switchSearchButton,
+            icon: Icon(
+              _isSearchPressed ? Icons.close : Icons.search,
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
       body: MasterBackground(
         child: Column(

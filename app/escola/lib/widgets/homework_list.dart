@@ -3,7 +3,6 @@ import 'package:escola/models/subject.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/homeworks.dart';
 import '../widgets/homework_item.dart';
 
 class HomeworkList extends StatelessWidget {
