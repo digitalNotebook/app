@@ -15,7 +15,8 @@ class HomeworkOverview extends StatefulWidget {
   _HomeworkOverviewState createState() => _HomeworkOverviewState();
 }
 
-class _HomeworkOverviewState extends State<HomeworkOverview> {
+class _HomeworkOverviewState extends State<HomeworkOverview>
+    with SingleTickerProviderStateMixin {
   var _isSearchPressed = false;
   var _filter = Filters.UNDONE;
   late Homeworks _provider;

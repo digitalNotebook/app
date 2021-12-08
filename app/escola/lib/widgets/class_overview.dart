@@ -3,6 +3,7 @@ import 'package:escola/providers/aulas.dart';
 import 'package:escola/widgets/class_list.dart';
 import 'package:escola/widgets/class_tabs.dart';
 import 'package:escola/widgets/master_background.dart';
+import 'package:escola/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _ClassOverviewState extends State<ClassOverview>
   var _isSearchPressed = false;
   late List<Aula> _aulas;
   List<Aula> _foundAulas = [];
-
+  //fazem parte da animação do search
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _opacityAnimation;
@@ -149,6 +150,11 @@ class _ClassOverviewState extends State<ClassOverview>
     }
   }
 
+  void _onSubmitted() {
+    _showKeyboard = false;
+    _foundAulas = _aulas;
+  }
+
   @override
   Widget build(BuildContext context) {
     print('Buildei a ClassesOverview');
@@ -180,30 +186,13 @@ class _ClassOverviewState extends State<ClassOverview>
               flex: 2,
               child: _isSearchPressed
                   ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Form(
-                        key: _formKey,
-                        child: FadeTransition(
-                          opacity: _opacityAnimation,
-                          child: SlideTransition(
-                            position: _slideAnimation,
-                            child: TextField(
-                              onChanged: (text) => _runFilter(text),
-                              keyboardType: TextInputType.text,
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                labelText: 'Search',
-                                border: OutlineInputBorder(),
-                                suffixIcon: Icon(Icons.search),
-                                hintText: 'Insert class name here',
-                              ),
-                              onSubmitted: (_) {
-                                _showKeyboard = false;
-                                _foundAulas = _aulas;
-                              },
-                            ),
-                          ),
-                        ),
+                      padding: EdgeInsets.all(8.0),
+                      child: SearchField(
+                        _formKey,
+                        _runFilter,
+                        _onSubmitted,
+                        _slideAnimation,
+                        _opacityAnimation,
                       ),
                     )
                   : ClassTabs(
