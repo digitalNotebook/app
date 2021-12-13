@@ -24,14 +24,25 @@ class HomeworkList extends StatelessWidget {
         ),
       ),
       alignment: Alignment.center,
-      child: ListView.builder(
-        itemCount: homeworks.length,
-        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-          key: ValueKey(homeworks[index].id),
-          value: homeworks[index] as Homework,
-          child: HomeworkItem(),
-        ),
-      ),
+      child: homeworks.length > 0
+          ? ListView.builder(
+              itemCount: homeworks.length,
+              itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                key: ValueKey(homeworks[index].id),
+                value: homeworks[index] as Homework,
+                child: Column(
+                  children: [
+                    HomeworkItem(),
+                    SizedBox(
+                      height: 5,
+                    )
+                  ],
+                ),
+              ),
+            )
+          : Center(
+              child: Text('Nothing here yet!'),
+            ),
     );
   }
 }
