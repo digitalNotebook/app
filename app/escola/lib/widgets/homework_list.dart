@@ -7,9 +7,10 @@ import '../widgets/homework_item.dart';
 
 class HomeworkList extends StatelessWidget {
   final List<Subject> homeworks;
-
+  final Function _onResetHomeworkList;
   const HomeworkList(
-    this.homeworks, {
+    this.homeworks,
+    this._onResetHomeworkList, {
     Key? key,
   }) : super(key: key);
 
@@ -32,7 +33,7 @@ class HomeworkList extends StatelessWidget {
                 value: homeworks[index] as Homework,
                 child: Column(
                   children: [
-                    HomeworkItem(),
+                    HomeworkItem(_onResetHomeworkList),
                     SizedBox(
                       height: 5,
                     )

@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 import '../models/homework.dart';
 
 class HomeworkItem extends StatelessWidget {
-  const HomeworkItem({Key? key}) : super(key: key);
+  final Function _onResetHomeworkList;
+  const HomeworkItem(this._onResetHomeworkList, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,11 @@ class HomeworkItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         pushNewScreenWithRouteSettings(context,
-            screen: ExerciciosScreen(),
-            settings: RouteSettings(
-                name: ExerciciosScreen.pageName, arguments: homework.id),
-            pageTransitionAnimation: PageTransitionAnimation.fade);
+                screen: ExerciciosScreen(),
+                settings: RouteSettings(
+                    name: ExerciciosScreen.pageName, arguments: homework.id),
+                pageTransitionAnimation: PageTransitionAnimation.fade)
+            .then((value) => _onResetHomeworkList());
       },
       child: Card(
         elevation: 8,

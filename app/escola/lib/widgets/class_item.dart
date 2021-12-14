@@ -13,7 +13,7 @@ class ClassItem extends StatelessWidget {
   ClassItem(this._refreshClass);
   @override
   Widget build(BuildContext context) {
-    print('Buildei a ClassItem 546465454564531231313133');
+    print('Buildei a ClassItem');
 
     return Consumer<Aula>(
       builder: (ctx, aula, ch) => GestureDetector(

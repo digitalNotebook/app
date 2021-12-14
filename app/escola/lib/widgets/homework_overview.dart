@@ -19,16 +19,12 @@ class HomeworkOverview extends StatefulWidget {
 
 class _HomeworkOverviewState extends State<HomeworkOverview>
     with SingleTickerProviderStateMixin {
-  var _isSearchPressed = false;
-  var _filter = Filters.UNDONE;
-  late Homeworks _provider;
-  var _isInit = true;
-
   //fazem parte do search
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _searchController = TextEditingController();
+  var _isSearchPressed = false;
   late List<Homework> _homeworks;
-  List<Homework> _foundAulas = [];
+  List<Homework> _foundHomeworks = [];
   //fazem parte da animação do search
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
@@ -36,41 +32,18 @@ class _HomeworkOverviewState extends State<HomeworkOverview>
 
   var _showKeyboard = true;
 
-  void _handleToDo() {
-    _filter = Filters.UNDONE;
-    getHomeworksWithThisFilter(_filter);
-  }
+  var _filter = Filters.UNDONE;
 
-  void _handleFavorites() {
-    _filter = Filters.FAVORITES;
-    getFavorites();
-  }
+  var _isInit = true;
 
-  void _handleDone() {
-    _filter = Filters.DONE;
-    getHomeworksWithThisFilter(_filter);
-  }
+  //Provider
+  late Homeworks _provider;
 
-  void getHomeworksWithThisFilter(Filters filter) {
-    _homeworks = _provider.getHomeworksWithThisFilter(filter);
-    setState(() {});
-  }
-
-  void getFavorites() {
-    _homeworks = _provider.favoriteClasses;
-    setState(() {});
-  }
-
-  void _switchSearchButton() {
-    setState(() {
-      _isSearchPressed = !_isSearchPressed;
-    });
-    //starta a animação
-    if (_isSearchPressed) {
-      _controller.forward();
-    } else {
-      _controller.reverse();
-    }
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -104,6 +77,8 @@ class _HomeworkOverviewState extends State<HomeworkOverview>
     if (_isInit) {
       _provider = Provider.of<Homeworks>(context, listen: false);
       _homeworks = _provider.getHomeworksWithThisFilter(_filter);
+      _foundHomeworks = _homeworks;
+      print('Homeworks: ${_foundHomeworks.length}');
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -123,20 +98,61 @@ class _HomeworkOverviewState extends State<HomeworkOverview>
           .toList();
     }
     setState(() {
-      _foundAulas = results;
+      _foundHomeworks = results;
     });
+  }
+
+  void _handleToDo() {
+    _filter = Filters.UNDONE;
+    getHomeworksWithThisFilter(_filter);
+  }
+
+  void _handleFavorites() {
+    _filter = Filters.FAVORITES;
+    getFavorites();
+  }
+
+  void _handleDone() {
+    _filter = Filters.DONE;
+    getHomeworksWithThisFilter(_filter);
+  }
+
+  void getHomeworksWithThisFilter(Filters filter) {
+    _homeworks = _provider.getHomeworksWithThisFilter(filter);
+    setState(() {
+      _foundHomeworks = _homeworks;
+    });
+  }
+
+  void getFavorites() {
+    _homeworks = _provider.favoriteClasses;
+    setState(() {});
+  }
+
+  void _switchSearchButton() {
+    setState(() {
+      _isSearchPressed = !_isSearchPressed;
+    });
+    //starta a animação
+    if (_isSearchPressed) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
   }
 
   void _onSubmitted() {
     _showKeyboard = false;
-    _foundAulas = _homeworks;
+    _foundHomeworks = _homeworks;
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _controller.dispose();
-    super.dispose();
+  void _resetIsSearchPressed() {
+    if (_isSearchPressed) {
+      setState(() {
+        _isSearchPressed = false;
+        _foundHomeworks = _homeworks;
+      });
+    }
   }
 
   @override
@@ -183,7 +199,7 @@ class _HomeworkOverviewState extends State<HomeworkOverview>
             ),
             Expanded(
               flex: 10,
-              child: HomeworkList(_homeworks),
+              child: HomeworkList(_foundHomeworks, _resetIsSearchPressed),
             ),
           ],
         ),
