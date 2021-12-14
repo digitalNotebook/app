@@ -125,8 +125,10 @@ class _HomeworkOverviewState extends State<HomeworkOverview>
   }
 
   void getFavorites() {
-    _homeworks = _provider.favoriteClasses;
-    setState(() {});
+    setState(() {
+      _homeworks = _provider.favoriteClasses;
+      _foundHomeworks = _homeworks;
+    });
   }
 
   void _switchSearchButton() {
