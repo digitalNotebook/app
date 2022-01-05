@@ -73,7 +73,7 @@ class _CalendarItemState extends State<CalendarItem> {
         TableCalendar(
           focusedDay: _focusedDay,
           firstDay: DateTime(2021, 1, 1),
-          lastDay: DateTime(2022, 1, 1),
+          lastDay: DateTime(2022, 1, 12),
           calendarFormat: _calendarFormat,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
           onFormatChanged: (format) {
